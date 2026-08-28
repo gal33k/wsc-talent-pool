@@ -1,0 +1,612 @@
+# =============================================================================
+# taxonomy.yaml — the lexicon behind every deterministic decision
+# =============================================================================
+# Everything here is DATA, not code. If a recruiter wants to add a new role
+# family, teach the system a new synonym, or exclude a generic employer token
+# that is generating false warm paths, this is the file they edit.
+#
+# Sections:
+#   role_families         title pattern -> family classification
+#   family_evidence       skills that confirm a candidate really is in the family
+#   skill_synonyms        expansion map for required-skill matching
+#   domain_lexicon        keywords that indicate sports / media / broadcast proximity
+#   generic_employer_stoplist   employer strings too generic to be a warm signal
+#   company_aliases       clusters of employer names that are the same organisation
+#   job_family_map        per-job target family (used by src/score.py)
+#
+# Matching is case-insensitive throughout. Every pattern is a substring match
+# on the whitespace-collapsed lowercased target. All patterns are matched in the
+# declared order and FIRST HIT WINS (see src/normalize.py).
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# Role families — order matters (first-match-wins)
+# -----------------------------------------------------------------------------
+# Order rationale:
+#   1. not_talent first        so "IT Manager" beats a generic "manager" catch
+#   2. sales_engineering        so "ML Solutions Architect" != ml_general
+#   3. video_broadcast          so "Video Platform Engineer" != platform_devops
+#   4. ml_cv                    "Video AI Engineer" is CV, not video_broadcast
+#   5. ml_general
+#   6. data_engineering
+#   7. data_analytics           "Data Analyst" is separate from data_engineering
+#   8. platform_devops
+#   9. backend                  fallback for generic "Software Engineer"
+#   10. product
+# -----------------------------------------------------------------------------
+role_families:
+
+  - family: not_talent
+    title_patterns:
+      - "it manager"
+      - "it support"
+      - "it engineer"
+      - "network engineer"        # in this dataset all are telecom, not sports/media
+      - "network admin"
+      - "systems administrator"
+      - "digital marketing"
+      - "marketing manager"
+      - "sales manager"
+      - "account manager"
+      - "procurement"
+      - "recruiter"
+      - "talent acquisition"
+      - "hr manager"
+
+  - family: sales_engineering
+    # The "vendor archetype" from docs/01. Credible engineers on a pre-sales
+    # track. Flag as a different hiring motion; don't silently reject.
+    title_patterns:
+      - "solutions architect"
+      - "solution architect"
+      - "sales engineer"
+      - "presales"
+      - "pre-sales"
+      - "customer engineer"
+
+  - family: video_broadcast
+    title_patterns:
+      - "broadcast engineer"
+      - "video streaming"
+      - "video systems"
+      - "video platform"
+      - "senior video engineer"
+      - "video engineer"
+      - "media delivery"
+      - "camera systems"
+      - "broadcast systems"
+      - "streaming engineer"
+
+  - family: ml_cv
+    title_patterns:
+      - "computer vision"
+      - "cv engineer"
+      - "cv research"
+      - "video ai"
+      - "ml engineer - video"
+      - "ml engineer video"
+      - "vision engineer"
+
+  - family: ml_general
+    title_patterns:
+      - "ml engineer"                # generic ML Engineer
+      - "ml research"
+      - "machine learning engineer"
+      - "principal data scientist"
+      - "senior data scientist"
+      - "data scientist"             # will be re-checked by skills evidence
+      - "ai engineer"
+      - "applied scientist"
+      - "research engineer"
+
+  - family: data_engineering
+    title_patterns:
+      - "data engineer"
+      - "data platform"
+      - "analytics engineer"
+      - "sports data engineer"
+      - "head of data"               # leadership variant (above_band handled elsewhere)
+      - "data infrastructure"
+
+  - family: data_analytics
+    title_patterns:
+      - "data analyst"
+      - "bi analyst"
+      - "business analyst"
+      - "reporting analyst"
+      - "analytics analyst"
+
+  - family: platform_devops
+    title_patterns:
+      - "devops"
+      - "site reliability"
+      - "sre"
+      - "platform engineer"
+      - "platform architect"
+      - "infrastructure engineer"
+      - "cloud engineer"
+      - "kubernetes engineer"
+
+  - family: backend
+    title_patterns:
+      - "backend engineer"
+      - "backend developer"
+      - "software engineer"
+      - "software developer"
+      - "senior software"
+      - "full stack"
+      - "fullstack"
+      - "server engineer"
+
+  - family: product
+    title_patterns:
+      - "product manager"
+      - "senior product manager"
+      - "product owner"
+      - "head of product"
+      - "head of technology"          # leadership catch — above_band flagged
+      - "director of product"
+
+# -----------------------------------------------------------------------------
+# Family evidence — skills that confirm the title
+# -----------------------------------------------------------------------------
+# Gate signal 2 (skills_evidence_ok) is TRUE if the candidate has AT LEAST ONE
+# skill from their claimed family's evidence set. Prevents the "IT Manager who
+# lists ITIL and Network" case from surviving into a platform_devops bucket.
+# Case-insensitive substring against the top_skills list.
+# -----------------------------------------------------------------------------
+family_evidence:
+  ml_cv:
+    - computer vision
+    - opencv
+    - yolo
+    - pytorch
+    - tensorflow
+    - deep learning
+    - video understanding
+    - video captioning
+    - highlight detection
+    - sports tracking
+    - pose estimation
+    - object detection
+    - image processing
+    - sports cv
+    - sports video
+    - video ai
+  ml_general:
+    - pytorch
+    - tensorflow
+    - deep learning
+    - machine learning
+    - recommendation systems
+    - causal ml
+    - event detection
+    - research
+    - nlp
+    - reinforcement learning
+    - sagemaker
+    - ml architecture
+  data_engineering:
+    - spark
+    - dbt
+    - airflow
+    - kafka
+    - delta lake
+    - snowflake
+    - data pipelines
+    - data feeds
+    - real-time
+    - real time
+    - data platform
+    - data warehouse
+    - lakehouse
+    - data ingestion
+  data_analytics:
+    - tableau
+    - power bi
+    - excel
+    - reporting
+    - looker
+  backend:
+    - java
+    - spring
+    - spring boot
+    - go
+    - microservices
+    - rest apis
+    - grpc
+    - postgresql
+    - node.js
+    - django
+    - websockets
+    - kafka
+  platform_devops:
+    - kubernetes
+    - helm
+    - terraform
+    - jenkins
+    - ci/cd
+    - docker
+    - monitoring
+    - reliability
+    - sre
+    - iac
+    - prometheus
+    - infrastructure
+    - cdn
+    - live streaming             # CDN/streaming platform work is genuine
+  video_broadcast:
+    - ffmpeg
+    - hls
+    - dash
+    - video encoding
+    - live streaming
+    - cdn
+    - evs
+    - broadcast systems
+    - camera systems
+    - video processing
+    - multi-camera
+    - broadcast equipment
+    - highlight clipping
+    - streaming
+  product:
+    - product management
+    - roadmapping
+    - stakeholder management
+    - b2b saas
+    - agile
+    - ott
+    - broadcast apis
+  sales_engineering:
+    - solutions architect
+    - media services
+    - sports clients
+    - iac
+    - architecture
+    - sagemaker
+  not_talent:
+    - it management
+    - itil
+    - windows server
+    - healthcare it
+    - government systems
+    - government reporting
+    - erp
+    - seo
+    - google ads
+    - insurance analytics
+
+# -----------------------------------------------------------------------------
+# Skill synonyms — expansion map for required-skill matching
+# -----------------------------------------------------------------------------
+# Structure: canonical -> { exact: [aliases], family: [broader-family peers] }
+# Exact match earns skill_exact_credit (1.0). Family match earns
+# skill_family_credit (0.6). Documented in the README so the trade-off is
+# visible.
+#
+# Design call: TensorFlow ~= PyTorch within a "deep_learning" family, but the
+# exact skill still earns more. Mason Young (TensorFlow) is matched to a
+# PyTorch requirement at 0.6, not 0.0 -- this is why he shows up in the JOB001
+# top with a visible "framework mismatch" flag rather than being buried.
+# -----------------------------------------------------------------------------
+skill_synonyms:
+
+  Python:
+    exact: [python]
+    family: []
+
+  PyTorch:
+    exact: [pytorch]
+    family: [tensorflow, keras, jax, mxnet, deep learning]
+
+  TensorFlow:
+    exact: [tensorflow]
+    family: [pytorch, keras, jax, deep learning]
+
+  "Computer Vision":
+    exact: [computer vision, cv, opencv, image processing, video understanding, video ai]
+    family: [yolo, pose estimation, sports tracking, highlight detection, video captioning, tracking algorithms]
+
+  "Object Detection":
+    exact: [object detection, yolo, tracking algorithms, sports tracking, pose estimation, highlight detection]
+    family: [computer vision, video understanding]
+
+  AWS:
+    exact: [aws, amazon web services, sagemaker, s3, ec2, lambda]
+    family: [gcp, azure]
+
+  GCP:
+    exact: [gcp, google cloud]
+    family: [aws, azure]
+
+  Go:
+    exact: [go, golang]
+    family: []
+
+  Kafka:
+    exact: [kafka]
+    family: [pulsar, kinesis]
+
+  Spark:
+    exact: [spark, delta lake, databricks]
+    family: [flink, beam]
+
+  dbt:
+    exact: [dbt]
+    family: []
+
+  Airflow:
+    exact: [airflow]
+    family: [prefect, dagster]
+
+  SQL:
+    exact: [sql, postgresql, mysql, snowflake, bigquery]
+    family: []
+
+  Microservices:
+    exact: [microservices, rest apis, grpc]
+    family: []
+
+  "REST APIs":
+    exact: [rest apis, rest api, restful]
+    family: [grpc, apis]
+
+  Kubernetes:
+    exact: [kubernetes, k8s, helm, eks, gke]
+    family: [docker, containers]
+
+  Terraform:
+    exact: [terraform, iac]
+    family: [pulumi, cloudformation]
+
+  Docker:
+    exact: [docker, containers]
+    family: [kubernetes]
+
+  Redis:
+    exact: [redis]
+    family: [memcached]
+
+  FFmpeg:
+    exact: [ffmpeg]
+    family: [video encoding, video processing]
+
+  "Video streaming":
+    exact: [video streaming, hls, dash, live streaming, cdn]
+    family: []
+
+  "Product Management":
+    exact: [product management, product manager, roadmapping]
+    family: []
+
+  "Sports Analytics":
+    exact: [sports analytics, sports data, sports cv, sports tracking, football analytics, sports science, sports video]
+    family: []
+
+  "API Products":
+    exact: [api products, apis, broadcast apis, rest apis]
+    family: []
+
+  "Stakeholder Management":
+    exact: [stakeholder management]
+    family: []
+
+  "Real-time processing":
+    exact: [real-time processing, real-time, real time, real-time sports data, real-time processing]
+    family: [streaming, kafka]
+
+  "OTT platforms":
+    exact: [ott, ott streaming, ott platforms, ott platform]
+    family: []
+
+  "Broadcast tech":
+    exact: [broadcast, broadcast systems, broadcast equipment, broadcast media, broadcast technology]
+    family: []
+
+  "Sports domain knowledge":
+    exact: [sports, sports technology, sports media, sports analytics, sports data, sports streaming, sports broadcasting]
+    family: []
+
+# -----------------------------------------------------------------------------
+# Domain lexicon — proximity signal for the gate + fit.domain component
+# -----------------------------------------------------------------------------
+# Case-insensitive substring hits against the candidate's INDUSTRY,
+# current_company + past_companies, and their top_skills list. Any hit = +1.
+# The count is thresholded for the gate signal and scaled for the fit
+# component (see src/gate.py and src/score.py).
+# -----------------------------------------------------------------------------
+domain_lexicon:
+
+  keywords:
+    # Sports terms — direct hits
+    - sports
+    - sport
+    - football
+    - basketball
+    - baseball
+    - tennis
+    - hockey
+    # Broadcast / streaming — direct hits
+    - broadcast
+    - broadcasting
+    - streaming
+    - ott
+    - highlight
+    - cdn
+    # "video" as a bare keyword is fine (only used in engineering-domain skills in this data)
+    - video
+    # "media" was too broad (matched "Social Media") — use compound tokens only
+    - broadcast media
+    - sports media
+    - media technology
+    - media services
+    - media delivery
+    - cloud/media
+    # camera is broadcast-adjacent; only matches Camera Systems context in this data
+    - camera
+
+  known_companies:
+    # sports-tech / analytics
+    - Opta
+    - Opta Sports
+    - Stats Perform
+    - Sportradar
+    - Nielsen Sports
+    - Genius Sports
+    - Second Spectrum
+    - KINEXON
+    - KINEXON Sports
+    - Deltatre
+    - LaLiga Tech
+    - Betgenius
+    - Betfair
+
+    # broadcasters / streamers
+    - DAZN
+    - Sky Sports
+    - Sky Italia
+    - Sky Deutschland
+    - Sky Sports Digital
+    - BBC Sport
+    - BBC Sport Online
+    - BBC R&D
+    - ITV
+    - ITV Digital
+    - Fox Sports
+    - Fox Sports Digital
+    - ESPN
+    - ESPN Technology
+    - Turner Sports
+    - Turner Broadcasting
+    - Warner Media
+    - Warner Media Sports
+    - Canal+
+    - RTVE
+    - TeleDeporte
+    - Eurosport
+    - Eurosport Sport
+    - Mediaset
+    - RAI
+    - Channel 4
+    - IMG Media
+    - SuperSport
+    - Claro Video
+    - OTT Latam
+    - Ericsson              # 5G broadcast context
+    - Sony Professional
+    - ARRI
+
+    # leagues / rights
+    - NBA
+    - NFL
+    - IOC
+    - IOC Digital
+    - Eurovision Sport
+    - Olympic Channel
+    - FIFA
+    - PFA
+    - Premier League club
+    - FC Porto
+    - Benfica Lab
+
+    # cdn / streaming infra
+    - Akamai
+    - Akamai Technologies
+    - Akamai Media
+    - Cloudflare
+    - Fastly
+
+    # CV / video-adjacent tech (relevant to ml_cv proximity)
+    - Mobileye
+    - Intel Computer Vision Lab
+
+# -----------------------------------------------------------------------------
+# Generic-employer stoplist — the ~40 false warm paths finding
+# -----------------------------------------------------------------------------
+# Case-insensitive EXACT match on the trimmed employer string. Bare tokens
+# like "startup" or "freelance" appear on both sides of the warm-path join and
+# would generate false positives; specific variants like "IDF Intelligence
+# Unit" or "Basel University" are NOT in this list and survive.
+#
+# See docs/01-data-findings.md § "Implementation trap — generic employer tokens"
+# -----------------------------------------------------------------------------
+generic_employer_stoplist:
+  - freelance
+  - freelance developer
+  - freelance sports analyst
+  - freelance developer (2021-2022)
+  - startup
+  - food startup
+  - farming startup
+  - shipping startup
+  - fintech startup
+  - betting startup
+  - pet retail chain
+  - private clinic
+  - law firm
+  - Dublin law firm IT dept
+  - public sector
+  - agency
+  - NGO
+  - factory group
+  - retail
+  - retailer
+  - Hospital group
+  - hospital group
+  - Hospital Group
+  - fintech
+  - university             # bare only; "Basel University", "Oxford Research Lab" survive
+  - univ
+  - uni
+
+# -----------------------------------------------------------------------------
+# Company aliases — clusters of names that are the same organisation
+# -----------------------------------------------------------------------------
+# Warm-path matching normalises both sides to the alias's canonical key before
+# comparing. Without this, "Opta Sports" (attendee) and "Stats Perform" (WSC
+# employee) never match, and the doc-expected paths for Marcus Reid / James
+# Thornton / Jin Park disappear.
+#
+# Rule: only cluster when the entities really are the same. Sky Sports and
+# Sky Italia are DIFFERENT subsidiaries and are NOT clustered.
+# -----------------------------------------------------------------------------
+company_aliases:
+  IDF:
+    - IDF
+    - IDF tech unit
+    - IDF Intelligence Unit
+  "Opta / Stats Perform":
+    - Opta
+    - Opta Sports
+    - Stats Perform
+    - Stats Perform / Opta
+  Akamai:
+    - Akamai
+    - Akamai Technologies
+    - Akamai Media
+  Intel:
+    - Intel
+    - Intel Computer Vision Lab
+  "Sky Sports":
+    - Sky Sports
+    - Sky Sports Digital
+  "BBC Sport":
+    - BBC Sport
+    - BBC Sport Online
+  ESPN:
+    - ESPN
+    - ESPN Technology
+
+# -----------------------------------------------------------------------------
+# Job -> target family map
+# -----------------------------------------------------------------------------
+# The role_family component of fit_score compares the candidate's family
+# against the job's target family. Declared here so a new job needs only
+# CSV + config, not code.
+# -----------------------------------------------------------------------------
+job_family_map:
+  JOB001: ml_cv              # Senior ML Engineer — required skills lock this to CV
+  JOB002: backend
+  JOB003: product
+  JOB004: data_engineering

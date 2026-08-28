@@ -1,0 +1,1248 @@
+"use client";
+
+import { useState } from "react";
+import { Icon } from "@/components/Icon";
+import { Chip } from "@/components/Chip";
+import { usePool } from "@/lib/data";
+
+const TABS = [
+  { id: "tldr",        label: "TL;DR",           hint: "the 30-second version" },
+  { id: "how",         label: "How it works",    hint: "the pipeline in 5 boxes" },
+  { id: "assumptions", label: "Assumptions",     hint: "the 7 brief-mandated answers" },
+  { id: "examples",    label: "Worked examples", hint: "candidates through the pipeline" },
+  { id: "design",      label: "Design doc",      hint: "the technical deep-dive" },
+] as const;
+
+type TabId = typeof TABS[number]["id"];
+
+export default function Methodology() {
+  const { pool } = usePool();
+  const [tab, setTab] = useState<TabId>("tldr");
+
+  return (
+    <main className="max-w-[1200px] mx-auto px-8 py-8">
+      <header className="mb-6">
+        <div className="text-xs font-medium text-mute mb-1">Complete documentation</div>
+        <h1 className="text-3xl font-semibold text-text tracking-tight">How it works</h1>
+        <p className="text-sm text-mute mt-2 max-w-2xl">
+          Four views of the same system — from the one-paragraph elevator pitch to the technical
+          deep-dive. Start with TL;DR; go deeper as needed.
+        </p>
+      </header>
+
+      <div role="tablist" aria-label="Documentation views" className="flex items-baseline gap-1 border-b border-border mb-8 overflow-x-auto">
+        {TABS.map(t => (
+          <button
+            key={t.id}
+            role="tab"
+            aria-selected={tab === t.id}
+            onClick={() => setTab(t.id)}
+            className={`px-4 py-2.5 text-sm font-medium -mb-px border-b-2 transition-colors whitespace-nowrap ${
+              tab === t.id
+                ? "border-indigo-600 text-indigo-700"
+                : "border-transparent text-mute hover:text-text"
+            }`}
+          >
+            {t.label}
+            <span className="hidden sm:inline text-xs text-faint font-normal ml-2">· {t.hint}</span>
+          </button>
+        ))}
+      </div>
+
+      {tab === "tldr"        && <TLDR pool={pool} onDeeper={() => setTab("how")} />}
+      {tab === "how"         && <HowItWorks onDeeper={() => setTab("design")} />}
+      {tab === "assumptions" && <Assumptions />}
+      {tab === "examples"    && <WorkedExamples />}
+      {tab === "design"      && <DesignDoc pool={pool} />}
+    </main>
+  );
+}
+
+/* ============================================================================
+ * TAB 1 — TL;DR
+ * The plain-English 30-second version. What we do, for whom, and what makes
+ * the design defensible.
+ * ============================================================================ */
+
+function TLDR({ pool, onDeeper }: { pool: ReturnType<typeof usePool>["pool"]; onDeeper: () => void }) {
+  return (
+    <section className="space-y-8">
+      <div className="rounded-2xl bg-gradient-to-br from-indigo-50 via-white to-violet-50 border border-indigo-100 p-8">
+        <div className="text-xs uppercase tracking-wider text-indigo-700 font-semibold mb-4">TL;DR</div>
+        <p className="text-2xl text-text leading-snug font-medium mb-4">
+          We turn <em>badge scans, employee referrals, and inbound CVs</em> into a queryable talent
+          pool — then, for each open role, we rank the pool on <em>how well someone fits</em> and{" "}
+          <em>how easy they are to reach</em>.
+        </p>
+        <p className="text-base text-dim leading-relaxed">
+          Every score has an evidence trail a recruiter can defend. Nothing is a black box. A recruiter
+          can always override the model, and their override sticks — no LLM decides who gets hired.
+        </p>
+      </div>
+
+      {pool && (
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          <StatBig n={pool.candidates.length}   label="contacts in the pool"  sub="across 4 conferences" />
+          <StatBig n={pool.jobs.length}         label="open roles scored"     sub="on demand, per job" />
+          <StatBig n={pool.employees.length}    label="WSC employees"         sub="the warm-intro graph" />
+          <StatBig n={32}                       label="tests passing"         sub="scoring maths locked" />
+        </div>
+      )}
+
+      <div>
+        <div className="text-xs uppercase tracking-wider text-mute font-semibold mb-3">The pipeline at a glance</div>
+        <MiniFlowDiagram />
+        <div className="mt-3 text-xs text-mute italic">
+          Same shape for every channel — the enrichment, gate, and scoring are shared. Only the source door changes.
+        </div>
+      </div>
+
+      <div>
+        <div className="text-xs uppercase tracking-wider text-mute font-semibold mb-3">Who this is for</div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <PersonaCard title="Recruiter"    hint="picks up the phone this week" href="/">
+            Open positions grid → shortlist per role. Tier chip tells them who to call today.
+          </PersonaCard>
+          <PersonaCard title="Head of HR"   hint="tracks channel & role KPIs"   href="/analytics/">
+            Admission rate by conference, funnel conversion, override quality — with the actual BigQuery SQL.
+          </PersonaCard>
+          <PersonaCard title="WSC engineer" hint="refers & introduces"          href="/referrals/">
+            Referral form + Intros view (the reverse-referral: system → employee it's asking to intro).
+          </PersonaCard>
+        </div>
+      </div>
+
+      <div className="rounded-lg border border-indigo-100 bg-indigo-50/40 p-5 flex items-start gap-4">
+        <Icon name="arrow-right" className="w-5 h-5 text-indigo-600 flex-shrink-0 mt-0.5" strokeWidth={2.25} />
+        <div className="text-sm text-indigo-900 flex-1">
+          <strong className="font-semibold">Want to know how each box works?</strong>{" "}
+          The <em>How it works</em> tab walks through the 5 boxes in plain English.{" "}
+          <em>Worked examples</em> shows real candidates flowing through it. The <em>Design doc</em> is
+          the technical deep-dive for an auditor.
+          <button onClick={onDeeper} className="ml-2 underline hover:no-underline font-medium">
+            Show me →
+          </button>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ============================================================================
+ * TAB 2 — HOW IT WORKS
+ * The visual pipeline explanation. 5 boxes + arrows + plain-English captions.
+ * ============================================================================ */
+
+function HowItWorks({ onDeeper }: { onDeeper: () => void }) {
+  return (
+    <section className="space-y-10">
+      <div>
+        <div className="text-xs uppercase tracking-wider text-mute font-semibold mb-4">The pipeline, in 5 boxes</div>
+        <FlowDiagramLarge />
+      </div>
+
+      <div className="space-y-4">
+        <FlowBoxDetail
+          num={1}
+          title="Source"
+          iconName="download"
+          plain="Where every contact comes in. Three doors."
+          detail={[
+            "**Conference badge scans** — post-event export from Cvent / Swapcard / Brella. Bulk ingest, usually a few hundred rows.",
+            "**Employee referrals** — a WSC engineer submits someone they'd vouch for through the /referrals form.",
+            "**Inbound CVs** — someone applies through Comeet; the CV lands here (in this build a stub adapter — see the Comeet integration).",
+          ]}
+        />
+        <FlowBoxDetail
+          num={2}
+          title="Enrich"
+          iconName="search"
+          plain="Fill in what we don't know. LinkedIn is the primary source."
+          detail={[
+            "**Fetch profile** via Proxycurl — cached per person; costs credits (visible in /analytics).",
+            "**Extract past employers** and tag notable-tier ones (feeds a caliber signal).",
+            "**Scan recent posts** for topic-matches against JD keywords (evidence signal).",
+            "**Pull publications, talks, repos** from Featured section + GitHub cross-reference.",
+            "**Cross-check connections** against the WSC employee directory — finds warm-intro paths.",
+          ]}
+          seeIt="/capture/"
+        />
+        <FlowBoxDetail
+          num={3}
+          title="Gate"
+          iconName="filter"
+          plain="Is this person talent in a domain we hire in? 3 signals, 2-of-3 admits."
+          detail={[
+            "**Signal 1: Role family from title.** Pattern list in the taxonomy — first-match-wins. Ten families including a `not_talent` bucket.",
+            "**Signal 2: Skills evidence.** Do their skills confirm the claimed family? At least one hit required.",
+            "**Signal 3: Sports / media proximity.** Keyword lexicon over industry, employers, and skills.",
+            "**Every excluded person carries a reason string** — no silent drops.",
+          ]}
+        />
+        <FlowBoxDetail
+          num={4}
+          title="Score"
+          iconName="sliders"
+          plain="For each open role, compute two scores. Kept separate on purpose."
+          detail={[
+            "**Fit score (competence)** — required skills, role family, seniority band, domain overlap, nice-to-haves. Never touches network.",
+            "**Warmth score (reachability)** — mutual connections, shared employers, recency of contact, notes on file.",
+            "**Never combined into a single number.** Combining hides strong candidates who happen to have no mutual connections.",
+            "**Tier** ('Call this week', 'Direct outreach', 'Nurture') is a label that reads both scores independently — not a sort key.",
+          ]}
+          seeIt="/jobs/JOB001/"
+        />
+        <FlowBoxDetail
+          num={5}
+          title="Shortlist"
+          iconName="list"
+          plain="Ranked list per open role. Every card names the WSC employee best placed to make the intro."
+          detail={[
+            "**Sorted by fit** (competence), tier shows as a chip on the card.",
+            "**Warm-intro path per candidate** — the recruiter sees the name, not just a warmth number.",
+            "**Recruiter overrides win.** 'Not a fit for this role' hides them from this role only; 'Blacklist' hides them everywhere. Both audited.",
+            "**Exportable** — CSV or Excel from the shortlist page.",
+          ]}
+          seeIt="/pool/"
+        />
+      </div>
+
+      <div className="pt-4 border-t border-border">
+        <div className="text-xs uppercase tracking-wider text-mute font-semibold mb-3">Two things worth understanding</div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="card p-5">
+            <div className="flex items-baseline gap-2 mb-2">
+              <span className="text-[10px] font-mono uppercase tracking-wider text-indigo-700 font-semibold">Two decisions</span>
+            </div>
+            <div className="text-sm text-text font-medium mb-2">
+              Pool admission (once per person) vs job match (once per person × job)
+            </div>
+            <div className="text-sm text-mute leading-relaxed">
+              We admit a person to the pool once — the expensive enrichment runs then. Scoring them against
+              a specific role is cheap and re-runnable. Enrichment cost scales with admissions, not with roles.
+            </div>
+          </div>
+          <div className="card p-5">
+            <div className="flex items-baseline gap-2 mb-2">
+              <span className="text-[10px] font-mono uppercase tracking-wider text-indigo-700 font-semibold">Two scores</span>
+            </div>
+            <div className="text-sm text-text font-medium mb-2">
+              Fit and Warmth stay separate. Always.
+            </div>
+            <div className="text-sm text-mute leading-relaxed">
+              Fit = can they do the job. Warmth = can we get to them. A single "compatibility rate" buries
+              strong candidates with no mutual connections. Two scores keep the trade-off visible.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="rounded-lg border border-indigo-100 bg-indigo-50/40 p-5 flex items-start gap-4">
+        <Icon name="info" className="w-5 h-5 text-indigo-600 flex-shrink-0 mt-0.5" strokeWidth={2.25} />
+        <div className="text-sm text-indigo-900 flex-1">
+          Want the maths — weights, thresholds, adjacency tables, formulas?
+          <button onClick={onDeeper} className="ml-2 underline hover:no-underline font-medium">
+            Design doc →
+          </button>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ============================================================================
+ * TAB — ASSUMPTIONS
+ * The 7 brief-mandated questions, answered in recruiter-facing language.
+ * Source: docs/05-assumptions.md (the canonical version).
+ * ============================================================================ */
+
+const ASSUMPTIONS: Array<{ q: string; short: string; answer: React.ReactNode }> = [
+  {
+    q: "How do you define \"domain relevance\"?",
+    short: "3 independent signals, 2-of-3 admits",
+    answer: (
+      <>
+        Three independent signals evaluated per person at ingest: <strong>title → role family</strong>{" "}
+        (pattern-matched against a taxonomy), <strong>skills evidence</strong> (does their skills list
+        confirm the claimed family), and <strong>sports/media proximity</strong> (industry + employer
+        lexicon hits). <strong>2-of-3 admits.</strong> Conference attendance is never evidence by
+        itself — the room sets the expectation, the person's own profile decides. An IT manager at a
+        DevOps conference scores 0/3 and is rejected with a reason string.
+      </>
+    ),
+  },
+  {
+    q: "What if a contact has no LinkedIn profile match?",
+    short: "Keep them, cap confidence — never drop silently",
+    answer: (
+      <>
+        <strong>Keep them.</strong> Score on what does exist (title, company, conference domain,
+        recruiter notes), cap fit_score at the low-confidence ceiling (~60), set{" "}
+        <code>enrichment_status = none</code>, and flag for later re-enrichment. Dropping them makes
+        the pipeline's coverage invisible — a recruiter should see &ldquo;12 contacts we couldn't
+        verify&rdquo; rather than never learning they existed. Edge cases proven in{" "}
+        <code>tests/test_missing_data.py</code>.
+      </>
+    ),
+  },
+  {
+    q: "Is 1 mutual connection the same as 3?",
+    short: "No — diminishing returns, and it belongs on warmth (not fit)",
+    answer: (
+      <>
+        No, but the difference is smaller than linear implies — and it belongs on the{" "}
+        <strong>warmth axis</strong>, never fit. Curve: 0 → 0.0, 1 → 0.5, 2 → 0.8, 3+ → 1.0. The
+        jump from nobody to somebody is the whole value. Same-department peers weight above
+        cross-department (better placed to say yes to an intro). This lives in the warmth score;
+        mixing it into fit would bury strong candidates whose network we don't happen to intersect.
+      </>
+    ),
+  },
+  {
+    q: "Should candidates already in Comeet be flagged differently?",
+    short: "Yes, and by status — not one-size-fits-all",
+    answer: (
+      <>
+        <ul className="space-y-1 pl-1">
+          <li>· <strong>Active in process</strong> — suppressed entirely (two recruiters must not approach the same person).</li>
+          <li>· <strong>Previously rejected</strong> — shown with reason + date. A rejection for a different role two years ago is not a rejection for this one.</li>
+          <li>· <strong>Hired</strong> — excluded.</li>
+          <li>· <strong>Declined an offer</strong> — shown with a flag. Warm intelligence, not a disqualifier.</li>
+        </ul>
+        Backed by a stub CSV in this build (<code>data/comeet_status_stub.csv</code>) and a real
+        Comeet adapter in <code>src/integrations/mock_comeet.py</code>.
+      </>
+    ),
+  },
+  {
+    q: "What is the intended refresh cadence?",
+    short: "Three cadences — not one",
+    answer: (
+      <>
+        <ol className="space-y-1 pl-1">
+          <li>1. <strong>Ingestion</strong> — event-driven, fires when a conference export lands.</li>
+          <li>2. <strong>Enrichment refresh</strong> — rolling ~6-month batch on pool members (profiles go stale).</li>
+          <li>3. <strong>Matching</strong> — on demand, per role, per recruiter action.</li>
+        </ol>
+        Treating this as a one-time batch is what caused the original problem — contacts went stale
+        because nothing ran again.
+      </>
+    ),
+  },
+  {
+    q: "Who triggers the pipeline — recruiter or automated?",
+    short: "Both, deliberately",
+    answer: (
+      <>
+        <ul className="space-y-1 pl-1">
+          <li>· <strong>Automated on the ingest side</strong> — badge-scan export lands → pipeline runs → recruiter receives a digest of new admissions.</li>
+          <li>· <strong>Manual on the match side</strong> — recruiter opens a role and requests a shortlist.</li>
+          <li>· <strong>Plus</strong> an automatic trigger when a new job is published in Comeet.</li>
+        </ul>
+        The recruiter should never have to remember the system exists.
+      </>
+    ),
+  },
+  {
+    q: "GDPR / privacy considerations at scale?",
+    short: "Substantial — Article 14, Article 22, data minimisation, EU residency",
+    answer: (
+      <>
+        <ul className="space-y-1 pl-1">
+          <li>· <strong>Legal basis</strong>: legitimate interest, with a documented Legitimate Interests Assessment.</li>
+          <li>· <strong>Article 14</strong>: because data isn't collected from the person directly, they must be notified within 30 days — carried in the first outreach message.</li>
+          <li>· <strong>Data minimisation</strong>: store derived features (role family, skill tags, seniority band), not full profile copies.</li>
+          <li>· <strong>Retention</strong>: 12–24 month TTL with automatic purge; re-consent or drop.</li>
+          <li>· <strong>Residency</strong>: EU data region; DPA signed with any enrichment vendor.</li>
+          <li>· <strong>Article 22</strong>: no solely-automated decisions with legal effect — human in the loop by design. The system ranks and explains; a recruiter decides.</li>
+        </ul>
+        That last point is why the deterministic scoring layer exists: an automated decision you
+        can't explain is a compliance problem, not just an engineering one.
+      </>
+    ),
+  },
+];
+
+function Assumptions() {
+  return (
+    <section className="max-w-4xl">
+      <div className="mb-6 rounded-lg border border-indigo-100 bg-indigo-50/40 p-5">
+        <div className="text-[10px] uppercase tracking-wider font-semibold text-indigo-700 mb-2">
+          Why this tab exists
+        </div>
+        <p className="text-sm text-indigo-900 leading-relaxed">
+          The brief names <strong>seven assumption questions</strong> and says candidates may either
+          answer or ask. A position with a reason scores; a hedge does not. These are the seven
+          questions verbatim, with the positions we took and why. Full versions live in{" "}
+          <code>docs/05-assumptions.md</code>.
+        </p>
+      </div>
+
+      <div className="space-y-3">
+        {ASSUMPTIONS.map((a, i) => (
+          <div key={i} className="card p-5">
+            <div className="flex items-start gap-3 mb-2">
+              <div className="w-7 h-7 rounded-full bg-slate-900 text-white flex items-center justify-center font-semibold text-xs flex-shrink-0">
+                {i + 1}
+              </div>
+              <div className="min-w-0 flex-1">
+                <div className="text-sm font-semibold text-text mb-0.5">{a.q}</div>
+                <div className="text-[11px] uppercase tracking-wider text-indigo-700 font-semibold">
+                  {a.short}
+                </div>
+              </div>
+            </div>
+            <div className="pl-10 text-sm text-dim leading-relaxed [&_code]:text-indigo-700 [&_code]:bg-indigo-50 [&_code]:font-mono [&_code]:text-[12px] [&_code]:px-1 [&_code]:rounded [&_strong]:text-text [&_strong]:font-semibold">
+              {a.answer}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="mt-6 rounded-lg border border-slate-200 bg-slate-50/70 p-4 text-xs text-mute leading-relaxed">
+        <strong className="text-text">Also documented</strong> — additional assumptions about the
+        data itself (self-reported skills, identity resolution on LinkedIn URL, location displayed
+        but not filtered on, source_channel first-class) live in the design doc tab and{" "}
+        <code>docs/05-assumptions.md</code>.
+      </div>
+    </section>
+  );
+}
+
+/* ============================================================================
+ * TAB 3 — WORKED EXAMPLES
+ * Real candidates + real referrals flowing through the pipeline.
+ * ============================================================================ */
+
+function WorkedExamples() {
+  return (
+    <section className="space-y-10">
+      <div>
+        <div className="text-xs uppercase tracking-wider text-mute font-semibold mb-2">Gate decisions — 4 candidates</div>
+        <p className="text-sm text-mute mb-4 max-w-3xl">
+          Four rows from the dataset — two admits and two rejects — showing what the 3 signals do and
+          why each ended where it did. Every exclusion has a reason a recruiter could read to the person.
+        </p>
+
+        <div className="space-y-2">
+          <GateExample
+            name="Grace Wilson" role="DevOps Engineer, CyberShield" family="platform_devops"
+            s1 s2 s3={false} verdict="admit" verdictLabel="Admit · 2/3"
+            note="Zero mutual connections, but a real IDF-tech-unit shared employer path with Yuval Stern. Invisible to a network-first model, visible to ours."
+          />
+          <GateExample
+            name="Viktor Novak" role="Senior Data Engineer, Databricks" family="data_engineering"
+            s1 s2 s3={false} verdict="admit" verdictLabel="Admit · 2/3"
+            note="Full data-engineering stack. No sports/media proximity — that alone would have buried him. Family + skills carry the admission."
+          />
+          <GateExample
+            name="Laura Gibson" role="IT Manager, City Hospital" family="not_talent"
+            s1={false} s2={false} s3={false} verdict="reject" verdictLabel="Reject · 0/3"
+            note="Classic noise. ITIL + Healthcare IT skills, no engineering family, no proximity. Reason recorded."
+          />
+          <GateExample
+            name="Olivia Scott" role="Digital Marketing Manager" family="not_talent"
+            s1={false} s2={false} s3={false} verdict="reject" verdictLabel="Reject · 0/3"
+            note="Almost slipped through — her 'Social Media' skill originally hit a bare 'media' keyword. Fixed by requiring compound tokens."
+          />
+        </div>
+      </div>
+
+      <div>
+        <div className="text-xs uppercase tracking-wider text-mute font-semibold mb-2">End-to-end walkthroughs</div>
+        <p className="text-sm text-mute mb-4 max-w-3xl">
+          The same candidate would take a different path through the pipeline depending on how they
+          entered. The scoring core is shared; only the inputs and the warmth lift differ.
+        </p>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+          <ChannelWalkthrough
+            channel="Conference"
+            tint="sky"
+            steps={[
+              { title: "Source",    body: "SportsTech Innovation Summit — 240 badge scans exported from Cvent." },
+              { title: "Enrich",    body: "Proxycurl pulls profile → past employers (DAZN, Meta), 3 recent posts on real-time inference, CVPR paper, 2.1k-star GitHub." },
+              { title: "Gate",      body: "family=ml_cv ✓ · skills evidence ✓ · sports proximity ✓ → ADMIT (3/3)." },
+              { title: "Score",     body: "JOB001 fit 82 (Computer Vision + Object Detection matched), warmth 45 (Maya Levi 2°)." },
+              { title: "Shortlist", body: "Tier: Direct outreach. Warm intro via Maya Levi (2° via shared Meta stint)." },
+            ]}
+            takeaway="Rich enrichment justifies the credit spend. Two of the 3 gate signals came from LinkedIn, not the badge scan."
+          />
+          <ChannelWalkthrough
+            channel="Referral"
+            tint="emerald"
+            steps={[
+              { title: "Source",    body: "Maya Levi (Sr ML Engineer) submits via /referrals form, targets JOB001." },
+              { title: "Enrich",    body: "Same LinkedIn pull as conference — plus the referrer becomes an automatic 1° warm-intro path." },
+              { title: "Gate",      body: "Referral-admit path — 3/3 signals; Maya's vouch is proximity evidence." },
+              { title: "Score",     body: "JOB001 fit 82 (same), warmth 70 (base 55 + vouched-by-employee lift 15)." },
+              { title: "Shortlist", body: "Tier: Call this week. Warm intro is the referrer themselves." },
+            ]}
+            takeaway="Same candidate, same fit — but warmth is dramatically higher because someone actively vouched. The recruiter picks up the phone faster."
+          />
+          <ChannelWalkthrough
+            channel="CV inbound"
+            tint="amber"
+            steps={[
+              { title: "Source",    body: "CV lands in Comeet application. Parsed into skills + past employers." },
+              { title: "Enrich",    body: "Light enrichment — scan LinkedIn connections against WSC directory to find warm-intro paths. Skip evidence extraction (CV already declared skills)." },
+              { title: "Gate",      body: "Deduped against active pool. If already in Comeet as active, suppressed." },
+              { title: "Score",     body: "Stated fit from CV. Warmth from any connection paths found in the WSC directory." },
+              { title: "Shortlist", body: "Recruiter sees 'Alex applied and we know Ronit — do you want to ask Ronit about them?'" },
+            ]}
+            takeaway="CVs come with self-declared data. The high-value question is 'who do we already know that knows them?' — that's what enrichment focuses on for this channel."
+          />
+        </div>
+      </div>
+
+      <div>
+        <div className="text-xs uppercase tracking-wider text-mute font-semibold mb-2">Try it yourself</div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <TryItCard href="/capture/"   label="Capture a conference lead"        hint="Enrichment reveal runs on submit." />
+          <TryItCard href="/referrals/" label="Submit an employee referral"      hint="Vouched lift applied to warmth on the target role." />
+          <TryItCard href="/jobs/JOB001/" label="Open the JOB001 shortlist"     hint="Ranked pool, tier chips, warm-intro paths." />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ============================================================================
+ * TAB 4 — DESIGN DOC
+ * The technical deep-dive. Everything an auditor might want to check.
+ * ============================================================================ */
+
+function DesignDoc({ pool }: { pool: ReturnType<typeof usePool>["pool"] }) {
+  return (
+    <section className="grid grid-cols-1 lg:grid-cols-[1fr_220px] gap-10">
+      <article className="min-w-0 space-y-10 max-w-[780px]">
+
+        <Section id="architecture" num={1} title="Two decisions, not one">
+          <p>
+            The single most common failure mode is one big scoring function. Instead the pipeline
+            splits into <strong>two separate decisions</strong>, run at different times, with
+            different inputs and different owners.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-5">
+            <DecisionCard letter="A" tint="indigo" title="Pool admission" subtitle="Job-agnostic · at ingest"
+              bullets={[
+                "Is this person talent in a domain we hire in?",
+                "Runs once per person when a conference export lands",
+                "Output: role_family + gate decision + reason",
+                "Production: writes back to HubSpot as contact properties",
+              ]} />
+            <DecisionCard letter="B" tint="emerald" title="Job match" subtitle="Per job_id · on demand"
+              bullets={[
+                "Given JOB001, who does the recruiter call this week?",
+                "Runs against the clean pool — cheap re-pass, no re-enrichment",
+                "Output: fit_score, warmth_score, best_intro_path",
+                "Production: writes shortlisted rows into Comeet",
+              ]} />
+          </div>
+          <Callout tint="indigo">
+            Expensive work — enrichment, taxonomy classification, embeddings if we add them —
+            happens once <em>per person</em>, not once per <em>person × job</em>. That is the whole
+            answer to the &ldquo;at scale&rdquo; question in the brief.
+          </Callout>
+        </Section>
+
+        <Section id="gate" num={2} title="Decision A — the gate">
+          <p>
+            Three <em>independent</em> signals evaluated per candidate at ingest. Requiring 2-of-3
+            to agree means no single noisy field decides. Every decision carries a reason string, so
+            a recruiter can audit <em>why</em> someone was kept out.
+          </p>
+          <div className="space-y-3 my-5">
+            <SignalRow num={1} name="Role family from title" detail="Pattern list in taxonomy.yaml. Order-sensitive first-match-wins. Ten families including a dedicated not_talent bucket." example={`"Senior Data Engineer" → data_engineering`} />
+            <SignalRow num={2} name="Skills evidence" detail="Does the candidate's top_skills list contain at least one skill that confirms the claimed family?" example="ml_cv: computer vision · pytorch · yolo · deep learning" />
+            <SignalRow num={3} name="Sports / media proximity" detail="Lexicon hits across industry, current + past companies, and skills. Compound tokens only for 'media' (no 'Social Media' false positives)." example={`"Broadcasting" industry → hit on "broadcast" keyword`} />
+          </div>
+          <div className="grid grid-cols-3 gap-3 my-5">
+            <GateResult n="2 of 3" label="Admit"   tone="emerald" />
+            <GateResult n="1 of 3" label="Hold"    tone="amber" />
+            <GateResult n="0 of 3" label="Reject"  tone="rose"  />
+          </div>
+        </Section>
+
+        <Section id="scoring" num={3} title="Decision B — two scores, never one">
+          <p>
+            Collapsing competence and reachability into a single &ldquo;compatibility rate&rdquo; is
+            exactly how strong candidates with no network get buried and well-connected mismatches
+            float to the top. Fit and Warmth stay separate — the tier assignment reads them
+            independently.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-5">
+            <ScoreTable title="Fit" subtitle="Competence only" tone="indigo" rows={[
+              ["Required skills", 35, "Exact = 1.0, family = 0.6"],
+              ["Role family",     25, "Exact = 1.0, adjacent = 0.5"],
+              ["Seniority",       15, "Tier-based band fit"],
+              ["Domain",          15, "Sports/media lexicon"],
+              ["Nice-to-have",    10, "Bonus skills"],
+            ]} />
+            <ScoreTable title="Warmth" subtitle="Reachability only" tone="emerald" rows={[
+              ["Mutual connections", 40, "Diminishing returns"],
+              ["Shared employer",    30, "Post-stoplist, aliased"],
+              ["Recency",            20, "12-month half-life"],
+              ["Notes present",      10, "Real conversation"],
+            ]} />
+          </div>
+          <Callout tint="indigo">
+            Fit ≥ 70 <em>and</em> warmth ≥ 50 → <em>Call this week</em>. Fit ≥ 70 alone → <em>Direct outreach</em>.
+            Fit ≥ 45 → <em>Nurture</em>. Below that: not shortlisted.
+          </Callout>
+        </Section>
+
+        <Section id="taxonomy" num={4} title="The taxonomy">
+          <p>
+            Every classification rule lives in one YAML file. A recruiter can add a synonym, teach
+            the system a new role family, or exclude a generic-employer token — without touching
+            code.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 my-5">
+            {TAX_BLOCKS.map(b => (
+              <div key={b.title} className="card p-4">
+                <div className="text-xs font-semibold text-text mb-1.5">{b.title}</div>
+                <div className="text-xs text-mute mb-3">{b.description}</div>
+                <div className="text-[11px] text-dim font-mono border-l-2 border-indigo-200 pl-2.5">{b.example}</div>
+              </div>
+            ))}
+          </div>
+          <Callout tint="amber">
+            The stoplist is not optional. Without it, <code>startup</code>, <code>freelance</code>,{" "}
+            <code>university</code>, <code>IDF</code> and similar generate around 40 false warm paths
+            on this dataset.
+          </Callout>
+        </Section>
+
+        <Section id="reveal" num={5} title="Honest scope of the enrichment reveal">
+          <p>
+            The live enrichment animation on <em>/capture</em> and <em>/referrals</em> shows five
+            categories of extracted signal: <strong>past employers (with a notable-tier flag)</strong>,{" "}
+            <strong>recent posts</strong>, <strong>publications, talks &amp; repos</strong>,{" "}
+            <strong>warm-intro paths against the WSC directory</strong>, and the final <strong>gate + fit
+            scoring</strong>.
+          </p>
+          <p>
+            Of these, <strong>only skills, mutual connections, shared employers, and the gate + fit
+            scoring are computed by the shipped Python pipeline</strong> from the CSVs. The other
+            reveal cards — posts, publications, employer-tier flag — illustrate what a production
+            enrichment adapter <em>would</em> return (Proxycurl + GitHub API + a Featured-section
+            parse), rendered from a clearly-labeled example payload so the recruiter can see the
+            shape of the data. They are not scored today; the UI marks each such reveal &ldquo;example
+            enrichment output.&rdquo;
+          </p>
+          <p>
+            Why keep them visible instead of dropping them: enrichment is the invisible half of a
+            talent-pool pipeline. Showing the shape recruiters would see makes the credit spend,
+            latency, and privacy trade-offs concrete — and marks the exact swap surface where a real
+            Proxycurl + Claude-normalisation call plugs in.
+          </p>
+        </Section>
+
+        <Section id="ai" num={6} title="Where AI belongs">
+          <p>
+            This is an <strong>AI Solution Manager</strong> take-home. The judgement being assessed
+            is not &ldquo;did you use an LLM&rdquo; — it's &ldquo;did you know where to put one.&rdquo;
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-5">
+            <div className="rounded-lg border border-emerald-200 bg-emerald-50/50 p-4">
+              <div className="text-xs font-semibold text-emerald-800 mb-2 flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-600" /> Model describes
+              </div>
+              <ul className="text-xs text-emerald-900/80 space-y-1.5">
+                <li>Title canonicalisation → role family (offline batch)</li>
+                <li>Skill synonym expansion (generated, reviewed, committed)</li>
+                <li>Parsing free-text notes into structured tags</li>
+                <li>why_summary + outreach_draft prose from evidence dict</li>
+              </ul>
+            </div>
+            <div className="rounded-lg border border-rose-200 bg-rose-50/50 p-4">
+              <div className="text-xs font-semibold text-rose-800 mb-2 flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-rose-600" /> Deterministic decides
+              </div>
+              <ul className="text-xs text-rose-900/80 space-y-1.5">
+                <li>The gate — an excluded person deserves a reason a human wrote</li>
+                <li>The final score — non-reproducible ranking is a compliance problem</li>
+                <li>Tier assignment</li>
+                <li>Any decision with legal or hiring effect (GDPR Art. 22)</li>
+              </ul>
+            </div>
+          </div>
+        </Section>
+
+        <Section id="storage" num={7} title="Queryable pool — mocked BigQuery">
+          <p>
+            The pool needs to be queryable. Not a CSV, not a JSON blob — a real analytical store that
+            recruiters can slice by conference, department, family, tier, or timestamp.
+          </p>
+          <p>
+            This build uses <strong>BigQuery mocked as an adapter</strong>
+            {" "}(<code>src/integrations/mock_bigquery.py</code>). Every meaningful event writes a row.
+            The exact SQL is shown on <em>/analytics · Activity</em>. Swapping to real BigQuery is a
+            one-file change.
+          </p>
+          <div className="my-5 rounded-lg border border-border bg-slate-50 p-4">
+            <div className="text-xs font-semibold text-text mb-2">Tables</div>
+            <table className="w-full text-xs font-mono">
+              <tbody>
+                <tr className="border-t border-border-faint"><td className="py-1.5 pr-4 text-indigo-700">wsc.talent_pool.contacts</td><td className="py-1.5 text-mute">one row per person, mutable</td></tr>
+                <tr className="border-t border-border-faint"><td className="py-1.5 pr-4 text-indigo-700">wsc.talent_pool.gate_events</td><td className="py-1.5 text-mute">immutable · one row per decision</td></tr>
+                <tr className="border-t border-border-faint"><td className="py-1.5 pr-4 text-indigo-700">wsc.talent_pool.score_events</td><td className="py-1.5 text-mute">immutable · one row per (contact × job × run)</td></tr>
+                <tr className="border-t border-border-faint"><td className="py-1.5 pr-4 text-indigo-700">wsc.hitl.overrides</td><td className="py-1.5 text-mute">per-role recruiter overrides</td></tr>
+                <tr className="border-t border-border-faint"><td className="py-1.5 pr-4 text-indigo-700">wsc.hitl.blacklist</td><td className="py-1.5 text-mute">globally excluded contacts</td></tr>
+                <tr className="border-t border-border-faint"><td className="py-1.5 pr-4 text-indigo-700">wsc.telemetry.enrichment_calls</td><td className="py-1.5 text-mute">Proxycurl call log with credit accounting</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </Section>
+
+        <Section id="hitl" num={8} title="Human in the loop — recruiter overrides AI">
+          <p>
+            An AI ranking without a human override is a compliance problem waiting to happen.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-5">
+            <div className="rounded-lg border border-amber-200 bg-amber-50/40 p-4">
+              <div className="text-sm font-semibold text-amber-900 mb-1.5 flex items-center gap-2">
+                <Icon name="filter" className="w-4 h-4" strokeWidth={2} />
+                Not a fit for this role
+              </div>
+              <div className="text-xs text-mute leading-relaxed">
+                Adds a recorded reason, hides the candidate from this specific role's shortlist,
+                keeps them in the pool for every other job.
+              </div>
+            </div>
+            <div className="rounded-lg border border-rose-200 bg-rose-50/40 p-4">
+              <div className="text-sm font-semibold text-rose-900 mb-1.5 flex items-center gap-2">
+                <Icon name="close" className="w-4 h-4" strokeWidth={2.5} />
+                Blacklist globally
+              </div>
+              <div className="text-xs text-mute leading-relaxed">
+                Requires a written reason plus a confirmation modal. Removes the candidate from
+                every scoring pass across every role. Reversible.
+              </div>
+            </div>
+          </div>
+          <Callout tint="rose">
+            This is also our answer to <strong>AI hallucination</strong>. The model can't
+            hallucinate a candidate onto the shortlist that the recruiter has marked &ldquo;not a
+            fit&rdquo; — the override wins deterministically.
+          </Callout>
+        </Section>
+
+        <Section id="shipped" num={9} title="What we shipped">
+          <div className="card overflow-hidden my-4">
+            <table className="w-full text-xs">
+              <thead className="text-[11px] uppercase tracking-wider text-mute font-medium border-b border-border bg-slate-50/50">
+                <tr>
+                  <th scope="col" className="text-left px-4 py-2.5">Requirement</th>
+                  <th scope="col" className="text-left px-4 py-2.5">Status</th>
+                  <th scope="col" className="text-left px-4 py-2.5">Where to look</th>
+                </tr>
+              </thead>
+              <tbody>
+                {SHIPPED.map(r => (
+                  <tr key={r[0]} className="border-t border-border-faint">
+                    <td className="px-4 py-2.5 text-text">{r[0]}</td>
+                    <td className="px-4 py-2.5">
+                      <span className={`inline-flex items-center rounded-full border px-2 py-0.5 text-[10px] font-medium ${
+                        r[1] === "Done"     ? "bg-emerald-50 text-emerald-700 border-emerald-200"
+                      : r[1] === "Exceeded" ? "bg-indigo-50 text-indigo-700 border-indigo-200"
+                      : r[1] === "Partial"  ? "bg-amber-50 text-amber-800 border-amber-200"
+                      : "bg-slate-100 text-slate-600 border-slate-200"
+                      }`}>{r[1]}</span>
+                    </td>
+                    <td className="px-4 py-2.5 text-mute font-mono text-[11px]">{r[2]}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </Section>
+
+        <Section id="tests" num={10} title="What we tested">
+          <p className="mb-3">
+            <strong>32 tests across 4 files, all passing.</strong> Focused on the invariants that
+            would silently break the tuner, the pool, or the gate if they drifted.
+          </p>
+          <div className="space-y-2 my-3">
+            <TestRow status="pass" name="tests/test_json_parity.py"    detail="Browser weighted-sum recompute matches Python's default within 0.1dp." />
+            <TestRow status="pass" name="tests/test_gate.py · 7 tests" detail="Critical admits, known rejects, every row has a reason, stoplist filters generic employers." />
+            <TestRow status="pass" name="tests/test_scoring.py · 16 tests" detail="Connection curve, exact-vs-family skill credit, seniority bands, adjacency, ceilings." />
+            <TestRow status="pass" name="tests/test_missing_data.py · 9 tests" detail="Missing enrichment, blank fields, dedupe, miss-rate simulator." />
+          </div>
+        </Section>
+
+        <Section id="tradeoffs" num={11} title="Trade-offs made">
+          <div className="space-y-3 mt-3">
+            <Tradeoff title="conference_domain isn't a gate signal"
+              choice="Not used"
+              why="Kept the three signals independent. Conference domain would either double-count industry or overweight presence in the room." />
+            <Tradeoff title="Filter state doesn't sync to URL"
+              choice="useState only"
+              why="Every filter is React local state. Deep-linking would be nicer but adds a library. Highest-value UX item on the next-up list." />
+            <Tradeoff title="Same-department bonus lives in intro-path only"
+              choice="Path-only"
+              why="Warmth is job-agnostic in the JSON contract. best_intro_path is per-job and prefers peers — Maya (Sr ML) over Hila (UX) for JOB001." />
+            <Tradeoff title="mock_narrator uses templates, not a live LLM"
+              choice="Deterministic templates"
+              why="Brief forbids live keys and network. The narrator builds the prompt-shaped evidence dict even in mock mode." />
+          </div>
+        </Section>
+
+        <Section id="next" num={12} title="What's next">
+          <ol className="space-y-3 text-sm text-dim mt-3 list-decimal pl-5 marker:text-mute marker:font-mono marker:text-xs">
+            <li><strong className="text-text">Deep-link URL state.</strong> Sync active job, filters, expanded candidate into query params.</li>
+            <li><strong className="text-text">Reverse-referral outreach queue as a real feature.</strong> Employee responses feed the warmth model back.</li>
+            <li><strong className="text-text">Live-narrator flag.</strong> A <code>--use-live-narrator</code> switch that calls Claude on the same evidence dict.</li>
+            <li><strong className="text-text">Embedding-based prefilter.</strong> At hundreds of conferences, prefilter with a vector index, then rank with the transparent scorer.</li>
+            <li><strong className="text-text">Fairness monitoring.</strong> Network-based signals encode bias quickly. Track shortlist composition across gender, geography, channel.</li>
+            <li><strong className="text-text">Feedback loop from recruiter outcomes.</strong> Which shortlisted candidates actually converted — used to re-weight.</li>
+          </ol>
+        </Section>
+
+      </article>
+
+      <aside className="hidden lg:block">
+        <div className="sticky top-4 card p-4">
+          <div className="text-xs uppercase tracking-wider text-mute font-medium mb-3">On this page</div>
+          <nav className="space-y-0.5">
+            {[
+              ["architecture", "Two decisions"],
+              ["gate",         "Decision A · gate"],
+              ["scoring",      "Decision B · scoring"],
+              ["taxonomy",     "Taxonomy"],
+              ["reveal",       "Reveal · honest scope"],
+              ["ai",           "Where AI belongs"],
+              ["storage",      "Queryable pool"],
+              ["hitl",         "Human in the loop"],
+              ["shipped",      "What we shipped"],
+              ["tests",        "What we tested"],
+              ["tradeoffs",    "Trade-offs"],
+              ["next",         "What's next"],
+            ].map(([id, label], i) => (
+              <a key={id} href={"#" + id}
+                 className="flex items-baseline gap-2 py-1 text-[13px] text-dim hover:text-accent transition-colors rounded px-2 hover:bg-indigo-50">
+                <span className="font-mono text-[10px] text-faint w-4 tabular">{String(i + 1).padStart(2, "0")}</span>
+                <span>{label}</span>
+              </a>
+            ))}
+          </nav>
+          {pool && (
+            <div className="mt-5 pt-4 border-t border-border text-[11px] text-mute space-y-1">
+              <div>Config <code className="text-dim">{pool.config_version}</code></div>
+              <div>Generated {pool.generated_at.split("T")[0]}</div>
+              <div>{pool.candidates.length} contacts · {pool.jobs.length} jobs · {pool.employees.length} employees</div>
+            </div>
+          )}
+        </div>
+      </aside>
+    </section>
+  );
+}
+
+/* ============================================================================
+ * Shared visual components
+ * ============================================================================ */
+
+const BOXES = [
+  { id: "source",     label: "Source",     icon: "download" as const, tint: "sky",     hint: "conference · referral · CV" },
+  { id: "enrich",     label: "Enrich",     icon: "search"   as const, tint: "violet",  hint: "LinkedIn: employers · posts · connections" },
+  { id: "gate",       label: "Gate",       icon: "filter"   as const, tint: "amber",   hint: "is this person talent we hire?" },
+  { id: "score",      label: "Score",      icon: "sliders"  as const, tint: "indigo",  hint: "fit + warmth, per role" },
+  { id: "shortlist",  label: "Shortlist",  icon: "list"     as const, tint: "emerald", hint: "ranked list · warm intros" },
+];
+
+const TINT_BG: Record<string, string> = {
+  sky:     "bg-sky-50 border-sky-200 text-sky-800",
+  violet:  "bg-violet-50 border-violet-200 text-violet-800",
+  amber:   "bg-amber-50 border-amber-200 text-amber-800",
+  indigo:  "bg-indigo-50 border-indigo-200 text-indigo-800",
+  emerald: "bg-emerald-50 border-emerald-200 text-emerald-800",
+};
+
+const TINT_ICON: Record<string, string> = {
+  sky:     "bg-sky-100 text-sky-700",
+  violet:  "bg-violet-100 text-violet-700",
+  amber:   "bg-amber-100 text-amber-700",
+  indigo:  "bg-indigo-100 text-indigo-700",
+  emerald: "bg-emerald-100 text-emerald-700",
+};
+
+function MiniFlowDiagram() {
+  return (
+    <div className="flex items-stretch gap-2 overflow-x-auto pb-2">
+      {BOXES.map((b, i) => (
+        <div key={b.id} className="flex items-center gap-2 flex-shrink-0">
+          <div className={`rounded-md border px-3 py-2.5 min-w-[130px] ${TINT_BG[b.tint]}`}>
+            <div className="flex items-center gap-2">
+              <div className={`w-6 h-6 rounded flex items-center justify-center ${TINT_ICON[b.tint]}`}>
+                <Icon name={b.icon} className="w-3.5 h-3.5" strokeWidth={2} />
+              </div>
+              <div className="text-sm font-semibold">{b.label}</div>
+            </div>
+            <div className="text-[10px] mt-1 opacity-80">{b.hint}</div>
+          </div>
+          {i < BOXES.length - 1 && (
+            <Icon name="arrow-right" className="w-4 h-4 text-mute flex-shrink-0" strokeWidth={2} />
+          )}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function FlowDiagramLarge() {
+  return (
+    <div className="card p-6 bg-gradient-to-br from-slate-50 to-white">
+      <div className="grid grid-cols-1 md:grid-cols-5 gap-3 items-stretch">
+        {BOXES.map((b, i) => (
+          <div key={b.id} className="relative">
+            <div className={`rounded-lg border-2 p-4 h-full ${TINT_BG[b.tint]}`}>
+              <div className="flex items-center gap-2 mb-2">
+                <div className={`w-8 h-8 rounded flex items-center justify-center ${TINT_ICON[b.tint]}`}>
+                  <Icon name={b.icon} className="w-4 h-4" strokeWidth={2} />
+                </div>
+                <div>
+                  <div className="text-[10px] font-mono uppercase tracking-wider opacity-70">Step {i + 1}</div>
+                  <div className="text-base font-bold">{b.label}</div>
+                </div>
+              </div>
+              <div className="text-xs opacity-80 leading-snug">{b.hint}</div>
+            </div>
+            {i < BOXES.length - 1 && (
+              <div className="hidden md:flex absolute top-1/2 -right-3 -translate-y-1/2 z-10 w-6 h-6 rounded-full bg-white border border-border items-center justify-center">
+                <Icon name="arrow-right" className="w-3.5 h-3.5 text-mute" strokeWidth={2.5} />
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+      <div className="mt-5 pt-4 border-t border-border-faint text-xs text-mute leading-relaxed">
+        <strong className="text-text">Same shape for every channel.</strong> Only the <em>Source</em> door
+        changes — conference badge scans, employee referrals, and inbound CVs all funnel into the same
+        enrichment + gate + scoring pipeline. That's the point of a channel-tuned but shared core.
+      </div>
+    </div>
+  );
+}
+
+function FlowBoxDetail({
+  num, title, iconName, plain, detail, seeIt,
+}: {
+  num: number;
+  title: string;
+  iconName: React.ComponentProps<typeof Icon>["name"];
+  plain: string;
+  detail: string[];
+  seeIt?: string;
+}) {
+  return (
+    <div className="card p-5 flex gap-4">
+      <div className="w-10 h-10 rounded-lg bg-indigo-100 text-indigo-700 flex items-center justify-center flex-shrink-0">
+        <Icon name={iconName} className="w-5 h-5" strokeWidth={2} />
+      </div>
+      <div className="min-w-0 flex-1">
+        <div className="flex items-baseline gap-3 mb-1">
+          <span className="text-[10px] font-mono uppercase tracking-wider text-mute font-semibold">Step {num}</span>
+          <h3 className="text-lg font-semibold text-text">{title}</h3>
+        </div>
+        <p className="text-sm text-text mb-3 font-medium">{plain}</p>
+        <ul className="space-y-1.5 text-sm text-mute leading-relaxed">
+          {detail.map((d, i) => (
+            <li key={i} className="flex gap-2">
+              <span className="text-faint mt-0.5">·</span>
+              <span dangerouslySetInnerHTML={{ __html: renderInlineBold(d) }} />
+            </li>
+          ))}
+        </ul>
+        {seeIt && (
+          <a href={seeIt} className="inline-flex items-center gap-1.5 mt-3 text-xs text-indigo-600 hover:text-indigo-800 font-medium">
+            See it running
+            <Icon name="arrow-right" className="w-3.5 h-3.5" strokeWidth={2.25} />
+          </a>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function renderInlineBold(s: string) {
+  return s.replace(/\*\*(.+?)\*\*/g, "<strong class=\"text-text font-semibold\">$1</strong>");
+}
+
+function StatBig({ n, label, sub }: { n: number | undefined; label: string; sub: string }) {
+  return (
+    <div className="card p-4">
+      <div className="text-3xl font-bold text-text tabular font-mono">{n ?? "—"}</div>
+      <div className="text-sm text-text font-medium mt-1">{label}</div>
+      <div className="text-xs text-mute mt-0.5">{sub}</div>
+    </div>
+  );
+}
+
+function PersonaCard({ title, hint, href, children }: { title: string; hint: string; href: string; children: React.ReactNode }) {
+  return (
+    <a href={href} className="card p-4 hover:border-accent transition-colors block">
+      <div className="flex items-baseline justify-between mb-1.5 gap-2">
+        <div className="text-sm font-semibold text-text">{title}</div>
+        <div className="text-[10px] uppercase tracking-wider text-indigo-700 font-semibold">{hint}</div>
+      </div>
+      <div className="text-xs text-mute leading-relaxed">{children}</div>
+    </a>
+  );
+}
+
+function ChannelWalkthrough({
+  channel, tint, steps, takeaway,
+}: {
+  channel: string;
+  tint: "sky" | "emerald" | "amber";
+  steps: Array<{ title: string; body: string }>;
+  takeaway: string;
+}) {
+  const chip = { sky: "bg-sky-100 text-sky-800", emerald: "bg-emerald-100 text-emerald-800", amber: "bg-amber-100 text-amber-800" }[tint];
+  const bar  = { sky: "bg-sky-500",              emerald: "bg-emerald-500",                  amber: "bg-amber-500" }[tint];
+  return (
+    <div className="card p-5">
+      <div className="flex items-center justify-between mb-3">
+        <div className={`text-xs font-semibold uppercase tracking-wider rounded-full px-2.5 py-1 ${chip}`}>{channel}</div>
+      </div>
+      <ol className="space-y-2 mb-4">
+        {steps.map((s, i) => (
+          <li key={i} className="flex gap-3">
+            <div className={`w-5 h-5 rounded-full ${bar} text-white text-[10px] font-bold flex items-center justify-center flex-shrink-0 mt-0.5`}>
+              {i + 1}
+            </div>
+            <div className="min-w-0">
+              <div className="text-xs font-semibold text-text">{s.title}</div>
+              <div className="text-xs text-mute leading-relaxed">{s.body}</div>
+            </div>
+          </li>
+        ))}
+      </ol>
+      <div className="pt-3 border-t border-border-faint">
+        <div className="text-[10px] uppercase tracking-wider text-mute font-semibold mb-1">Takeaway</div>
+        <div className="text-xs text-dim leading-relaxed">{takeaway}</div>
+      </div>
+    </div>
+  );
+}
+
+function TryItCard({ href, label, hint }: { href: string; label: string; hint: string }) {
+  return (
+    <a href={href} className="card p-4 hover:border-accent transition-colors flex items-start gap-3">
+      <div className="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-700 flex items-center justify-center flex-shrink-0">
+        <Icon name="play" className="w-4 h-4" strokeWidth={2.25} />
+      </div>
+      <div className="min-w-0 flex-1">
+        <div className="text-sm font-semibold text-text">{label}</div>
+        <div className="text-xs text-mute mt-0.5">{hint}</div>
+      </div>
+    </a>
+  );
+}
+
+/* ============================================================================
+ * Design-doc helpers (reused from the previous methodology page)
+ * ============================================================================ */
+
+function Section({ id, num, title, children }: { id: string; num: number; title: string; children: React.ReactNode }) {
+  return (
+    <section id={id} className="scroll-mt-6">
+      <div className="flex items-baseline gap-3 mb-4">
+        <div className="font-mono text-xs text-faint tabular w-6">{String(num).padStart(2, "0")}</div>
+        <h2 className="text-xl font-semibold text-text tracking-tight">{title}</h2>
+      </div>
+      <div className="text-sm text-dim leading-relaxed space-y-3 [&_code]:text-indigo-700 [&_code]:bg-indigo-50 [&_code]:font-mono [&_code]:text-[12px] [&_code]:px-1 [&_code]:rounded [&_strong]:text-text [&_strong]:font-semibold pl-9">
+        {children}
+      </div>
+    </section>
+  );
+}
+
+function Callout({ children, tint }: { children: React.ReactNode; tint: "indigo" | "amber" | "emerald" | "rose" }) {
+  const cls = {
+    indigo:  "bg-indigo-50 border-indigo-200 text-indigo-900",
+    amber:   "bg-amber-50 border-amber-200 text-amber-900",
+    emerald: "bg-emerald-50 border-emerald-200 text-emerald-900",
+    rose:    "bg-rose-50 border-rose-200 text-rose-900",
+  }[tint];
+  return <div className={`rounded-lg border p-4 text-sm ${cls} my-4`}>{children}</div>;
+}
+
+function DecisionCard({ letter, tint, title, subtitle, bullets }: { letter: string; tint: "indigo" | "emerald"; title: string; subtitle: string; bullets: string[] }) {
+  const gradient = tint === "indigo" ? "from-indigo-500 to-indigo-700" : "from-emerald-500 to-emerald-700";
+  return (
+    <div className="card p-5">
+      <div className="flex items-start gap-3 mb-3">
+        <div className={`w-10 h-10 rounded-lg bg-gradient-to-br ${gradient} text-white font-bold flex items-center justify-center flex-shrink-0`}>
+          {letter}
+        </div>
+        <div className="pt-1">
+          <div className="text-sm font-semibold text-text">{title}</div>
+          <div className="text-xs text-mute mt-0.5">{subtitle}</div>
+        </div>
+      </div>
+      <ul className="text-xs text-dim space-y-1.5">
+        {bullets.map(b => (
+          <li key={b} className="flex gap-2">
+            <span className="text-faint mt-0.5">·</span>
+            <span>{b}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+function SignalRow({ num, name, detail, example }: { num: number; name: string; detail: string; example: string }) {
+  return (
+    <div className="flex gap-3 card p-4">
+      <div className="w-7 h-7 rounded-full bg-slate-900 text-white flex items-center justify-center font-semibold text-xs flex-shrink-0">
+        {num}
+      </div>
+      <div className="flex-1 min-w-0">
+        <div className="text-sm font-semibold text-text">{name}</div>
+        <div className="text-xs text-mute mt-1">{detail}</div>
+        <div className="text-[11px] text-dim font-mono bg-slate-50 rounded px-2 py-1 mt-2 border border-border-faint">{example}</div>
+      </div>
+    </div>
+  );
+}
+
+function GateResult({ n, label, tone }: { n: string; label: string; tone: "emerald" | "amber" | "rose" }) {
+  const bg = { emerald: "bg-emerald-50 border-emerald-200 text-emerald-800", amber: "bg-amber-50 border-amber-200 text-amber-800", rose: "bg-rose-50 border-rose-200 text-rose-800" }[tone];
+  return (
+    <div className={`rounded-lg border ${bg} p-4 text-center`}>
+      <div className="text-2xl font-bold leading-none">{n}</div>
+      <div className="text-[11px] uppercase tracking-wider mt-2 font-medium">{label}</div>
+    </div>
+  );
+}
+
+function GateExample({ name, role, family, s1, s2, s3, verdict, verdictLabel, note }:
+  { name: string; role: string; family: string; s1: boolean; s2: boolean; s3: boolean; verdict: "admit" | "reject"; verdictLabel: string; note: string }) {
+  const cls = verdict === "admit" ? "border-emerald-200" : "border-rose-200";
+  const ink = verdict === "admit" ? "text-emerald-700 bg-emerald-100" : "text-rose-700 bg-rose-100";
+  return (
+    <div className={`rounded-lg border bg-white ${cls} p-4`}>
+      <div className="flex items-center justify-between gap-3 flex-wrap">
+        <div>
+          <div className="text-sm font-semibold text-text">{name}</div>
+          <div className="text-xs text-mute">{role} · <code className="text-[11px]">{family}</code></div>
+        </div>
+        <div className="flex items-center gap-2">
+          {[s1, s2, s3].map((ok, i) => (
+            <span key={i} className={`w-5 h-5 rounded-full flex items-center justify-center ${ok ? "bg-emerald-500 text-white" : "bg-slate-200 text-slate-400"}`}>
+              <Icon name={ok ? "check" : "close"} className="w-3 h-3" strokeWidth={3} />
+            </span>
+          ))}
+          <span className={`text-[11px] font-semibold px-2 py-0.5 rounded-full ${ink}`}>{verdictLabel}</span>
+        </div>
+      </div>
+      <div className="text-xs text-mute mt-2.5">{note}</div>
+    </div>
+  );
+}
+
+function ScoreTable({ title, subtitle, tone, rows }: { title: string; subtitle: string; tone: "indigo" | "emerald"; rows: Array<[string, number, string]> }) {
+  const dot = tone === "indigo" ? "bg-indigo-500" : "bg-emerald-500";
+  return (
+    <div className="card overflow-hidden">
+      <div className="px-4 py-3 border-b border-border">
+        <div className="flex items-center gap-2">
+          <span className={`w-1.5 h-1.5 rounded-full ${dot}`} />
+          <div className="text-sm font-semibold text-text">{title}</div>
+        </div>
+        <div className="text-xs text-mute mt-0.5">{subtitle}</div>
+      </div>
+      <table className="w-full text-xs">
+        <tbody>
+          {rows.map(([name, w, detail], i) => (
+            <tr key={name} className={i > 0 ? "border-t border-border-faint" : ""}>
+              <td className="px-4 py-2 font-medium text-text">{name}</td>
+              <td className="px-4 py-2 text-right font-mono font-semibold text-indigo-700 tabular w-12">{w}</td>
+              <td className="px-4 py-2 text-mute">{detail}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+function TestRow({ status = "pass", name, detail }: { status?: "pass" | "manual" | "missing"; name: string; detail: string }) {
+  const style = {
+    pass:    { bg: "bg-emerald-100 text-emerald-600", icon: "check" as const, label: "PASS" },
+    manual:  { bg: "bg-indigo-100 text-indigo-600",   icon: "check" as const, label: "MANUAL" },
+    missing: { bg: "bg-slate-100 text-slate-400",     icon: "minus" as const, label: "TODO" },
+  }[status];
+  return (
+    <div className="flex gap-3 card p-3">
+      <div className={`w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 ${style.bg}`}>
+        <Icon name={style.icon} className="w-3.5 h-3.5" strokeWidth={2.5} />
+      </div>
+      <div className="min-w-0 flex-1">
+        <div className="flex items-baseline gap-2">
+          <div className="text-sm font-medium text-text">{name}</div>
+          <span className="text-[9px] font-mono uppercase tracking-wider text-mute">{style.label}</span>
+        </div>
+        <div className="text-xs text-mute mt-0.5">{detail}</div>
+      </div>
+    </div>
+  );
+}
+
+function Tradeoff({ title, choice, why }: { title: string; choice: string; why: string }) {
+  return (
+    <div className="card p-4">
+      <div className="flex items-baseline justify-between gap-3 flex-wrap mb-1.5">
+        <div className="text-sm font-semibold text-text">{title}</div>
+        <span className="text-[10px] font-mono uppercase tracking-wider text-amber-700 bg-amber-50 border border-amber-200 rounded-full px-2 py-0.5">
+          {choice}
+        </span>
+      </div>
+      <div className="text-sm text-mute leading-relaxed">{why}</div>
+    </div>
+  );
+}
+
+const TAX_BLOCKS = [
+  { title: "Role families",     description: "Title-pattern → family. Ordered so 'Video AI Engineer' hits ml_cv before ml_general.", example: "ml_cv · ml_general · data_engineering · platform_devops · video_broadcast · sales_engineering · not_talent" },
+  { title: "Family evidence",   description: "Skills that confirm the claimed family. Gate signal 2 needs at least one hit.",       example: "ml_cv: computer vision · pytorch · yolo · deep learning · sports tracking" },
+  { title: "Skill synonyms",    description: "Exact + family aliases. Exact match earns 1.0, family match earns 0.6.",              example: "PyTorch → exact: pytorch · family: tensorflow, keras, deep learning" },
+  { title: "Domain lexicon",    description: "Keywords + known companies. Compound tokens for 'media' to avoid false positives.",   example: "sports · broadcast · streaming · cdn · Opta · Sportradar · KINEXON · DAZN" },
+  { title: "Employer stoplist", description: "Exact case-insensitive match. Filters ~40 false warm paths on this dataset.",         example: "freelance · startup · university · public sector · hospital group · IDF (bare)" },
+  { title: "Company aliases",   description: "Cluster different names for the same organisation. Enables real overlaps to surface.", example: "Opta ~ Opta Sports ~ Stats Perform · IDF ~ IDF tech unit ~ IDF Intelligence Unit" },
+];
+
+const SHIPPED: Array<[string, "Done" | "Exceeded" | "Partial" | "Not shipped", string]> = [
+  ["Working pipeline with --job-id input",       "Done",     "run.py"],
+  ["Output CSV for JOB001 committed",            "Exceeded", "JOB001–004 + excluded + pool CSVs"],
+  ["Design document",                            "Done",     "README + docs/ + this page"],
+  ["7 assumptions positioned with reasoning",    "Done",     "README + docs/05"],
+  ["Executive summary for non-technical HR",     "Done",     "README + TL;DR tab"],
+  ["Recruiter view (bonus)",                     "Exceeded", "Full Next.js app · 12+ routes"],
+  ["Two decisions, never one function",          "Done",     "src/gate.py + src/score.py"],
+  ["Two scores (fit never touches network)",     "Done",     "src/score.py / src/warmpath.py"],
+  ["Transparent — every weight in YAML",         "Done",     "config/scoring.yaml + taxonomy.yaml"],
+  ["No LLM decides",                             "Done",     "mock_narrator is deterministic templates"],
+  ["Every exclusion has a reason string",        "Done",     "JOB001_excluded.csv + gate.reason"],
+  ["No hardcoded candidate names in src/",       "Done",     "verified via grep"],
+  ["Runs offline on fresh clone",                "Done",     "no env vars, no network, no keys"],
+  ["Python owns matching; JS does weighted sum", "Done",     "lib/scoring.ts + parity test"],
+  ["Mock integration adapters",                  "Done",     "src/integrations/ · 7 systems"],
+  ["Multi-channel architecture",                 "Done",     "source_channel first-class on every row"],
+  ["Conference channel end-to-end",              "Done",     "/capture · live enrichment reveal"],
+  ["Referral channel with vouched lift",         "Done",     "/referrals · +15 warmth on target role"],
+  ["Reverse-referral (system → employee)",       "Done",     "/intros"],
+  ["Recruiter-first UI · jobs as landing",       "Done",     "/ → open positions grid"],
+  ["Human-in-the-loop overrides",                "Done",     "per-role override + global blacklist + notes"],
+  ["Queryable database (BigQuery mock)",         "Done",     "src/integrations/mock_bigquery.py"],
+  ["BI dashboard with KPIs",                     "Done",     "/analytics · 4 tabs"],
+  ["Business-level integrations view",           "Done",     "/integrations"],
+  ["Enrichment as a visible flow",               "Done",     "shared EnrichmentReveal on capture + referral"],
+  ["Inbound (Comeet application) channel",       "Partial",  "status stub for dedupe; capture path designed"],
+  ["Sourced (outbound research) channel",        "Not shipped", "documented in docs/06"],
+  ["Live-narrator flag",                         "Not shipped", "swap surface documented in /integrations"],
+];

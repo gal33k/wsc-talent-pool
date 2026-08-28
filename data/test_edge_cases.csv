@@ -1,0 +1,6 @@
+hubspot_id,full_name,email,company,title,conference_name,conference_domain,conference_date,source,notes,linkedin_url
+HSTEST01,Missing URL,noone@nowhere.com,Nowhere,Software Engineer,Data & AI Summit Europe,Data Engineering & AI/ML,2025-03-20,Conference - Badge Scan,,
+HSTEST02,Ghost Profile,ghost@nowhere.com,Nowhere,ML Engineer,Data & AI Summit Europe,Data Engineering & AI/ML,2025-03-20,Conference - Badge Scan,,linkedin.com/in/does-not-exist
+HSTEST03,Blank Title,unknown@somewhere.com,Somewhere,,SportsTech Innovation Summit,Sports Technology & Analytics,2024-11-14,Conference - Badge Scan,Booth chat about video pipelines,linkedin.com/in/blank-title
+HSTEST04,Duplicate Person A,dup@dup.com,DupCo,Data Engineer,Data & AI Summit Europe,Data Engineering & AI/ML,2025-03-20,Conference - Badge Scan,,linkedin.com/in/dup-person
+HSTEST05,Duplicate Person B,dup@dup.com,DupCo,Data Engineer,DevOps World 2025,DevOps & Platform Engineering,2025-04-10,Conference - Badge Scan,,linkedin.com/in/dup-person

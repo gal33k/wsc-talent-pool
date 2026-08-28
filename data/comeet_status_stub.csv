@@ -1,0 +1,6 @@
+email,status,role,date,notes
+n.anderson@genius-sports.com,active_in_process,JOB001,2026-08-01,Currently in interview loop for JOB001 - suppress from shortlist
+priya.anand@vidstream.com,previously_rejected,JOB003,2024-02-15,Rejected for Product Manager role two years ago - not a bar to JOB001
+marcus.reid@statsperform.com,previously_rejected,JOB004,2024-02-15,Rejected for Data Engineer role - different role now
+tom.nguyen@financeflow.com,hired,,2023-06-01,Not in dataset; example stub only
+lucas.evans@img.com,declined_offer,JOB001,2025-01-10,Declined last time - warm intelligence

@@ -1,0 +1,42 @@
+full_name,stage,reason,signals_passed,hubspot_id,linkedin_url
+Tom Nguyen,comeet,Already hired at WSC (Comeet),3/3,HS005,linkedin.com/in/tom-nguyen-fin
+Rachel Kim,below_threshold,fit=34.8 < nurture cutoff,n/a,HS007,linkedin.com/in/rachel-kim-be
+Daniel Brown,below_threshold,fit=15.0 < nurture cutoff,n/a,HS008,linkedin.com/in/daniel-brown-pm
+Ben Walker,below_threshold,fit=15.0 < nurture cutoff,n/a,HS010,linkedin.com/in/ben-walker-retail
+Anna Petrov,below_threshold,fit=15.0 < nurture cutoff,n/a,HS014,linkedin.com/in/anna-petrov-gov
+Chris Lee,below_threshold,fit=42.3 < nurture cutoff,n/a,HS015,linkedin.com/in/chris-lee-sportradar
+Jennifer Adams,below_threshold,fit=15.0 < nurture cutoff,n/a,HS016,linkedin.com/in/jennifer-adams-ins
+Zoe Wright,below_threshold,fit=15.0 < nurture cutoff,n/a,HS020,linkedin.com/in/zoe-wright-legal
+Alex Turner,below_threshold,fit=30.0 < nurture cutoff,n/a,HS021,linkedin.com/in/alex-turner-olym
+Isabella Moore,below_threshold,fit=29.0 < nurture cutoff,n/a,HS022,linkedin.com/in/isabella-moore-edu
+Ethan Clark,below_threshold,fit=33.0 < nurture cutoff,n/a,HS023,linkedin.com/in/ethan-clark-aws
+Mia Johnson,below_threshold,fit=27.0 < nurture cutoff,n/a,HS024,linkedin.com/in/mia-johnson-food
+Grace Wilson,below_threshold,fit=24.0 < nurture cutoff,n/a,HS026,linkedin.com/in/grace-wilson-cyber
+Jack Thomas,below_threshold,fit=40.3 < nurture cutoff,n/a,HS027,linkedin.com/in/jack-thomas-sport
+Chloe Martinez,below_threshold,fit=15.0 < nurture cutoff,n/a,HS028,linkedin.com/in/chloe-martinez-bank
+Noah Anderson,comeet,Active in JOB001 process (dedupe),3/3,HS029,linkedin.com/in/noah-anderson-gs
+Aria White,below_threshold,fit=15.0 < nurture cutoff,n/a,HS032,linkedin.com/in/aria-white-logi
+Liam Harris,below_threshold,fit=40.3 < nurture cutoff,n/a,HS033,linkedin.com/in/liam-harris-kinexon
+Emma Lewis,below_threshold,fit=15.0 < nurture cutoff,n/a,HS034,linkedin.com/in/emma-lewis-agri
+Elijah Allen,below_threshold,fit=30.0 < nurture cutoff,n/a,HS037,linkedin.com/in/elijah-allen-deltatre
+Amelia King,below_threshold,fit=22.0 < nurture cutoff,n/a,HS038,linkedin.com/in/amelia-king-pet
+Viktor Novak,below_threshold,fit=36.0 < nurture cutoff,n/a,HS041,linkedin.com/in/viktor-novak-de
+Fatima Al-Rashid,below_threshold,fit=39.3 < nurture cutoff,n/a,HS042,linkedin.com/in/fatima-alrashid-data
+George Patterson,below_threshold,fit=27.0 < nurture cutoff,n/a,HS043,linkedin.com/in/george-patterson-cloud
+Marcus Webb,below_threshold,fit=27.0 < nurture cutoff,n/a,HS045,linkedin.com/in/marcus-webb-pharma
+Katarzyna Wojcik,below_threshold,fit=27.0 < nurture cutoff,n/a,HS047,linkedin.com/in/katarzyna-wojcik-ins
+Ingrid Svensson,below_threshold,fit=29.0 < nurture cutoff,n/a,HS049,linkedin.com/in/ingrid-svensson-klarna
+Tobias Braun,below_threshold,fit=38.0 < nurture cutoff,n/a,HS050,linkedin.com/in/tobias-braun-aws
+Pavel Horak,below_threshold,fit=15.0 < nurture cutoff,n/a,HS052,linkedin.com/in/pavel-horak-gov
+Mei Zhang,below_threshold,fit=21.2 < nurture cutoff,n/a,HS054,linkedin.com/in/mei-zhang-platform
+Kim Soo-Jin,below_threshold,fit=18.0 < nurture cutoff,n/a,HS056,linkedin.com/in/kim-soojin-devops
+Alexei Volkov,below_threshold,fit=41.0 < nurture cutoff,n/a,HS057,linkedin.com/in/alexei-volkov-dazn
+Nadia Osei,below_threshold,fit=22.0 < nurture cutoff,n/a,HS058,linkedin.com/in/nadia-osei-cloud
+Hana Blum,below_threshold,fit=24.0 < nurture cutoff,n/a,HS060,linkedin.com/in/hana-blum-agtech
+Stefano Conti,below_threshold,fit=35.0 < nurture cutoff,n/a,HS061,linkedin.com/in/stefano-conti-sky
+Jerome Blanc,below_threshold,fit=41.0 < nurture cutoff,n/a,HS062,linkedin.com/in/jerome-blanc-canal
+Sven Hartmann,below_threshold,fit=43.8 < nurture cutoff,n/a,HS065,linkedin.com/in/sven-hartmann-arri
+Javier Morales,below_threshold,fit=43.8 < nurture cutoff,n/a,HS067,linkedin.com/in/javier-morales-tv
+Lars Andersen,below_threshold,fit=33.0 < nurture cutoff,n/a,HS069,linkedin.com/in/lars-andersen-ericsson
+Felix Obi,below_threshold,fit=15.0 < nurture cutoff,n/a,HS073,linkedin.com/in/felix-obi-health
+Claudia Vogel,below_threshold,fit=32.0 < nurture cutoff,n/a,HS074,linkedin.com/in/claudia-vogel-eurosport

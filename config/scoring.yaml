@@ -1,0 +1,182 @@
+# =============================================================================
+# scoring.yaml — every tunable number in one place
+# =============================================================================
+# Every weight, threshold, curve and cutoff below is a value the recruiter or
+# hiring manager may want to change without touching code. Keep it that way.
+#
+# Sub-scores computed by src/score.py and src/warmpath.py are 0-1 values that
+# describe the CANDIDATE and are WEIGHT-INDEPENDENT. The weights below are
+# applied last, so the browser can recombine components live as the user drags
+# a slider in the tuner. See docs/08-web-app.md.
+# =============================================================================
+
+version: "1.0"
+
+# -----------------------------------------------------------------------------
+# Fit — competence only. No network signal anywhere in this axis, ever.
+# -----------------------------------------------------------------------------
+fit_weights:
+  required_skills: 35     # matched required / total required
+  role_family:     25     # exact family = 1.0, adjacent = 0.5, other = 0.0
+  seniority:       15     # band fit (tier-based, not linear years)
+  domain:          15     # sports/media lexicon hits on industry + employers + skills
+  nice_to_have:    10
+
+# Partial-credit for skill matches. Exact synonym match earns full; a match on a
+# broader "family" (e.g. TensorFlow for a PyTorch requirement) earns partial.
+# Documented in the README so the trade-off is visible.
+skill_exact_credit:  1.0
+skill_family_credit: 0.6
+
+# Role-family adjacency — DIRECTIONAL, per-pair credit.
+# Read as: adjacency[job_family][candidate_family] = credit.
+# A pair not listed = 0.0 (unrelated). Exact family match short-circuits to 1.0
+# and does not consult this map.
+#
+# Rationale: the old uniform 0.5 credit made "ml_general → ml_cv" and
+# "data_engineering → ml_cv" score identically for JOB001 (Senior ML Engineer).
+# See docs/01-data-findings.md § "Role-family collision" — Scarlett Green
+# (Data Engineer, NFL) landing at the same family score as ML engineers on an
+# ML role is exactly the failure mode we are here to prevent.
+role_family_adjacency:
+  ml_cv:
+    ml_general:       0.70    # near — ML background, may pivot to CV
+    video_broadcast:  0.55    # near — adjacent video domain
+    data_engineering: 0.20    # far — different discipline
+  ml_general:
+    ml_cv:            0.75    # near — CV work is a specialisation of ML
+    data_engineering: 0.30
+  data_engineering:
+    ml_general:       0.35
+    backend:          0.55
+    platform_devops:  0.45
+  backend:
+    platform_devops:  0.55
+    data_engineering: 0.45
+  platform_devops:
+    backend:          0.55
+    video_broadcast:  0.40
+  video_broadcast:
+    ml_cv:            0.55
+    platform_devops:  0.35
+    backend:          0.30
+  sales_engineering:
+    backend:          0.30
+    platform_devops:  0.30
+  product: {}
+
+# Critical (starred) required skills — the "hard" ones for a job.
+# In job_openings.csv, mark a required_skills token with a trailing '*' to
+# declare it critical (e.g. "Computer Vision*"). If a candidate has ZERO credit
+# on any critical skill (no exact and no family alias match), their
+# required_skills component is capped at this ceiling before weighting.
+#
+# This is what turns Sara Lindqvist (PyTorch + AWS but no CV at all) from a
+# "decent generalist ML engineer" into a visibly-penalised nurture candidate
+# for JOB001. A family match (e.g. TensorFlow for a PyTorch requirement) still
+# counts as HAVING the skill — only literal zero credit triggers the cap.
+critical_missing_ceiling: 0.4
+
+# -----------------------------------------------------------------------------
+# Seniority as a TIER, not a line
+# -----------------------------------------------------------------------------
+# We map both the candidate's title AND the job's seniority to the same ladder,
+# then compare. Years are a cross-check only — a Principal with 6 years is
+# above band for a Senior role; a Senior with 12 years still fits.
+#
+# See docs/01-data-findings.md § "Seniority above the band" — Jin Park
+# (Principal Data Scientist, 10y) must land on above_band, not #1.
+# -----------------------------------------------------------------------------
+title_tiers:
+  intern:      1
+  junior:      2
+  mid:         3
+  engineer:    3        # bare "Engineer" without a modifier
+  developer:   3
+  associate:   3
+  senior:      4
+  staff:       4
+  lead:        5
+  principal:   5
+  architect:   5
+  head:        6
+  director:    6
+  vp:          7
+  cto:         7
+  founder:     7
+
+# Job seniority string → target tier
+job_seniority_tier:
+  Junior:      2
+  Mid:         3
+  Mid-Senior:  3.5
+  Senior:      4
+  Lead:        5
+  Principal:   5
+
+# Years bands (secondary cross-check, mild penalty only)
+seniority_years_band:
+  Junior:      [0, 3]
+  Mid:         [3, 6]
+  Mid-Senior:  [5, 8]
+  Senior:      [6, 12]
+  Lead:        [9, 99]
+  Principal:   [10, 99]
+
+# Tier-diff penalties
+above_band_tier_gap:    0.5   # candidate_tier - job_tier > this -> above_band
+below_band_tier_gap:    1.0   # job_tier - candidate_tier > this -> below_band
+above_band_penalty:     0.4   # component drops to 1 - this if above_band
+below_band_penalty:     0.5   # component drops to 1 - this if below_band
+band_floor:             0.2   # never below this
+
+# -----------------------------------------------------------------------------
+# Warmth — reachability. Everything about getting a reply.
+# -----------------------------------------------------------------------------
+warmth_weights:
+  mutual_connections: 40
+  shared_employer:    30
+  recency:            20
+  notes_present:      10
+
+# Diminishing returns on connection count. Index = count (capped at end).
+# 0 -> 0.0; 1 -> 0.5; 2 -> 0.8; 3+ -> 1.0. Same curve for shared employers.
+connection_curve:      [0.0, 0.5, 0.8, 1.0]
+
+# Same-department employees are worth more as intro paths — a peer is better
+# placed to answer "will you introduce us" than a cross-department colleague.
+same_department_multiplier: 1.25
+
+# Recency decay on warmth ONLY. Skills don't expire; memory of a booth
+# conversation does. Half-life 12 months = a Nov 2024 contact is worth ~0.71 of
+# an Apr 2025 one on the recency component.
+recency_half_life_months: 12
+
+# -----------------------------------------------------------------------------
+# Gate (Decision A) — 3 signals, 2-of-3 admits
+# -----------------------------------------------------------------------------
+gate:
+  admit_min_signals: 2      # of 3
+  hold_min_signals:  1
+  # reject_below is implicit at 0
+
+# When enrichment is missing/partial we cap fit_score to avoid over-ranking
+# candidates we know little about. Set data_confidence low and flag it.
+low_confidence_fit_ceiling: 60
+
+# -----------------------------------------------------------------------------
+# Priority tiers — the recruiter's action list
+# -----------------------------------------------------------------------------
+tiers:
+  call_this_week:  {min_fit: 70, min_warmth: 50}   # ask for a warm intro
+  direct_outreach: {min_fit: 70}                    # cold, personalise from evidence
+  nurture:         {min_fit: 45}                    # adjacent, re-score next role
+  # anything below min_fit=45 is not in the default view but is retrievable
+
+# -----------------------------------------------------------------------------
+# Mock enrichment behaviour (docs/09) — makes the cost argument concrete
+# -----------------------------------------------------------------------------
+enrichment_mock:
+  cache_enabled:      true
+  miss_rate:          0.0     # default: everyone hits; --simulate-missing flag overrides
+  credit_budget:      500
