@@ -125,31 +125,9 @@ export default function CandidateCard({
             <ScoreBar label="Warmth" value={warmthScore} tone="good" />
           </div>
 
-          {/* Scoring math — the direct answer to "why is this score what it is?" */}
-          <div className="mt-2.5 flex items-center gap-3 flex-wrap text-[10px] font-mono text-mute">
-            <span className="text-faint uppercase tracking-wider font-semibold">Fit math</span>
-            <span title="Required skills coverage × weight">
-              skills <span className="text-text">{(fit.components.required_skills * 100).toFixed(0)}·35</span>
-            </span>
-            <span className="text-faint">+</span>
-            <span title="Role family match × weight">
-              family <span className="text-text">{(fit.components.role_family * 100).toFixed(0)}·25</span>
-            </span>
-            <span className="text-faint">+</span>
-            <span title="Seniority band fit × weight">
-              seniority <span className="text-text">{(fit.components.seniority * 100).toFixed(0)}·15</span>
-            </span>
-            <span className="text-faint">+</span>
-            <span title="Sports/media domain overlap × weight">
-              domain <span className="text-text">{(fit.components.domain * 100).toFixed(0)}·15</span>
-            </span>
-            <span className="text-faint">+</span>
-            <span title="Nice-to-have bonus × weight">
-              nice <span className="text-text">{(fit.components.nice_to_have * 100).toFixed(0)}·10</span>
-            </span>
-            <span className="text-faint">=</span>
-            <span className="text-text font-semibold">{fit.score_default.toFixed(1)}</span>
-          </div>
+          {/* Score visualization — 5 mini component bars showing raw score
+              contribution to the final fit. Height = raw component × weight. */}
+          <FitBreakdownMiniBars components={fit.components} total={fit.score_default} />
 
           <div className="flex flex-wrap gap-1.5 mt-3">
             {fit.matched_required.map(s => <Chip key={"m" + s} variant="success">{s}</Chip>)}
@@ -228,5 +206,59 @@ export default function CandidateCard({
         </div>
       </div>
     </article>
+  );
+}
+
+/* Compact fit visualization — 5 mini component bars stacked horizontally.
+   Each bar's fill height = raw score (0-1); the width is proportional to the
+   component's weight so you can eyeball "who's carrying this score." */
+function FitBreakdownMiniBars({
+  components, total,
+}: {
+  components: FitForJob["components"];
+  total: number;
+}) {
+  const parts: Array<{ key: string; label: string; short: string; raw: number; weight: number; color: string }> = [
+    { key: "required_skills", label: "Required skills · weight 35",  short: "skills",  raw: components.required_skills, weight: 35, color: "bg-emerald-500" },
+    { key: "role_family",     label: "Role family match · weight 25", short: "family",  raw: components.role_family,     weight: 25, color: "bg-emerald-600" },
+    { key: "seniority",       label: "Seniority band · weight 15",    short: "senior",  raw: components.seniority,       weight: 15, color: "bg-teal-500" },
+    { key: "domain",          label: "Sports/media domain · weight 15", short: "domain",  raw: components.domain,        weight: 15, color: "bg-teal-600" },
+    { key: "nice_to_have",    label: "Nice-to-have · weight 10",      short: "nice",    raw: components.nice_to_have,    weight: 10, color: "bg-cyan-500" },
+  ];
+  const maxRaw = 1.0;
+
+  return (
+    <div className="mt-3">
+      <div className="flex items-baseline justify-between mb-1.5">
+        <span className="text-[10px] uppercase tracking-wider text-mute font-semibold">Fit breakdown</span>
+        <span className="text-[10px] text-mute">
+          weighted total <span className="text-text font-mono font-semibold tabular">{total.toFixed(1)}</span>
+        </span>
+      </div>
+      <div className="flex items-end gap-1.5 h-12" role="img" aria-label={`Fit score ${total.toFixed(1)} across 5 components`}>
+        {parts.map(p => {
+          const heightPct = (p.raw / maxRaw) * 100;
+          const contribution = p.raw * p.weight;
+          return (
+            <div
+              key={p.key}
+              className="flex-1 min-w-0 flex flex-col items-center justify-end h-full group cursor-help"
+              title={`${p.label}\nraw: ${(p.raw * 100).toFixed(0)}%\ncontribution: ${contribution.toFixed(1)} of ${p.weight}`}
+              style={{ flexGrow: p.weight }}
+            >
+              <div className="w-full h-full relative bg-stone-100 rounded-sm overflow-hidden">
+                <div
+                  className={`absolute bottom-0 left-0 right-0 ${p.color} rounded-sm transition-all group-hover:brightness-110`}
+                  style={{ height: `${Math.max(2, heightPct)}%` }}
+                />
+              </div>
+              <div className="mt-1 text-[9px] text-mute leading-none uppercase tracking-wider">
+                {p.short}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
   );
 }

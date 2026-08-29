@@ -830,31 +830,90 @@ function DesignDoc({ pool: _pool }: { pool: ReturnType<typeof usePool>["pool"] }
           </div>
         </Section>
 
-        <Section id="tradeoffs" num={11} title="Trade-offs made">
+        <Section id="tradeoffs" num={11} title="Design decisions we deliberately made — and could defend either way">
+          <p className="mb-4">
+            Every project has calls that go one way and could reasonably go the other. Here are the four
+            biggest ones. If a reviewer disagrees, these are the levers we'd argue.
+          </p>
           <div className="space-y-3 mt-3">
-            <Tradeoff title="conference_domain isn't a gate signal"
-              choice="Not used"
-              why="Kept the three signals independent. Conference domain would either double-count industry or overweight presence in the room." />
-            <Tradeoff title="Filter state doesn't sync to URL"
-              choice="useState only"
-              why="Every filter is React local state. Deep-linking would be nicer but adds a library. Highest-value UX item on the next-up list." />
-            <Tradeoff title="Same-department bonus lives in intro-path only"
-              choice="Path-only"
-              why="Warmth is job-agnostic in the JSON contract. best_intro_path is per-job and prefers peers — Maya (Sr ML) over Hila (UX) for JOB001." />
-            <Tradeoff title="mock_narrator uses templates, not a live LLM"
-              choice="Deterministic templates"
-              why="Brief forbids live keys and network. The narrator builds the prompt-shaped evidence dict even in mock mode." />
+            <Tradeoff
+              title="We don't use which conference someone attended as a gate signal"
+              choice="Kept out"
+              why="Attendance is opportunity, not fit. Someone who happened to be at a sports-tech conference isn't automatically a sports-tech engineer — they might be a vendor, an analyst, a journalist. If we added 'attended sports conference' as a 4th signal, we'd be double-counting industry and letting the room decide instead of the person's own profile. Kept the three signals independent for that reason." />
+            <Tradeoff
+              title="Filters don't persist in the URL"
+              choice="Session only"
+              why="When you filter the pool or the shortlist, refreshing the page loses the filter. In production you'd want shareable URLs — send a colleague 'here's the JOB001 Call-this-week list' as a link. Adding this is ~2 hours of work and a small library dependency. We deprioritised it because it's a UX polish item, not a correctness one." />
+            <Tradeoff
+              title="'Same team' preference lives in intro-path picking, not the warmth score"
+              choice="Preference-only"
+              why="When we recommend WHO should make an intro, we prefer a same-team person (Maya from AI/ML over Hila from UX for a Senior ML Engineer role). But we don't add points to the candidate's warmth score for being connected to a same-team person. Reason: it would make warmth per-candidate × per-employee × per-job — a 4,500-row explosion. Keeping warmth job-agnostic in the data, and applying preference at the display layer, is cleaner." />
+            <Tradeoff
+              title="The AI-written outreach draft is a template, not a real LLM call"
+              choice="Deterministic template"
+              why="Every candidate gets a why-summary and a first-touch outreach draft. In production these would be Claude API calls. In this build they're filled from a template because the brief forbids live API keys. Importantly: the code still builds the exact prompt-shaped 'evidence dict' the LLM would receive — visible in the integrations trace. Swapping to a real Claude call is a two-line change." />
           </div>
         </Section>
 
-        <Section id="next" num={12} title="What's next">
-          <ol className="space-y-3 text-sm text-dim mt-3 list-decimal pl-5 marker:text-mute marker:font-mono marker:text-xs">
-            <li><strong className="text-text">Deep-link URL state.</strong> Sync active job, filters, expanded candidate into query params.</li>
-            <li><strong className="text-text">Reverse-referral outreach queue as a real feature.</strong> Employee responses feed the warmth model back.</li>
-            <li><strong className="text-text">Live-narrator flag.</strong> A <code>--use-live-narrator</code> switch that calls Claude on the same evidence dict.</li>
-            <li><strong className="text-text">Embedding-based prefilter.</strong> At hundreds of conferences, prefilter with a vector index, then rank with the transparent scorer.</li>
-            <li><strong className="text-text">Fairness monitoring.</strong> Network-based signals encode bias quickly. Track shortlist composition across gender, geography, channel.</li>
-            <li><strong className="text-text">Feedback loop from recruiter outcomes.</strong> Which shortlisted candidates actually converted — used to re-weight.</li>
+        <Section id="next" num={12} title="What we'd build next if we had another week">
+          <p className="mb-4">
+            Concrete gaps we know about, in the order we'd close them. Not vague future ambitions —
+            actual next tasks.
+          </p>
+          <ol className="space-y-4 mt-3 pl-0 list-none">
+            <li>
+              <div className="text-sm font-semibold text-text">1. Shareable filter URLs</div>
+              <div className="text-sm text-mute mt-1">
+                Right now filters, tuner settings, and which candidate you're looking at live in browser
+                memory — refresh and it's gone. Making these part of the URL means a recruiter can send a
+                colleague &ldquo;the JOB001 warm-intro list&rdquo; as a link. Highest-value UX gap; ~2 hrs.
+              </div>
+            </li>
+            <li>
+              <div className="text-sm font-semibold text-text">2. Real "employee replied yes/no" tracking</div>
+              <div className="text-sm text-mute mt-1">
+                When a recruiter asks an employee to intro a candidate, we currently track the request
+                but not the reply. Adding &ldquo;yes / no / not a fit / never heard back&rdquo; responses
+                gives us labelled examples — which employees' vouches convert, which candidates got
+                intro'd. That data feeds back into the scoring model as ground truth. This is what turns
+                a good pipeline into a learning one.
+              </div>
+            </li>
+            <li>
+              <div className="text-sm font-semibold text-text">3. Real Claude API for the outreach draft</div>
+              <div className="text-sm text-mute mt-1">
+                Flip a config switch (<code>--use-live-narrator</code>) and the templated outreach
+                message becomes a real Claude call on the same evidence dict. Two-line change; the
+                whole surface is already there.
+              </div>
+            </li>
+            <li>
+              <div className="text-sm font-semibold text-text">4. Vector-search prefilter for scale</div>
+              <div className="text-sm text-mute mt-1">
+                Today's pool is 75 rows × 4 jobs = 300 scoring ops. At hundreds of conferences and
+                thousands of contacts, that grows quickly. Before scoring, run a cheap vector-similarity
+                search to shortlist ~200 plausible candidates per job — then let the transparent scorer
+                do its work on that subset. Explainability preserved where it matters (in the final
+                ranking); cost cut where it matters (early filtering).
+              </div>
+            </li>
+            <li>
+              <div className="text-sm font-semibold text-text">5. Fairness monitoring on shortlists</div>
+              <div className="text-sm text-mute mt-1">
+                Network-based signals (mutual connections, shared employers) encode existing bias fast
+                and quietly — the pool starts to look like the current team. We'd track shortlist
+                composition across gender, geography, and channel as a first-class metric, and alert
+                when the pipeline drifts toward homogeneity.
+              </div>
+            </li>
+            <li>
+              <div className="text-sm font-semibold text-text">6. Hire-outcome feedback loop</div>
+              <div className="text-sm text-mute mt-1">
+                Which shortlisted candidates actually replied, converted to interview, got offered, got
+                hired? Every one is a labelled example. Use them to re-weight the model quarterly rather
+                than guessing at the numbers. Requires ATS integration (Comeet outcomes → BigQuery).
+              </div>
+            </li>
           </ol>
         </Section>
 
