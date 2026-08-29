@@ -209,51 +209,70 @@ export default function CandidateCard({
   );
 }
 
-/* Compact fit visualization — 5 mini component bars stacked horizontally.
-   Each bar's fill height = raw score (0-1); the width is proportional to the
-   component's weight so you can eyeball "who's carrying this score." */
+/* Fit breakdown — one horizontal bar of 100 units, divided into 5 segments
+   by weight. Each segment is FILLED to `raw × weight` and left EMPTY for the
+   shortfall. Missing points show as a stone-colored gap at the end. Reads
+   like a progress bar built out of the 5 components — a recruiter can
+   immediately see "family carrying, nice-to-have dragging." */
 function FitBreakdownMiniBars({
   components, total,
 }: {
   components: FitForJob["components"];
   total: number;
 }) {
-  const parts: Array<{ key: string; label: string; short: string; raw: number; weight: number; color: string }> = [
-    { key: "required_skills", label: "Required skills · weight 35",  short: "skills",  raw: components.required_skills, weight: 35, color: "bg-emerald-500" },
-    { key: "role_family",     label: "Role family match · weight 25", short: "family",  raw: components.role_family,     weight: 25, color: "bg-emerald-600" },
-    { key: "seniority",       label: "Seniority band · weight 15",    short: "senior",  raw: components.seniority,       weight: 15, color: "bg-teal-500" },
-    { key: "domain",          label: "Sports/media domain · weight 15", short: "domain",  raw: components.domain,        weight: 15, color: "bg-teal-600" },
-    { key: "nice_to_have",    label: "Nice-to-have · weight 10",      short: "nice",    raw: components.nice_to_have,    weight: 10, color: "bg-cyan-500" },
+  const parts: Array<{ key: string; label: string; short: string; raw: number; weight: number; fill: string; empty: string }> = [
+    { key: "required_skills", label: "Required skills",  short: "Skills",   raw: components.required_skills, weight: 35, fill: "bg-emerald-600", empty: "bg-emerald-100" },
+    { key: "role_family",     label: "Role family",       short: "Family",   raw: components.role_family,     weight: 25, fill: "bg-emerald-700", empty: "bg-emerald-100" },
+    { key: "seniority",       label: "Seniority band",    short: "Senior",   raw: components.seniority,       weight: 15, fill: "bg-teal-600",    empty: "bg-teal-100" },
+    { key: "domain",          label: "Sports/media domain", short: "Domain", raw: components.domain,          weight: 15, fill: "bg-teal-700",    empty: "bg-teal-100" },
+    { key: "nice_to_have",    label: "Nice-to-have",      short: "Nice",     raw: components.nice_to_have,    weight: 10, fill: "bg-cyan-600",    empty: "bg-cyan-100" },
   ];
-  const maxRaw = 1.0;
 
   return (
     <div className="mt-3">
       <div className="flex items-baseline justify-between mb-1.5">
-        <span className="text-[10px] uppercase tracking-wider text-mute font-semibold">Fit breakdown</span>
+        <span className="text-[10px] uppercase tracking-wider text-mute font-semibold">
+          Fit breakdown · what's carrying, what's dragging
+        </span>
         <span className="text-[10px] text-mute">
-          weighted total <span className="text-text font-mono font-semibold tabular">{total.toFixed(1)}</span>
+          <span className="text-text font-mono font-semibold tabular">{total.toFixed(1)}</span> of 100
         </span>
       </div>
-      <div className="flex items-end gap-1.5 h-12" role="img" aria-label={`Fit score ${total.toFixed(1)} across 5 components`}>
+
+      {/* The 100-unit bar: 5 weighted segments with fill = raw × weight */}
+      <div className="flex items-stretch h-2 rounded-sm overflow-hidden gap-px" role="img" aria-label={`Fit score ${total.toFixed(1)} across 5 components`}>
+        {parts.map(p => (
+          <div
+            key={p.key}
+            className="relative overflow-hidden"
+            style={{ flexGrow: p.weight }}
+            title={`${p.label} · weight ${p.weight} · raw ${(p.raw * 100).toFixed(0)}% · contributes ${(p.raw * p.weight).toFixed(1)}`}
+          >
+            <div className={`absolute inset-0 ${p.empty}`} />
+            <div
+              className={`absolute inset-y-0 left-0 ${p.fill}`}
+              style={{ width: `${Math.min(100, p.raw * 100)}%` }}
+            />
+          </div>
+        ))}
+      </div>
+
+      {/* Per-component readout — bigger numbers, weakest highlighted amber */}
+      <div className="mt-2 grid grid-cols-5 gap-1">
         {parts.map(p => {
-          const heightPct = (p.raw / maxRaw) * 100;
           const contribution = p.raw * p.weight;
+          const isWeakest = p.raw < 0.5;
           return (
             <div
               key={p.key}
-              className="flex-1 min-w-0 flex flex-col items-center justify-end h-full group cursor-help"
-              title={`${p.label}\nraw: ${(p.raw * 100).toFixed(0)}%\ncontribution: ${contribution.toFixed(1)} of ${p.weight}`}
-              style={{ flexGrow: p.weight }}
+              className={`text-center rounded px-1 py-0.5 ${isWeakest ? "bg-amber-50" : ""}`}
+              title={p.label}
             >
-              <div className="w-full h-full relative bg-stone-100 rounded-sm overflow-hidden">
-                <div
-                  className={`absolute bottom-0 left-0 right-0 ${p.color} rounded-sm transition-all group-hover:brightness-110`}
-                  style={{ height: `${Math.max(2, heightPct)}%` }}
-                />
-              </div>
-              <div className="mt-1 text-[9px] text-mute leading-none uppercase tracking-wider">
+              <div className="text-[10px] text-mute uppercase tracking-wider leading-none">
                 {p.short}
+              </div>
+              <div className={`text-[11px] font-mono font-semibold tabular mt-1 ${isWeakest ? "text-amber-800" : "text-text"}`}>
+                {contribution.toFixed(0)}<span className="text-mute font-normal">/{p.weight}</span>
               </div>
             </div>
           );
