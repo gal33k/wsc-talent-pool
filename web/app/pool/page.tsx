@@ -71,12 +71,16 @@ const SOURCE_STYLES: Record<string, string> = {
 };
 
 export default function TalentPoolAudit() {
-  const { pool, loading, error, sessionCandidates } = usePool();
+  const { pool, loading, error, sessionCandidates, getGateOverride } = usePool();
   const [conf, setConf] = useState("all");
   const [decision, setDecision] = useState("all");
   const [source, setSource] = useState("all");
   const [q, setQ] = useState("");
   const [detailId, setDetailId] = useState<string | null>(null);
+
+  // Effective gate = recruiter override wins over pipeline decision.
+  const effectiveGate = (c: { id: string; gate: { decision: string } }) =>
+    getGateOverride(c.id)?.newDecision ?? c.gate.decision;
 
   const rows = useMemo(() => {
     if (!pool) return [];
@@ -87,9 +91,9 @@ export default function TalentPoolAudit() {
     return merged
       .filter(c => source === "all" || (source === "conference"))
       .filter(c => conf === "all" || c.conference.name === conf)
-      .filter(c => decision === "all" || c.gate.decision === decision)
+      .filter(c => decision === "all" || effectiveGate(c) === decision)
       .filter(c => !ql || c.name.toLowerCase().includes(ql) || c.company.toLowerCase().includes(ql) || (c.title || "").toLowerCase().includes(ql));
-  }, [pool, sessionCandidates, conf, decision, source, q]);
+  }, [pool, sessionCandidates, conf, decision, source, q, getGateOverride]);
 
   if (loading) return <main className="p-8 text-mute text-sm">Loading pool…</main>;
   if (error) return <main className="p-8 text-red-600 text-sm">Error: {error}</main>;
@@ -97,7 +101,8 @@ export default function TalentPoolAudit() {
 
   const conferences = Array.from(new Set(pool.candidates.map(c => c.conference.name)));
   const counts = pool.candidates.reduce((acc, c) => {
-    acc[c.gate.decision] = (acc[c.gate.decision] || 0) + 1;
+    const d = effectiveGate(c);
+    acc[d] = (acc[d] || 0) + 1;
     return acc;
   }, {} as Record<string, number>);
 
@@ -224,8 +229,9 @@ export default function TalentPoolAudit() {
                     { label: "Signal · family",     get: c => c.gate.signals.role_family ? "yes" : "" },
                     { label: "Signal · skills",     get: c => c.gate.signals.skills_evidence ? "yes" : "" },
                     { label: "Signal · proximity",  get: c => c.gate.signals.proximity ? "yes" : "" },
-                    { label: "Decision",      get: c => c.gate.decision },
-                    { label: "Reason",        get: c => c.gate.reason },
+                    { label: "Decision",      get: c => effectiveGate(c) },
+                    { label: "Pipeline decision", get: c => c.gate.decision },
+                    { label: "Reason",        get: c => getGateOverride(c.id)?.reason ?? c.gate.reason },
                     { label: "LinkedIn",      get: c => c.linkedin_url },
                   ]
                 );
@@ -300,9 +306,19 @@ export default function TalentPoolAudit() {
                     </td>
                   ))}
                   <td className="px-4 py-2.5">
-                    <span className={`inline-flex items-center rounded-full border px-2 py-0.5 text-[11px] font-medium ${DECISION_STYLES[c.gate.decision]}`}>
-                      {c.gate.decision}
-                    </span>
+                    {(() => {
+                      const eff = effectiveGate(c);
+                      const overridden = eff !== c.gate.decision;
+                      return (
+                        <span
+                          className={`inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[11px] font-medium ${DECISION_STYLES[eff]}`}
+                          title={overridden ? `Pipeline: ${c.gate.decision} → recruiter override: ${eff}` : undefined}
+                        >
+                          {eff}
+                          {overridden && <span className="text-[9px] opacity-70">·override</span>}
+                        </span>
+                      );
+                    })()}
                   </td>
                   <td className="px-4 py-2.5 text-xs text-dim max-w-md" title={c.gate.reason}>
                     {friendlyGateReason(c)}

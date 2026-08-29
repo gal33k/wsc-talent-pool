@@ -45,6 +45,15 @@ export type BqActivity = {
   rows?: number;
 };
 
+// Manual gate-decision override — recruiter promoting a HOLD to ADMIT, or
+// confirming a REJECT. Article-22 human decision on top of the pipeline output.
+export type GateOverrideEntry = {
+  candidateId: string;
+  newDecision: "ADMIT" | "REJECT";  // original decision was HOLD (or reversal of REJECT → ADMIT)
+  reason: string;
+  addedAt: string;
+};
+
 export type IntroStatus = "queued" | "sent" | "accepted" | "declined";
 
 // Session-only additions to the pool (captured via /capture or /referrals).
@@ -93,6 +102,12 @@ type Ctx = {
   blacklistCandidate: (candidateId: string, reason: string) => void;
   unblacklistCandidate: (candidateId: string) => void;
   saveNote: (candidateId: string, text: string) => void;
+
+  // Gate-decision overrides — recruiter admits a HOLD or reverses a REJECT.
+  gateOverrides: GateOverrideEntry[];
+  getGateOverride: (candidateId: string) => GateOverrideEntry | undefined;
+  overrideGate: (candidateId: string, newDecision: "ADMIT" | "REJECT", reason: string) => void;
+  removeGateOverride: (candidateId: string) => void;
 
   // BigQuery mock activity (session-only)
   bqActivity: BqActivity[];
@@ -143,6 +158,7 @@ export function PoolProvider({ children }: { children: ReactNode }) {
   const [overrides, setOverrides] = useState<OverrideEntry[]>([]);
   const [blacklist, setBlacklist] = useState<BlacklistEntry[]>([]);
   const [notes, setNotes] = useState<NoteEntry[]>([]);
+  const [gateOverrides, setGateOverrides] = useState<GateOverrideEntry[]>([]);
   const [bqActivity, setBqActivity] = useState<BqActivity[]>([]);
   const [introRequests, setIntroRequests] = useState<IntroRequest[]>([]);
 
@@ -307,6 +323,35 @@ export function PoolProvider({ children }: { children: ReactNode }) {
     });
   }, [logBq]);
 
+  const getGateOverride = useCallback(
+    (candidateId: string) => gateOverrides.find(g => g.candidateId === candidateId),
+    [gateOverrides]
+  );
+
+  const overrideGate = useCallback((candidateId: string, newDecision: "ADMIT" | "REJECT", reason: string) => {
+    setGateOverrides(prev => {
+      const existing = prev.find(g => g.candidateId === candidateId);
+      const entry = { candidateId, newDecision, reason, addedAt: new Date().toISOString() };
+      return existing ? prev.map(g => (g === existing ? entry : g)) : [...prev, entry];
+    });
+    logBq({
+      op: "INSERT",
+      table: "wsc.hitl.gate_overrides",
+      sql: `INSERT INTO wsc.hitl.gate_overrides (contact_id, new_decision, reason, actor, ts)\nVALUES ('${candidateId}', '${newDecision}', ${JSON.stringify(reason)}, 'recruiter@wsc', CURRENT_TIMESTAMP())`,
+      rows: 1,
+    });
+  }, [logBq]);
+
+  const removeGateOverride = useCallback((candidateId: string) => {
+    setGateOverrides(prev => prev.filter(g => g.candidateId !== candidateId));
+    logBq({
+      op: "DELETE",
+      table: "wsc.hitl.gate_overrides",
+      sql: `DELETE FROM wsc.hitl.gate_overrides WHERE contact_id = '${candidateId}'`,
+      rows: 1,
+    });
+  }, [logBq]);
+
   const getIntroRequest = useCallback(
     (candidateId: string, jobId: string) =>
       introRequests.find(r => r.candidateId === candidateId && r.jobId === jobId),
@@ -389,6 +434,7 @@ export function PoolProvider({ children }: { children: ReactNode }) {
       overrides, blacklist, notes,
       isOverridden, isBlacklisted, getNote,
       overrideCandidate, removeOverride, blacklistCandidate, unblacklistCandidate, saveNote,
+      gateOverrides, getGateOverride, overrideGate, removeGateOverride,
       bqActivity, logBq,
       introRequests, getIntroRequest, requestIntro, updateIntroStatus, cancelIntroRequest,
       sessionCandidates, addSessionCandidate,

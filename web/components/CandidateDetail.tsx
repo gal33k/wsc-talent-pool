@@ -23,8 +23,11 @@ export default function CandidateDetail({
     return () => window.removeEventListener("keydown", handler);
   }, [onClose]);
 
-  if (!fit) return null;
-  const fitScore = computeFit(fit.components, fitWeights);
+  // HOLD/REJECT candidates don't have per-job fit — still open the dossier so
+  // the recruiter can review the gate reason, notes, skills, AND take a decision
+  // (admit, reject, blacklist, add note).
+  const hasFit = !!fit;
+  const fitScore = hasFit ? computeFit(fit!.components, fitWeights) : 0;
   const warmthScore = computeWarmth(candidate.warmth.components, warmthWeights);
   const maxFitWeight = Math.max(...Object.values(fitWeights)) || 40;
   const maxWarmthWeight = Math.max(...Object.values(warmthWeights)) || 40;
@@ -76,38 +79,51 @@ export default function CandidateDetail({
           </div>
 
           {/* Score header */}
-          <div className="grid grid-cols-2 gap-3 mt-5">
-            <div className="rounded-lg border border-indigo-100 bg-indigo-50/50 px-4 py-3">
-              <div className="text-[10px] font-semibold uppercase tracking-wider text-indigo-700">Fit</div>
-              <div className="flex items-baseline gap-2 mt-1">
-                <div className="text-2xl font-bold text-indigo-900 tabular">{fitScore.toFixed(1)}</div>
-                <div className="text-xs text-indigo-700/70">/ 100</div>
+          <div className={`grid gap-3 mt-5 ${hasFit ? "grid-cols-2" : "grid-cols-1"}`}>
+            {hasFit && (
+              <div className="rounded-lg border border-indigo-100 bg-indigo-50/50 px-4 py-3">
+                <div className="text-[10px] font-semibold uppercase tracking-wider text-indigo-700">Fit</div>
+                <div className="flex items-baseline gap-2 mt-1">
+                  <div className="text-2xl font-bold text-indigo-900 tabular">{fitScore.toFixed(1)}</div>
+                  <div className="text-xs text-indigo-700/70">/ 100</div>
+                </div>
+                <div className="text-[11px] text-indigo-700/70 mt-0.5">competence for {job.title}</div>
               </div>
-              <div className="text-[11px] text-indigo-700/70 mt-0.5">competence for {job.title}</div>
-            </div>
+            )}
             <div className="rounded-lg border border-emerald-100 bg-emerald-50/50 px-4 py-3">
-              <div className="text-[10px] font-semibold uppercase tracking-wider text-emerald-700">Warmth</div>
+              <div className="text-[10px] font-semibold uppercase tracking-wider text-emerald-700">Signal</div>
               <div className="flex items-baseline gap-2 mt-1">
                 <div className="text-2xl font-bold text-emerald-900 tabular">{warmthScore.toFixed(1)}</div>
                 <div className="text-xs text-emerald-700/70">/ 100</div>
               </div>
-              <div className="text-[11px] text-emerald-700/70 mt-0.5">reachability index</div>
+              <div className="text-[11px] text-emerald-700/70 mt-0.5">
+                {hasFit
+                  ? "endorsements + team + reachability"
+                  : `not scored for ${job.title} — gate decision: ${candidate.gate.decision}`}
+              </div>
             </div>
           </div>
         </div>
 
         <div className="px-6 py-6 space-y-7">
-          <CandidateActions candidateId={candidate.id} jobId={job.job_id} jobTitle={job.title} />
+          <CandidateActions
+            candidateId={candidate.id}
+            jobId={job.job_id}
+            jobTitle={job.title}
+            gateDecision={candidate.gate.decision}
+          />
 
-          <Section title="Fit breakdown" sub="5 components, weight-independent">
-            <div className="rounded-lg border border-border bg-white p-4">
-              <ComponentBar label="Required skills" value={fit.components.required_skills} weight={fitWeights.required_skills} weightMax={maxFitWeight} />
-              <ComponentBar label="Role family"     value={fit.components.role_family}     weight={fitWeights.role_family}     weightMax={maxFitWeight} />
-              <ComponentBar label="Seniority"       value={fit.components.seniority}       weight={fitWeights.seniority}       weightMax={maxFitWeight} />
-              <ComponentBar label="Domain"          value={fit.components.domain}          weight={fitWeights.domain}          weightMax={maxFitWeight} />
-              <ComponentBar label="Nice-to-have"    value={fit.components.nice_to_have}    weight={fitWeights.nice_to_have}    weightMax={maxFitWeight} />
-            </div>
-          </Section>
+          {hasFit && (
+            <Section title="Fit breakdown" sub="5 components, weight-independent">
+              <div className="rounded-lg border border-border bg-white p-4">
+                <ComponentBar label="Required skills" value={fit!.components.required_skills} weight={fitWeights.required_skills} weightMax={maxFitWeight} />
+                <ComponentBar label="Role family"     value={fit!.components.role_family}     weight={fitWeights.role_family}     weightMax={maxFitWeight} />
+                <ComponentBar label="Seniority"       value={fit!.components.seniority}       weight={fitWeights.seniority}       weightMax={maxFitWeight} />
+                <ComponentBar label="Domain"          value={fit!.components.domain}          weight={fitWeights.domain}          weightMax={maxFitWeight} />
+                <ComponentBar label="Nice-to-have"    value={fit!.components.nice_to_have}    weight={fitWeights.nice_to_have}    weightMax={maxFitWeight} />
+              </div>
+            </Section>
+          )}
 
           <Section title="Signal breakdown" sub="8 components — endorsements + team + culture + reachability">
             <div className="rounded-lg border border-border bg-white p-4">
@@ -133,21 +149,29 @@ export default function CandidateDetail({
             </div>
           </Section>
 
-          <Section title="Required skills">
-            <div className="flex flex-wrap gap-1.5">
-              {fit.matched_required.map(s => <Chip key={s} variant="success">✓ {s}</Chip>)}
-              {fit.matched_required_family.map(s => <Chip key={s + "f"} variant="family">~ {s} (family)</Chip>)}
-              {fit.missing_required.map(s => <Chip key={s + "x"} variant="outlined">✗ {s}</Chip>)}
-            </div>
-            {fit.matched_nice_to_have.length > 0 && (
-              <div className="mt-3">
-                <div className="text-[11px] text-mute mb-1.5">Nice-to-have matches</div>
-                <div className="flex flex-wrap gap-1.5">
-                  {fit.matched_nice_to_have.map(s => <Chip key={s} variant="info">{s}</Chip>)}
-                </div>
+          {hasFit ? (
+            <Section title="Required skills">
+              <div className="flex flex-wrap gap-1.5">
+                {fit!.matched_required.map(s => <Chip key={s} variant="success">✓ {s}</Chip>)}
+                {fit!.matched_required_family.map(s => <Chip key={s + "f"} variant="family">~ {s} (family)</Chip>)}
+                {fit!.missing_required.map(s => <Chip key={s + "x"} variant="outlined">✗ {s}</Chip>)}
               </div>
-            )}
-          </Section>
+              {fit!.matched_nice_to_have.length > 0 && (
+                <div className="mt-3">
+                  <div className="text-[11px] text-mute mb-1.5">Nice-to-have matches</div>
+                  <div className="flex flex-wrap gap-1.5">
+                    {fit!.matched_nice_to_have.map(s => <Chip key={s} variant="info">{s}</Chip>)}
+                  </div>
+                </div>
+              )}
+            </Section>
+          ) : candidate.skills.length > 0 ? (
+            <Section title="Skills on file" sub="candidate has not been scored against a role yet">
+              <div className="flex flex-wrap gap-1.5">
+                {candidate.skills.map(s => <Chip key={s} variant="info">{s}</Chip>)}
+              </div>
+            </Section>
+          ) : null}
 
           {(candidate.warmth.shared_employers.length > 0 || candidate.warmth.mutuals.length > 0) && (
             <Section title="Warm paths">
@@ -220,29 +244,33 @@ export default function CandidateDetail({
             </div>
           </Section>
 
-          <Section title="Recruiter brief" sub="rendered by mock_narrator — production: single Claude call">
-            <div className="rounded-lg border border-indigo-100 bg-indigo-50/30 p-4 text-sm text-text leading-relaxed">
-              {fit.why_summary}
-            </div>
-          </Section>
+          {hasFit && (
+            <>
+              <Section title="Recruiter brief" sub="rendered by mock_narrator — production: single Claude call">
+                <div className="rounded-lg border border-indigo-100 bg-indigo-50/30 p-4 text-sm text-text leading-relaxed">
+                  {fit!.why_summary}
+                </div>
+              </Section>
 
-          <Section title="Outreach draft" actions={
-            <button
-              onClick={() => {
-                navigator.clipboard?.writeText(fit.outreach_draft);
-                setCopied(true);
-                setTimeout(() => setCopied(false), 1500);
-              }}
-              className="inline-flex items-center gap-1.5 rounded-md text-xs font-medium text-indigo-600 hover:text-indigo-800 transition-colors"
-            >
-              <Icon name="copy" className="w-3.5 h-3.5" strokeWidth={2} />
-              {copied ? "Copied" : "Copy"}
-            </button>
-          }>
-            <div className="rounded-lg border border-border bg-white p-4 text-sm text-text leading-relaxed whitespace-pre-wrap">
-              {fit.outreach_draft}
-            </div>
-          </Section>
+              <Section title="Outreach draft" actions={
+                <button
+                  onClick={() => {
+                    navigator.clipboard?.writeText(fit!.outreach_draft);
+                    setCopied(true);
+                    setTimeout(() => setCopied(false), 1500);
+                  }}
+                  className="inline-flex items-center gap-1.5 rounded-md text-xs font-medium text-indigo-600 hover:text-indigo-800 transition-colors"
+                >
+                  <Icon name="copy" className="w-3.5 h-3.5" strokeWidth={2} />
+                  {copied ? "Copied" : "Copy"}
+                </button>
+              }>
+                <div className="rounded-lg border border-border bg-white p-4 text-sm text-text leading-relaxed whitespace-pre-wrap">
+                  {fit!.outreach_draft}
+                </div>
+              </Section>
+            </>
+          )}
         </div>
       </div>
     </div>

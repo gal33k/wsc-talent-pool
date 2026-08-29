@@ -837,9 +837,9 @@ function DesignDoc({ pool: _pool }: { pool: ReturnType<typeof usePool>["pool"] }
           </p>
           <div className="space-y-3 mt-3">
             <Tradeoff
-              title="We don't use which conference someone attended as a gate signal"
+              title="Being at a sports-tech conference doesn't automatically count in your favour"
               choice="Kept out"
-              why="Attendance is opportunity, not fit. Someone who happened to be at a sports-tech conference isn't automatically a sports-tech engineer — they might be a vendor, an analyst, a journalist. If we added 'attended sports conference' as a 4th signal, we'd be double-counting industry and letting the room decide instead of the person's own profile. Kept the three signals independent for that reason." />
+              why="A lot of people at a sports-tech event aren't sports-tech engineers — vendors, analysts, journalists, students, plus-ones. If we gave everyone a bonus just for being in the room, we'd let the venue vouch for people instead of their actual profile. We judge each person on what's on their LinkedIn, not on which door they walked through." />
             <Tradeoff
               title="Filters don't persist in the URL"
               choice="Session only"
@@ -862,11 +862,12 @@ function DesignDoc({ pool: _pool }: { pool: ReturnType<typeof usePool>["pool"] }
           </p>
           <ol className="space-y-4 mt-3 pl-0 list-none">
             <li>
-              <div className="text-sm font-semibold text-text">1. Shareable filter URLs</div>
+              <div className="text-sm font-semibold text-text">1. Shareable links to a specific view</div>
               <div className="text-sm text-mute mt-1">
-                Right now filters, tuner settings, and which candidate you're looking at live in browser
-                memory — refresh and it's gone. Making these part of the URL means a recruiter can send a
-                colleague &ldquo;the JOB001 warm-intro list&rdquo; as a link. Highest-value UX gap; ~2 hrs.
+                Today, if a recruiter filters the shortlist a certain way and wants to send it to a
+                colleague, they have to describe how they got there — the filter resets on refresh.
+                We'd make every view have its own link, so &ldquo;the JOB001 people worth calling this
+                week&rdquo; is one URL a recruiter can paste into Slack. Small change, big daily-use win.
               </div>
             </li>
             <li>
