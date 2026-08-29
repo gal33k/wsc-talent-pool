@@ -57,7 +57,7 @@ src/enrich.py             LinkedIn join; missing profile is a state, not an erro
 src/normalize.py          title canonicalisation, skill expansion, seniority parsing
 src/gate.py               Decision A — domain relevance + pool admission, with reasons
 src/score.py              Decision B — fit_score components
-src/warmpath.py           Decision B — warmth_score components + intro paths
+src/signal.py             Decision B — 8-component Signal axis + intro paths (renamed from warmpath.py)
 src/report.py             CSV writer + standalone HTML view + JSON emitter
 src/integrations/         mock adapters — see docs/09-mock-integrations.md
 

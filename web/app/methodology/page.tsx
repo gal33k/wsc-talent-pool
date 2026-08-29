@@ -1331,7 +1331,7 @@ const SHIPPED: Array<[string, "Done" | "Exceeded" | "Partial" | "Not shipped", s
   ["Executive summary for non-technical HR",     "Done",     "README + TL;DR tab"],
   ["Recruiter view (bonus)",                     "Exceeded", "Full Next.js app · 12+ routes"],
   ["Two decisions, never one function",          "Done",     "src/gate.py + src/score.py"],
-  ["Two scores (fit never touches network)",     "Done",     "src/score.py / src/warmpath.py"],
+  ["Two scores (fit never touches network)",     "Done",     "src/score.py / src/signal.py"],
   ["Transparent — every weight in YAML",         "Done",     "config/scoring.yaml + taxonomy.yaml"],
   ["No LLM decides",                             "Done",     "mock_narrator is deterministic templates"],
   ["Every exclusion has a reason string",        "Done",     "JOB001_excluded.csv + gate.reason"],
