@@ -57,6 +57,13 @@ export default function JobsIndex() {
   const admitted = pool.candidates.filter(c => c.gate.decision === "ADMIT").length;
   const totalShortlisted = jobSummaries.reduce((s, j) => s + j.total, 0);
   const totalCall = jobSummaries.reduce((s, j) => s + j.counts.call, 0);
+  // Admits whose role_family is the same family as one of the open roles —
+  // the "for something I'm actually hiring for" subset. See taxonomy.yaml
+  // job_family_map for the mapping.
+  const openFamilies = new Set(pool.jobs.map(j => j.role_family));
+  const activelyHiring = pool.candidates.filter(
+    c => c.gate.decision === "ADMIT" && openFamilies.has(c.role_family)
+  ).length;
 
   return (
     <main className="max-w-[1400px] mx-auto px-4 py-5 md:px-8 md:py-8">
@@ -103,7 +110,7 @@ export default function JobsIndex() {
       <StatsBar stats={[
         { label: "Open roles",       value: pool.jobs.length,       sub: "hiring right now", iconName: "briefcase" },
         { label: "In the pool",      value: admitted,               sub: `${pool.candidates.length - admitted} filtered out`, iconName: "users" },
-        { label: "Total shortlist",  value: totalShortlisted,       sub: "across all roles", iconName: "list", accent: true },
+        { label: "Actively hiring",  value: activelyHiring,         sub: `admits matching an open role`, iconName: "check", accent: true },
         { label: "Call this week",   value: totalCall,              sub: "warm intro + strong fit", iconName: "trending-up" },
       ]} />
 

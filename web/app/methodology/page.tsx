@@ -622,6 +622,52 @@ function DesignDoc({ pool: _pool }: { pool: ReturnType<typeof usePool>["pool"] }
             <GateResult n="1 of 3" label="Hold"    tone="amber" />
             <GateResult n="0 of 3" label="Reject"  tone="rose"  />
           </div>
+
+          <h4 className="text-sm font-semibold text-text mt-8 mb-2">
+            On top of the gate: are we <em>currently</em> hiring for their role family?
+          </h4>
+          <p>
+            The gate itself is <strong>job-agnostic on purpose</strong> — it answers &ldquo;is
+            this person talent&rdquo; without looking at what roles are open today. That separation
+            is what makes the pool useful next quarter, when today&rsquo;s roles are filled and new
+            ones open.
+          </p>
+          <p>
+            But for the recruiter on Monday morning, the practical question is:{" "}
+            <em>&ldquo;of the {" "}<strong>68 admits</strong>, which are for a role I&rsquo;m
+            actually hiring for right now?&rdquo;</em> So we add a small derived flag on top of
+            the gate: every admit whose <code>role_family</code> matches one of the currently-open
+            roles gets a green <span className="inline-flex items-center gap-1 rounded-full border border-emerald-300 bg-emerald-50 px-1.5 py-0 text-[10px] font-medium text-emerald-800"><span className="w-1 h-1 rounded-full bg-emerald-600" />actively hiring</span> pill next to their gate chip on <a href="/pool/" className="underline hover:no-underline">/pool</a>.
+          </p>
+          <div className="rounded-lg border border-emerald-200 bg-emerald-50/40 p-4 my-4">
+            <div className="text-xs font-semibold text-emerald-900 uppercase tracking-wider mb-2">How the family match works — in one paragraph</div>
+            <div className="text-sm text-emerald-950/90 leading-relaxed">
+              Each candidate gets a <code className="text-[12px]">role_family</code> at ingest by
+              matching their title against patterns in{" "}
+              <code className="text-[12px]">config/taxonomy.yaml → role_families</code>
+              {" "}(e.g. <em>&ldquo;Senior Data Engineer&rdquo;</em> → <code className="text-[12px]">data_engineering</code>).
+              Each open job also has a target family, declared in{" "}
+              <code className="text-[12px]">config/taxonomy.yaml → job_family_map</code>
+              {" "}(e.g. <code className="text-[12px]">JOB004 → data_engineering</code>). The
+              &ldquo;actively hiring&rdquo; pill lights up when a candidate&rsquo;s family exactly
+              equals any open job&rsquo;s family. That&rsquo;s it — no ML, no fuzzy match, one
+              string comparison a recruiter can audit in the YAML.
+            </div>
+            <div className="mt-3 text-xs text-emerald-900/80 border-t border-emerald-200 pt-2.5">
+              Today: <strong>JOB001 → ml_cv</strong> · <strong>JOB002 → backend</strong> ·{" "}
+              <strong>JOB003 → product</strong> · <strong>JOB004 → data_engineering</strong>.
+              Admits in <code className="text-[12px]">platform_devops</code>,{" "}
+              <code className="text-[12px]">ml_general</code>,{" "}
+              <code className="text-[12px]">video_broadcast</code> etc. stay in the pool but
+              don&rsquo;t get the pill — no matching open role.
+            </div>
+          </div>
+          <p>
+            The gate decision itself doesn&rsquo;t change based on which roles are open — a hold
+            doesn&rsquo;t suddenly become an admit because we opened a matching job. That would
+            couple the gate to hiring state and make its output non-reproducible over time. The
+            pill only surfaces information that&rsquo;s already true.
+          </p>
         </Section>
 
         <Section id="scoring" num={3} title="Decision B — two scores, never one">
@@ -1329,6 +1375,7 @@ const TAX_BLOCKS = [
   { title: "Domain lexicon",    description: "Keywords + known companies. Compound tokens for 'media' to avoid false positives.",   example: "sports · broadcast · streaming · cdn · Opta · Sportradar · KINEXON · DAZN" },
   { title: "Employer stoplist", description: "Exact case-insensitive match on employer strings. Filters ~40 false passive warm paths. Active vouches through /referrals are unaffected.", example: "freelance · startup · university · public sector · hospital group · IDF · IDF tech unit · IDF Intelligence Unit" },
   { title: "Company aliases",   description: "Cluster different names for the same organisation. Enables real overlaps to surface. IDF variants are deliberately NOT clustered — they're stoplisted instead.", example: "Opta ~ Opta Sports ~ Stats Perform · Akamai ~ Akamai Technologies ~ Akamai Media" },
+  { title: "Job → family map",  description: "Declares the target role_family for each open job. Powers the fit score's role_family component AND the 'actively hiring' flag on /pool. Add a new role to job_openings.csv + one line here — no code change.", example: "JOB001 → ml_cv · JOB002 → backend · JOB003 → product · JOB004 → data_engineering" },
 ];
 
 const SHIPPED: Array<[string, "Done" | "Exceeded" | "Partial" | "Not shipped", string]> = [

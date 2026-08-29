@@ -99,6 +99,17 @@ export default function TalentPoolAudit() {
     return best;
   };
 
+  // Actively-hiring flag — is this candidate's role_family the same family
+  // as any currently-open role? Different from best-fit (which is fit-driven
+  // and always returns something for admits). This asks the simpler question
+  // a recruiter cares about on Monday morning: "am I hiring for this family
+  // *right now*?"
+  const activelyHiringFor = (c: import("@/lib/types").Candidate): { job_id: string; title: string } | null => {
+    if (!pool) return null;
+    const match = pool.jobs.find(j => j.role_family === c.role_family);
+    return match ? { job_id: match.job_id, title: match.title } : null;
+  };
+
   const rows = useMemo(() => {
     if (!pool) return [];
     const ql = q.trim().toLowerCase();
@@ -122,6 +133,13 @@ export default function TalentPoolAudit() {
     acc[d] = (acc[d] || 0) + 1;
     return acc;
   }, {} as Record<string, number>);
+  // Admitted candidates whose role_family matches at least one currently-open
+  // role. The recruiter's Monday-morning number: "how many people in the pool
+  // are for something I'm hiring for right now?"
+  const activelyHiringFamilies = new Set(pool.jobs.map(j => j.role_family));
+  const activelyHiringCount = pool.candidates.filter(
+    c => effectiveGate(c) === "ADMIT" && activelyHiringFamilies.has(c.role_family)
+  ).length;
 
   return (
     <main className="max-w-[1400px] mx-auto px-4 py-5 md:px-8 md:py-8">
@@ -134,10 +152,10 @@ export default function TalentPoolAudit() {
       </header>
 
       <StatsBar stats={[
-        { label: "Total contacts", value: pool.candidates.length, sub: "across 4 conferences",  iconName: "users" },
-        { label: "Admitted",       value: counts.ADMIT || 0,      sub: "in the talent pool",     iconName: "check", accent: true },
-        { label: "Hold",           value: counts.HOLD || 0,       sub: "for human review",       iconName: "alert" },
-        { label: "Rejected",       value: counts.REJECT || 0,     sub: "with reason recorded",   iconName: "filter" },
+        { label: "Total contacts",   value: pool.candidates.length, sub: "across 4 conferences",           iconName: "users" },
+        { label: "Admitted",         value: counts.ADMIT || 0,      sub: "in the talent pool",             iconName: "check" },
+        { label: "Actively hiring",  value: activelyHiringCount,    sub: `match one of ${pool.jobs.length} open roles`, iconName: "briefcase", accent: true },
+        { label: "Hold / Rejected",  value: (counts.HOLD || 0) + (counts.REJECT || 0), sub: `${counts.HOLD || 0} hold · ${counts.REJECT || 0} rejected`, iconName: "filter" },
       ]} />
 
       {/* Source-channel breakdown + honest note about the seed */}
@@ -243,6 +261,7 @@ export default function TalentPoolAudit() {
                     { label: "Company",       get: c => c.company },
                     { label: "Conference",    get: c => c.conference?.name },
                     { label: "Role family",   get: c => c.role_family },
+                    { label: "Actively hiring",     get: c => activelyHiringFor(c)?.job_id ?? "" },
                     { label: "Top-match role",      get: c => bestFitFor(c)?.jobTitle ?? "" },
                     { label: "Top-match fit",       get: c => { const b = bestFitFor(c); return b ? b.score.toFixed(1) : ""; } },
                     { label: "Signal · family",     get: c => c.gate.signals.role_family ? "yes" : "" },
@@ -352,14 +371,28 @@ export default function TalentPoolAudit() {
                     {(() => {
                       const eff = effectiveGate(c);
                       const overridden = eff !== c.gate.decision;
+                      const hiring = eff === "ADMIT" ? activelyHiringFor(c) : null;
                       return (
-                        <span
-                          className={`inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[11px] font-medium ${DECISION_STYLES[eff]}`}
-                          title={overridden ? `Pipeline: ${c.gate.decision} → recruiter override: ${eff}` : undefined}
-                        >
-                          {eff}
-                          {overridden && <span className="text-[9px] opacity-70">·override</span>}
-                        </span>
+                        <div className="flex flex-col items-start gap-1">
+                          <span
+                            className={`inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[11px] font-medium ${DECISION_STYLES[eff]}`}
+                            title={overridden ? `Pipeline: ${c.gate.decision} → recruiter override: ${eff}` : undefined}
+                          >
+                            {eff}
+                            {overridden && <span className="text-[9px] opacity-70">·override</span>}
+                          </span>
+                          {hiring && (
+                            <a
+                              href={`/jobs/${hiring.job_id}/`}
+                              onClick={e => e.stopPropagation()}
+                              className="inline-flex items-center gap-1 rounded-full border border-emerald-300 bg-emerald-50 px-2 py-0.5 text-[10px] font-medium text-emerald-800 hover:bg-emerald-100 hover:border-emerald-400 transition-colors max-w-[180px]"
+                              title={`Currently hiring for ${hiring.title} (${hiring.job_id}) — this candidate's role family matches`}
+                            >
+                              <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 flex-shrink-0" />
+                              <span className="truncate">actively hiring · {hiring.job_id}</span>
+                            </a>
+                          )}
+                        </div>
                       );
                     })()}
                   </td>

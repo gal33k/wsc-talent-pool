@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-29T20:41:35+00:00",
+  "generated_at": "2026-08-29T21:20:12+00:00",
   "config_version": "scoring.yaml@a0cc243f",
   "defaults": {
     "fit_weights": {
@@ -44,6 +44,7 @@
       "title": "Senior ML Engineer",
       "department": "AI/ML",
       "seniority": "Senior",
+      "role_family": "ml_cv",
       "key_domains": [
         "Sports Video Analysis",
         "Computer Vision",
@@ -67,6 +68,7 @@
       "title": "Backend Engineer",
       "department": "Engineering",
       "seniority": "Mid-Senior",
+      "role_family": "backend",
       "key_domains": [
         "Video Processing",
         "Distributed Systems",
@@ -91,6 +93,7 @@
       "title": "Senior Product Manager - Sports Data",
       "department": "Product",
       "seniority": "Senior",
+      "role_family": "product",
       "key_domains": [
         "Sports Technology",
         "B2B SaaS",
@@ -113,6 +116,7 @@
       "title": "Data Engineer",
       "department": "Data",
       "seniority": "Mid",
+      "role_family": "data_engineering",
       "key_domains": [
         "Sports Data Pipeline",
         "Cloud Infrastructure"
@@ -270,7 +274,7 @@
         "name": "SportsTech Innovation Summit",
         "domain": "Sports Technology & Analytics",
         "date": "2024-11-14",
-        "days_since": 653
+        "days_since": 654
       },
       "notes": "",
       "role_family": "ml_general",
@@ -507,7 +511,7 @@
         "name": "SportsTech Innovation Summit",
         "domain": "Sports Technology & Analytics",
         "date": "2024-11-14",
-        "days_since": 653
+        "days_since": 654
       },
       "notes": "Spoke about real-time tracking project",
       "role_family": "ml_cv",
@@ -737,7 +741,7 @@
         "name": "SportsTech Innovation Summit",
         "domain": "Sports Technology & Analytics",
         "date": "2024-11-14",
-        "days_since": 653
+        "days_since": 654
       },
       "notes": "",
       "role_family": "ml_general",
@@ -803,7 +807,7 @@
         "name": "SportsTech Innovation Summit",
         "domain": "Sports Technology & Analytics",
         "date": "2024-11-14",
-        "days_since": 653
+        "days_since": 654
       },
       "notes": "Very strong background in broadcast",
       "role_family": "ml_cv",
@@ -1013,7 +1017,7 @@
         "name": "SportsTech Innovation Summit",
         "domain": "Sports Technology & Analytics",
         "date": "2024-11-14",
-        "days_since": 653
+        "days_since": 654
       },
       "notes": "",
       "role_family": "backend",
@@ -1220,7 +1224,7 @@
         "name": "SportsTech Innovation Summit",
         "domain": "Sports Technology & Analytics",
         "date": "2024-11-14",
-        "days_since": 653
+        "days_since": 654
       },
       "notes": "Mentioned interest in video tech",
       "role_family": "data_engineering",
@@ -1432,7 +1436,7 @@
         "name": "SportsTech Innovation Summit",
         "domain": "Sports Technology & Analytics",
         "date": "2024-11-14",
-        "days_since": 653
+        "days_since": 654
       },
       "notes": "",
       "role_family": "backend",
@@ -1639,7 +1643,7 @@
         "name": "SportsTech Innovation Summit",
         "domain": "Sports Technology & Analytics",
         "date": "2024-11-14",
-        "days_since": 653
+        "days_since": 654
       },
       "notes": "",
       "role_family": "product",
@@ -1832,7 +1836,7 @@
         "name": "SportsTech Innovation Summit",
         "domain": "Sports Technology & Analytics",
         "date": "2024-11-14",
-        "days_since": 653
+        "days_since": 654
       },
       "notes": "Works on live sports streaming pipeline",
       "role_family": "platform_devops",
@@ -2063,7 +2067,7 @@
         "name": "SportsTech Innovation Summit",
         "domain": "Sports Technology & Analytics",
         "date": "2024-11-14",
-        "days_since": 653
+        "days_since": 654
       },
       "notes": "",
       "role_family": "backend",
@@ -2260,7 +2264,7 @@
         "name": "SportsTech Innovation Summit",
         "domain": "Sports Technology & Analytics",
         "date": "2024-11-14",
-        "days_since": 653
+        "days_since": 654
       },
       "notes": "Team at NBA working on player tracking",
       "role_family": "data_engineering",
@@ -2489,7 +2493,7 @@
         "name": "SportsTech Innovation Summit",
         "domain": "Sports Technology & Analytics",
         "date": "2024-11-14",
-        "days_since": 653
+        "days_since": 654
       },
       "notes": "",
       "role_family": "not_talent",
@@ -2555,7 +2559,7 @@
         "name": "SportsTech Innovation Summit",
         "domain": "Sports Technology & Analytics",
         "date": "2024-11-14",
-        "days_since": 653
+        "days_since": 654
       },
       "notes": "Published papers on sports event detection",
       "role_family": "ml_general",
@@ -2788,7 +2792,7 @@
         "name": "SportsTech Innovation Summit",
         "domain": "Sports Technology & Analytics",
         "date": "2024-11-14",
-        "days_since": 653
+        "days_since": 654
       },
       "notes": "",
       "role_family": "backend",
@@ -2985,7 +2989,7 @@
         "name": "SportsTech Innovation Summit",
         "domain": "Sports Technology & Analytics",
         "date": "2024-11-14",
-        "days_since": 653
+        "days_since": 654
       },
       "notes": "5 yrs at Sportradar on data feeds",
       "role_family": "backend",
@@ -3208,7 +3212,7 @@
         "name": "SportsTech Innovation Summit",
         "domain": "Sports Technology & Analytics",
         "date": "2024-11-14",
-        "days_since": 653
+        "days_since": 654
       },
       "notes": "",
       "role_family": "data_analytics",
@@ -3405,7 +3409,7 @@
         "name": "SportsTech Innovation Summit",
         "domain": "Sports Technology & Analytics",
         "date": "2024-11-14",
-        "days_since": 653
+        "days_since": 654
       },
       "notes": "Works on real-time sports data ingestion at DAZN",
       "role_family": "data_engineering",
@@ -3623,7 +3627,7 @@
         "name": "SportsTech Innovation Summit",
         "domain": "Sports Technology & Analytics",
         "date": "2024-11-14",
-        "days_since": 653
+        "days_since": 654
       },
       "notes": "",
       "role_family": "not_talent",
@@ -3688,7 +3692,7 @@
         "name": "SportsTech Innovation Summit",
         "domain": "Sports Technology & Analytics",
         "date": "2024-11-14",
-        "days_since": 653
+        "days_since": 654
       },
       "notes": "Tracking algorithms for NBA/EPL",
       "role_family": "ml_cv",
@@ -3891,7 +3895,7 @@
         "name": "SportsTech Innovation Summit",
         "domain": "Sports Technology & Analytics",
         "date": "2024-11-14",
-        "days_since": 653
+        "days_since": 654
       },
       "notes": "",
       "role_family": "backend",
@@ -4087,7 +4091,7 @@
         "name": "SportsTech Innovation Summit",
         "domain": "Sports Technology & Analytics",
         "date": "2024-11-14",
-        "days_since": 653
+        "days_since": 654
       },
       "notes": "Building data products for broadcast rights",
       "role_family": "product",
@@ -4296,7 +4300,7 @@
         "name": "SportsTech Innovation Summit",
         "domain": "Sports Technology & Analytics",
         "date": "2024-11-14",
-        "days_since": 653
+        "days_since": 654
       },
       "notes": "",
       "role_family": "backend",
@@ -4494,7 +4498,7 @@
         "name": "SportsTech Innovation Summit",
         "domain": "Sports Technology & Analytics",
         "date": "2024-11-14",
-        "days_since": 653
+        "days_since": 654
       },
       "notes": "Focused on sports media clients at AWS",
       "role_family": "sales_engineering",
@@ -4707,7 +4711,7 @@
         "name": "SportsTech Innovation Summit",
         "domain": "Sports Technology & Analytics",
         "date": "2024-11-14",
-        "days_since": 653
+        "days_since": 654
       },
       "notes": "",
       "role_family": "data_engineering",
@@ -4904,7 +4908,7 @@
         "name": "SportsTech Innovation Summit",
         "domain": "Sports Technology & Analytics",
         "date": "2024-11-15",
-        "days_since": 652
+        "days_since": 653
       },
       "notes": "Computer vision for sports highlights",
       "role_family": "ml_general",
@@ -5117,7 +5121,7 @@
         "name": "SportsTech Innovation Summit",
         "domain": "Sports Technology & Analytics",
         "date": "2024-11-15",
-        "days_since": 652
+        "days_since": 653
       },
       "notes": "",
       "role_family": "platform_devops",
@@ -5316,7 +5320,7 @@
         "name": "SportsTech Innovation Summit",
         "domain": "Sports Technology & Analytics",
         "date": "2024-11-15",
-        "days_since": 652
+        "days_since": 653
       },
       "notes": "Works with professional football clubs",
       "role_family": "data_analytics",
@@ -5522,7 +5526,7 @@
         "name": "SportsTech Innovation Summit",
         "domain": "Sports Technology & Analytics",
         "date": "2024-11-15",
-        "days_since": 652
+        "days_since": 653
       },
       "notes": "",
       "role_family": "backend",
@@ -5719,7 +5723,7 @@
         "name": "SportsTech Innovation Summit",
         "domain": "Sports Technology & Analytics",
         "date": "2024-11-15",
-        "days_since": 652
+        "days_since": 653
       },
       "notes": "Betting data & sports integrity pipelines",
       "role_family": "data_engineering",
@@ -5937,7 +5941,7 @@
         "name": "SportsTech Innovation Summit",
         "domain": "Sports Technology & Analytics",
         "date": "2024-11-15",
-        "days_since": 652
+        "days_since": 653
       },
       "notes": "",
       "role_family": "ml_general",
@@ -6004,7 +6008,7 @@
         "name": "SportsTech Innovation Summit",
         "domain": "Sports Technology & Analytics",
         "date": "2024-11-15",
-        "days_since": 652
+        "days_since": 653
       },
       "notes": "Streaming infrastructure for live sports",
       "role_family": "backend",
@@ -6218,7 +6222,7 @@
         "name": "SportsTech Innovation Summit",
         "domain": "Sports Technology & Analytics",
         "date": "2024-11-15",
-        "days_since": 652
+        "days_since": 653
       },
       "notes": "",
       "role_family": "backend",
@@ -6416,7 +6420,7 @@
         "name": "SportsTech Innovation Summit",
         "domain": "Sports Technology & Analytics",
         "date": "2024-11-15",
-        "days_since": 652
+        "days_since": 653
       },
       "notes": "Real-time IoT data processing for sports",
       "role_family": "backend",
@@ -6637,7 +6641,7 @@
         "name": "SportsTech Innovation Summit",
         "domain": "Sports Technology & Analytics",
         "date": "2024-11-15",
-        "days_since": 652
+        "days_since": 653
       },
       "notes": "",
       "role_family": "product",
@@ -6828,7 +6832,7 @@
         "name": "SportsTech Innovation Summit",
         "domain": "Sports Technology & Analytics",
         "date": "2024-11-15",
-        "days_since": 652
+        "days_since": 653
       },
       "notes": "Automated highlight generation at Sky",
       "role_family": "ml_general",
@@ -7047,7 +7051,7 @@
         "name": "SportsTech Innovation Summit",
         "domain": "Sports Technology & Analytics",
         "date": "2024-11-15",
-        "days_since": 652
+        "days_since": 653
       },
       "notes": "",
       "role_family": "not_talent",
@@ -7113,7 +7117,7 @@
         "name": "SportsTech Innovation Summit",
         "domain": "Sports Technology & Analytics",
         "date": "2024-11-15",
-        "days_since": 652
+        "days_since": 653
       },
       "notes": "OTT and digital sports products for broadcasters",
       "role_family": "product",
@@ -7337,7 +7341,7 @@
         "name": "SportsTech Innovation Summit",
         "domain": "Sports Technology & Analytics",
         "date": "2024-11-15",
-        "days_since": 652
+        "days_since": 653
       },
       "notes": "",
       "role_family": "data_analytics",
@@ -7536,7 +7540,7 @@
         "name": "SportsTech Innovation Summit",
         "domain": "Sports Technology & Analytics",
         "date": "2024-11-15",
-        "days_since": 652
+        "days_since": 653
       },
       "notes": "Sports broadcast data pipelines",
       "role_family": "data_engineering",
@@ -7748,7 +7752,7 @@
         "name": "SportsTech Innovation Summit",
         "domain": "Sports Technology & Analytics",
         "date": "2024-11-15",
-        "days_since": 652
+        "days_since": 653
       },
       "notes": "Player analytics and game data at NFL",
       "role_family": "data_engineering",
@@ -7985,7 +7989,7 @@
         "name": "Data & AI Summit Europe",
         "domain": "Data Engineering & AI/ML",
         "date": "2025-03-20",
-        "days_since": 527
+        "days_since": 528
       },
       "notes": "Works on Spark optimization and lakehouse",
       "role_family": "data_engineering",
@@ -8182,7 +8186,7 @@
         "name": "Data & AI Summit Europe",
         "domain": "Data Engineering & AI/ML",
         "date": "2025-03-20",
-        "days_since": 527
+        "days_since": 528
       },
       "notes": "Runs data team for 3 football clubs",
       "role_family": "data_engineering",
@@ -8394,7 +8398,7 @@
         "name": "Data & AI Summit Europe",
         "domain": "Data Engineering & AI/ML",
         "date": "2025-03-20",
-        "days_since": 527
+        "days_since": 528
       },
       "notes": "",
       "role_family": "data_engineering",
@@ -8591,7 +8595,7 @@
         "name": "Data & AI Summit Europe",
         "domain": "Data Engineering & AI/ML",
         "date": "2025-03-20",
-        "days_since": 527
+        "days_since": 528
       },
       "notes": "Recommendation engine for sports streaming",
       "role_family": "ml_general",
@@ -8797,7 +8801,7 @@
         "name": "Data & AI Summit Europe",
         "domain": "Data Engineering & AI/ML",
         "date": "2025-03-20",
-        "days_since": 527
+        "days_since": 528
       },
       "notes": "",
       "role_family": "data_engineering",
@@ -8994,7 +8998,7 @@
         "name": "Data & AI Summit Europe",
         "domain": "Data Engineering & AI/ML",
         "date": "2025-03-20",
-        "days_since": 527
+        "days_since": 528
       },
       "notes": "Deep learning models for event prediction in football",
       "role_family": "ml_general",
@@ -9222,7 +9226,7 @@
         "name": "Data & AI Summit Europe",
         "domain": "Data Engineering & AI/ML",
         "date": "2025-03-21",
-        "days_since": 526
+        "days_since": 527
       },
       "notes": "",
       "role_family": "data_engineering",
@@ -9419,7 +9423,7 @@
         "name": "Data & AI Summit Europe",
         "domain": "Data Engineering & AI/ML",
         "date": "2025-03-21",
-        "days_since": 526
+        "days_since": 527
       },
       "notes": "Player performance modeling at Benfica",
       "role_family": "ml_general",
@@ -9623,7 +9627,7 @@
         "name": "Data & AI Summit Europe",
         "domain": "Data Engineering & AI/ML",
         "date": "2025-03-21",
-        "days_since": 526
+        "days_since": 527
       },
       "notes": "",
       "role_family": "data_engineering",
@@ -9822,7 +9826,7 @@
         "name": "Data & AI Summit Europe",
         "domain": "Data Engineering & AI/ML",
         "date": "2025-03-21",
-        "days_since": 526
+        "days_since": 527
       },
       "notes": "Sports & media verticals at AWS EMEA",
       "role_family": "sales_engineering",
@@ -10034,7 +10038,7 @@
         "name": "Data & AI Summit Europe",
         "domain": "Data Engineering & AI/ML",
         "date": "2025-03-21",
-        "days_since": 526
+        "days_since": 527
       },
       "notes": "Building video analytics platform for African leagues",
       "role_family": "product",
@@ -10235,7 +10239,7 @@
         "name": "Data & AI Summit Europe",
         "domain": "Data Engineering & AI/ML",
         "date": "2025-03-21",
-        "days_since": 526
+        "days_since": 527
       },
       "notes": "",
       "role_family": "data_analytics",
@@ -10433,7 +10437,7 @@
         "name": "DevOps World 2025",
         "domain": "DevOps & Platform Engineering",
         "date": "2025-04-10",
-        "days_since": 506
+        "days_since": 507
       },
       "notes": "CDN and streaming infrastructure",
       "role_family": "platform_devops",
@@ -10659,7 +10663,7 @@
         "name": "DevOps World 2025",
         "domain": "DevOps & Platform Engineering",
         "date": "2025-04-10",
-        "days_since": 506
+        "days_since": 507
       },
       "notes": "",
       "role_family": "platform_devops",
@@ -10859,7 +10863,7 @@
         "name": "DevOps World 2025",
         "domain": "DevOps & Platform Engineering",
         "date": "2025-04-10",
-        "days_since": 506
+        "days_since": 507
       },
       "notes": "Runs SRE for live data ingestion pipelines",
       "role_family": "platform_devops",
@@ -11083,7 +11087,7 @@
         "name": "DevOps World 2025",
         "domain": "DevOps & Platform Engineering",
         "date": "2025-04-10",
-        "days_since": 506
+        "days_since": 507
       },
       "notes": "",
       "role_family": "platform_devops",
@@ -11281,7 +11285,7 @@
         "name": "DevOps World 2025",
         "domain": "DevOps & Platform Engineering",
         "date": "2025-04-10",
-        "days_since": 506
+        "days_since": 507
       },
       "notes": "Kubernetes platform for live sports streaming at DAZN",
       "role_family": "platform_devops",
@@ -11497,7 +11501,7 @@
         "name": "DevOps World 2025",
         "domain": "DevOps & Platform Engineering",
         "date": "2025-04-10",
-        "days_since": 506
+        "days_since": 507
       },
       "notes": "",
       "role_family": "platform_devops",
@@ -11695,7 +11699,7 @@
         "name": "DevOps World 2025",
         "domain": "DevOps & Platform Engineering",
         "date": "2025-04-11",
-        "days_since": 505
+        "days_since": 506
       },
       "notes": "Reliability engineering for Turner Sports broadcast",
       "role_family": "platform_devops",
@@ -11909,7 +11913,7 @@
         "name": "DevOps World 2025",
         "domain": "DevOps & Platform Engineering",
         "date": "2025-04-11",
-        "days_since": 505
+        "days_since": 506
       },
       "notes": "",
       "role_family": "platform_devops",
@@ -12109,7 +12113,7 @@
         "name": "DevOps World 2025",
         "domain": "DevOps & Platform Engineering",
         "date": "2025-04-11",
-        "days_since": 505
+        "days_since": 506
       },
       "notes": "Multi-region streaming infrastructure at Sky",
       "role_family": "platform_devops",
@@ -12326,7 +12330,7 @@
         "name": "DevOps World 2025",
         "domain": "DevOps & Platform Engineering",
         "date": "2025-04-11",
-        "days_since": 505
+        "days_since": 506
       },
       "notes": "Live event delivery platform for Ligue 1",
       "role_family": "platform_devops",
@@ -12534,7 +12538,7 @@
         "name": "DevOps World 2025",
         "domain": "DevOps & Platform Engineering",
         "date": "2025-04-11",
-        "days_since": 505
+        "days_since": 506
       },
       "notes": "",
       "role_family": "not_talent",
@@ -12601,7 +12605,7 @@
         "name": "Broadcast & Streaming Technology Expo",
         "domain": "Broadcast & Video Technology",
         "date": "2025-02-06",
-        "days_since": 569
+        "days_since": 570
       },
       "notes": "Live sports streaming for Latin American broadcasters",
       "role_family": "video_broadcast",
@@ -12815,7 +12819,7 @@
         "name": "Broadcast & Streaming Technology Expo",
         "domain": "Broadcast & Video Technology",
         "date": "2025-02-06",
-        "days_since": 569
+        "days_since": 570
       },
       "notes": "",
       "role_family": "video_broadcast",
@@ -13012,7 +13016,7 @@
         "name": "Broadcast & Streaming Technology Expo",
         "domain": "Broadcast & Video Technology",
         "date": "2025-02-06",
-        "days_since": 569
+        "days_since": 570
       },
       "notes": "Real-time highlight clipping pipeline at BBC",
       "role_family": "video_broadcast",
@@ -13232,7 +13236,7 @@
         "name": "Broadcast & Streaming Technology Expo",
         "domain": "Broadcast & Video Technology",
         "date": "2025-02-06",
-        "days_since": 569
+        "days_since": 570
       },
       "notes": "",
       "role_family": "video_broadcast",
@@ -13431,7 +13435,7 @@
         "name": "Broadcast & Streaming Technology Expo",
         "domain": "Broadcast & Video Technology",
         "date": "2025-02-06",
-        "days_since": 569
+        "days_since": 570
       },
       "notes": "Automated sports clipping and captioning",
       "role_family": "ml_cv",
@@ -13639,7 +13643,7 @@
         "name": "Broadcast & Streaming Technology Expo",
         "domain": "Broadcast & Video Technology",
         "date": "2025-02-07",
-        "days_since": 568
+        "days_since": 569
       },
       "notes": "5G broadcast for live sports events",
       "role_family": "sales_engineering",
@@ -13850,7 +13854,7 @@
         "name": "Broadcast & Streaming Technology Expo",
         "domain": "Broadcast & Video Technology",
         "date": "2025-02-07",
-        "days_since": 568
+        "days_since": 569
       },
       "notes": "CDN optimization for live sports at Akamai",
       "role_family": "video_broadcast",
@@ -14080,7 +14084,7 @@
         "name": "Broadcast & Streaming Technology Expo",
         "domain": "Broadcast & Video Technology",
         "date": "2025-02-07",
-        "days_since": 568
+        "days_since": 569
       },
       "notes": "",
       "role_family": "not_talent",
@@ -14146,7 +14150,7 @@
         "name": "Broadcast & Streaming Technology Expo",
         "domain": "Broadcast & Video Technology",
         "date": "2025-02-07",
-        "days_since": 568
+        "days_since": 569
       },
       "notes": "Multi-camera production pipelines for sports rights",
       "role_family": "video_broadcast",
@@ -14358,7 +14362,7 @@
         "name": "Broadcast & Streaming Technology Expo",
         "domain": "Broadcast & Video Technology",
         "date": "2025-02-07",
-        "days_since": 568
+        "days_since": 569
       },
       "notes": "",
       "role_family": "backend",
@@ -14550,7 +14554,7 @@
         "name": "Broadcast & Streaming Technology Expo",
         "domain": "Broadcast & Video Technology",
         "date": "2025-02-07",
-        "days_since": 568
+        "days_since": 569
       },
       "notes": "OTT product for sports rights across 12 markets",
       "role_family": "product",
@@ -14762,7 +14766,7 @@
         "name": "Broadcast & Streaming Technology Expo",
         "domain": "Broadcast & Video Technology",
         "date": "2025-02-07",
-        "days_since": 568
+        "days_since": 569
       },
       "notes": "League Pass streaming infrastructure globally",
       "role_family": "video_broadcast",
@@ -14967,7 +14971,7 @@
   ],
   "call_log": [
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "badge_scan",
       "method": "GET",
       "endpoint": "/events/conference_attendees/attendees",
@@ -14975,7 +14979,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/james-thornton-ml",
@@ -14983,7 +14987,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/priya-anand-cv",
@@ -14991,7 +14995,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/carlos-mendez-ds",
@@ -14999,7 +15003,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/emily-carter-video",
@@ -15007,7 +15011,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/tom-nguyen-fin",
@@ -15015,7 +15019,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/amir-hassan-sports",
@@ -15023,7 +15027,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/rachel-kim-be",
@@ -15031,7 +15035,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/daniel-brown-pm",
@@ -15039,7 +15043,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/sophie-martin-ott",
@@ -15047,7 +15051,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/ben-walker-retail",
@@ -15055,7 +15059,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/yuki-tanaka-nba",
@@ -15063,7 +15067,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/laura-gibson-health",
@@ -15071,7 +15075,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/marcus-reid-ml",
@@ -15079,7 +15083,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/anna-petrov-gov",
@@ -15087,7 +15091,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/chris-lee-sportradar",
@@ -15095,7 +15099,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/jennifer-adams-ins",
@@ -15103,7 +15107,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/ryan-patel-dazn",
@@ -15111,7 +15115,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/olivia-scott-mktg",
@@ -15119,7 +15123,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/nathan-brooks-cv",
@@ -15127,7 +15131,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/zoe-wright-legal",
@@ -15135,7 +15139,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/alex-turner-olym",
@@ -15143,7 +15147,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/isabella-moore-edu",
@@ -15151,7 +15155,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/ethan-clark-aws",
@@ -15159,7 +15163,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/mia-johnson-food",
@@ -15167,7 +15171,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/lucas-evans-img",
@@ -15175,7 +15179,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/grace-wilson-cyber",
@@ -15183,7 +15187,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/jack-thomas-sport",
@@ -15191,7 +15195,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/chloe-martinez-bank",
@@ -15199,7 +15203,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/noah-anderson-gs",
@@ -15207,7 +15211,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/lily-thompson-pharma",
@@ -15215,7 +15219,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/owen-jackson-fox",
@@ -15223,7 +15227,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/aria-white-logi",
@@ -15231,7 +15235,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/liam-harris-kinexon",
@@ -15239,7 +15243,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/emma-lewis-agri",
@@ -15247,7 +15251,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/mason-young-sky",
@@ -15255,7 +15259,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/charlotte-hall-tel",
@@ -15263,7 +15267,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/elijah-allen-deltatre",
@@ -15271,7 +15275,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/amelia-king-pet",
@@ -15279,7 +15283,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/henry-wright-wm",
@@ -15287,7 +15291,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/scarlett-green-nfl",
@@ -15295,7 +15299,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/viktor-novak-de",
@@ -15303,7 +15307,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/fatima-alrashid-data",
@@ -15311,7 +15315,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/george-patterson-cloud",
@@ -15319,7 +15323,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/sara-lindqvist-ml",
@@ -15327,7 +15331,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/marcus-webb-pharma",
@@ -15335,7 +15339,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/jin-park-stats",
@@ -15343,7 +15347,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/katarzyna-wojcik-ins",
@@ -15351,7 +15355,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/bruno-ferreira-benfica",
@@ -15359,7 +15363,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/ingrid-svensson-klarna",
@@ -15367,7 +15371,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/tobias-braun-aws",
@@ -15375,7 +15379,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/adaora-okafor-tech",
@@ -15383,7 +15387,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/pavel-horak-gov",
@@ -15391,7 +15395,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/tom-barker-akamai",
@@ -15399,7 +15403,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/mei-zhang-platform",
@@ -15407,7 +15411,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/rafa-torres-sre",
@@ -15415,7 +15419,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/kim-soojin-devops",
@@ -15423,7 +15427,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/alexei-volkov-dazn",
@@ -15431,7 +15435,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/nadia-osei-cloud",
@@ -15439,7 +15443,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/david-petersen-sre",
@@ -15447,7 +15451,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/hana-blum-agtech",
@@ -15455,7 +15459,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/stefano-conti-sky",
@@ -15463,7 +15467,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/jerome-blanc-canal",
@@ -15471,7 +15475,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/amara-diallo-telecom",
@@ -15479,7 +15483,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/pilar-reyes-ott",
@@ -15487,7 +15491,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/sven-hartmann-arri",
@@ -15495,7 +15499,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/nia-campbell-bbc",
@@ -15503,7 +15507,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/javier-morales-tv",
@@ -15511,7 +15515,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/chiara-russo-video",
@@ -15519,7 +15523,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/lars-andersen-ericsson",
@@ -15527,7 +15531,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/yael-bendavid-akamai",
@@ -15535,7 +15539,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/patrick-duval-textile",
@@ -15543,7 +15547,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/marta-kowalska-img",
@@ -15551,7 +15555,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/felix-obi-health",
@@ -15559,7 +15563,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/claudia-vogel-eurosport",
@@ -15567,7 +15571,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "enrichment",
       "method": "GET",
       "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/david-strauss-nba",
@@ -15575,7 +15579,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS001",
@@ -15590,7 +15594,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS002",
@@ -15605,7 +15609,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS004",
@@ -15620,7 +15624,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS005",
@@ -15635,7 +15639,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS006",
@@ -15650,7 +15654,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS007",
@@ -15665,7 +15669,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS008",
@@ -15680,7 +15684,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS009",
@@ -15695,7 +15699,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS010",
@@ -15710,7 +15714,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS011",
@@ -15725,7 +15729,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS013",
@@ -15740,7 +15744,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS014",
@@ -15755,7 +15759,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS015",
@@ -15770,7 +15774,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS016",
@@ -15785,7 +15789,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS017",
@@ -15800,7 +15804,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS019",
@@ -15815,7 +15819,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS020",
@@ -15830,7 +15834,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS021",
@@ -15845,7 +15849,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS022",
@@ -15860,7 +15864,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS023",
@@ -15875,7 +15879,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS024",
@@ -15890,7 +15894,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS025",
@@ -15905,7 +15909,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS026",
@@ -15920,7 +15924,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS027",
@@ -15935,7 +15939,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS028",
@@ -15950,7 +15954,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS029",
@@ -15965,7 +15969,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS031",
@@ -15980,7 +15984,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS032",
@@ -15995,7 +15999,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS033",
@@ -16010,7 +16014,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS034",
@@ -16025,7 +16029,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS035",
@@ -16040,7 +16044,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS037",
@@ -16055,7 +16059,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS038",
@@ -16070,7 +16074,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS039",
@@ -16085,7 +16089,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS040",
@@ -16100,7 +16104,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS041",
@@ -16115,7 +16119,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS042",
@@ -16130,7 +16134,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS043",
@@ -16145,7 +16149,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS044",
@@ -16160,7 +16164,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS045",
@@ -16175,7 +16179,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS046",
@@ -16190,7 +16194,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS047",
@@ -16205,7 +16209,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS048",
@@ -16220,7 +16224,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS049",
@@ -16235,7 +16239,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS050",
@@ -16250,7 +16254,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS051",
@@ -16265,7 +16269,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS052",
@@ -16280,7 +16284,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS053",
@@ -16295,7 +16299,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS054",
@@ -16310,7 +16314,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS055",
@@ -16325,7 +16329,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS056",
@@ -16340,7 +16344,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS057",
@@ -16355,7 +16359,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS058",
@@ -16370,7 +16374,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS059",
@@ -16385,7 +16389,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS060",
@@ -16400,7 +16404,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS061",
@@ -16415,7 +16419,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS062",
@@ -16430,7 +16434,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS064",
@@ -16445,7 +16449,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS065",
@@ -16460,7 +16464,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS066",
@@ -16475,7 +16479,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS067",
@@ -16490,7 +16494,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS068",
@@ -16505,7 +16509,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS069",
@@ -16520,7 +16524,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS070",
@@ -16535,7 +16539,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS072",
@@ -16550,7 +16554,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS073",
@@ -16565,7 +16569,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS074",
@@ -16580,7 +16584,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS075",
@@ -16595,17 +16599,17 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "bigquery",
       "method": "INSERT",
       "endpoint": "wsc.talent_pool.pipeline_runs",
       "result": "1 row \u00b7 75 contacts \u00b7 68 admitted",
       "payload": {
-        "sql": "INSERT INTO `wsc.talent_pool.pipeline_runs`\n  (run_ts, contacts_scored, admitted, held, rejected, jobs_scored)\nVALUES ('2026-08-29T20:41:34+00:00', 75, 68,\n  3,\n  4,\n  0)"
+        "sql": "INSERT INTO `wsc.talent_pool.pipeline_runs`\n  (run_ts, contacts_scored, admitted, held, rejected, jobs_scored)\nVALUES ('2026-08-29T21:20:11+00:00', 75, 68,\n  3,\n  4,\n  0)"
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "bigquery",
       "method": "SELECT",
       "endpoint": "wsc.talent_pool.contacts",
@@ -16615,7 +16619,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "comeet",
       "method": "GET",
       "endpoint": "/company/wsc/positions",
@@ -16623,7 +16627,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -16645,7 +16649,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -16667,7 +16671,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "comeet",
       "method": "GET",
       "endpoint": "/candidates?email=priya.anand@vidstream.com",
@@ -16675,7 +16679,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -16698,7 +16702,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -16721,7 +16725,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -16743,7 +16747,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -16765,7 +16769,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "comeet",
       "method": "GET",
       "endpoint": "/candidates?email=tom.nguyen@financeflow.com",
@@ -16773,7 +16777,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -16792,7 +16796,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -16811,7 +16815,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -16831,7 +16835,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -16851,7 +16855,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -16871,7 +16875,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -16891,7 +16895,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -16912,7 +16916,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -16933,7 +16937,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -16953,7 +16957,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -16973,7 +16977,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -16995,7 +16999,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -17017,7 +17021,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -17040,7 +17044,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -17063,7 +17067,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "comeet",
       "method": "GET",
       "endpoint": "/candidates?email=n.anderson@genius-sports.com",
@@ -17071,7 +17075,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -17091,7 +17095,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -17111,7 +17115,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -17133,7 +17137,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -17155,7 +17159,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -17175,7 +17179,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -17195,7 +17199,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -17215,7 +17219,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -17235,7 +17239,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -17256,7 +17260,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -17277,7 +17281,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -17297,7 +17301,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -17317,7 +17321,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -17338,7 +17342,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -17359,7 +17363,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -17381,7 +17385,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -17403,7 +17407,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -17423,7 +17427,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -17443,7 +17447,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -17463,7 +17467,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -17483,7 +17487,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -17503,7 +17507,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -17523,7 +17527,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -17543,7 +17547,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -17563,7 +17567,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -17583,7 +17587,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -17603,7 +17607,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -17626,7 +17630,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -17649,7 +17653,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -17669,7 +17673,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -17689,7 +17693,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -17708,7 +17712,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -17727,7 +17731,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -17747,7 +17751,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:11+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -17767,7 +17771,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "comeet",
       "method": "GET",
       "endpoint": "/candidates?email=priya.anand@vidstream.com",
@@ -17775,7 +17779,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -17795,7 +17799,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -17815,7 +17819,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "comeet",
       "method": "GET",
       "endpoint": "/candidates?email=tom.nguyen@financeflow.com",
@@ -17823,7 +17827,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -17842,7 +17846,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -17861,7 +17865,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -17884,7 +17888,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -17907,7 +17911,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -17928,7 +17932,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -17949,7 +17953,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -17969,7 +17973,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -17989,7 +17993,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -18008,7 +18012,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -18027,7 +18031,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -18050,7 +18054,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -18073,7 +18077,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -18094,7 +18098,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -18115,7 +18119,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -18136,7 +18140,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -18157,7 +18161,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "comeet",
       "method": "GET",
       "endpoint": "/candidates?email=n.anderson@genius-sports.com",
@@ -18165,7 +18169,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -18186,7 +18190,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -18207,7 +18211,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -18229,7 +18233,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -18251,7 +18255,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -18270,7 +18274,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -18289,7 +18293,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -18310,7 +18314,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -18331,7 +18335,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -18351,7 +18355,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -18371,7 +18375,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -18392,7 +18396,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -18413,7 +18417,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -18433,7 +18437,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -18453,7 +18457,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -18473,7 +18477,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -18493,7 +18497,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -18512,7 +18516,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -18531,7 +18535,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -18551,7 +18555,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -18571,7 +18575,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -18590,7 +18594,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -18609,7 +18613,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -18628,7 +18632,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -18647,7 +18651,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -18667,7 +18671,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -18687,7 +18691,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -18707,7 +18711,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -18727,7 +18731,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -18747,7 +18751,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -18767,7 +18771,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -18787,7 +18791,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:34+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -18807,7 +18811,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "comeet",
       "method": "GET",
       "endpoint": "/candidates?email=priya.anand@vidstream.com",
@@ -18815,7 +18819,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "comeet",
       "method": "GET",
       "endpoint": "/candidates?email=tom.nguyen@financeflow.com",
@@ -18823,7 +18827,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -18842,7 +18846,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -18861,7 +18865,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -18882,7 +18886,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -18903,7 +18907,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "comeet",
       "method": "GET",
       "endpoint": "/candidates?email=n.anderson@genius-sports.com",
@@ -18911,7 +18915,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -18930,7 +18934,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -18949,7 +18953,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -18969,7 +18973,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -18989,7 +18993,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -19006,7 +19010,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -19023,7 +19027,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -19042,7 +19046,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -19061,7 +19065,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -19080,7 +19084,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -19099,7 +19103,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "comeet",
       "method": "GET",
       "endpoint": "/candidates?email=priya.anand@vidstream.com",
@@ -19107,7 +19111,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "comeet",
       "method": "GET",
       "endpoint": "/candidates?email=tom.nguyen@financeflow.com",
@@ -19115,7 +19119,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -19138,7 +19142,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -19161,7 +19165,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -19180,7 +19184,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -19199,7 +19203,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -19219,7 +19223,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -19239,7 +19243,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -19263,7 +19267,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -19287,7 +19291,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -19306,7 +19310,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -19325,7 +19329,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -19344,7 +19348,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -19363,7 +19367,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -19386,7 +19390,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -19409,7 +19413,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -19431,7 +19435,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -19453,7 +19457,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -19473,7 +19477,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -19493,7 +19497,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "comeet",
       "method": "GET",
       "endpoint": "/candidates?email=n.anderson@genius-sports.com",
@@ -19501,7 +19505,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -19524,7 +19528,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -19547,7 +19551,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -19567,7 +19571,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -19587,7 +19591,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -19606,7 +19610,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -19625,7 +19629,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -19644,7 +19648,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -19663,7 +19667,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -19687,7 +19691,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -19711,7 +19715,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -19734,7 +19738,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -19757,7 +19761,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -19780,7 +19784,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -19803,7 +19807,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -19825,7 +19829,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -19847,7 +19851,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -19869,7 +19873,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -19891,7 +19895,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -19911,7 +19915,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -19931,7 +19935,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -19953,7 +19957,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -19975,7 +19979,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -19996,7 +20000,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -20017,7 +20021,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -20039,7 +20043,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -20061,7 +20065,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -20081,7 +20085,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -20101,7 +20105,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -20121,7 +20125,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -20141,7 +20145,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -20160,7 +20164,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -20179,7 +20183,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -20199,7 +20203,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -20219,7 +20223,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -20238,7 +20242,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -20257,7 +20261,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -20277,7 +20281,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -20297,7 +20301,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -20317,7 +20321,7 @@
       }
     },
     {
-      "ts": "2026-08-29T20:41:35+00:00",
+      "ts": "2026-08-29T21:20:12+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",

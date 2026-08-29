@@ -350,6 +350,10 @@ def emit_pool_json(pool: list[dict], employees: list[dict], jobs: list[dict],
                 "title": j["title"],
                 "department": j["department"],
                 "seniority": j["seniority"],
+                # Pulled from taxonomy.yaml::job_family_map so the frontend can
+                # answer "is this candidate's role_family one we're actively
+                # hiring for?" without re-reading the taxonomy file.
+                "role_family": (taxonomy().get("job_family_map") or {}).get(j["job_id"], "unknown"),
                 "key_domains": [s.strip() for s in (j.get("key_domains") or "").split(";") if s.strip()],
                 "required_skills": [s.strip() for s in (j.get("required_skills") or "").split(";") if s.strip()],
                 "nice_to_have": [s.strip() for s in (j.get("nice_to_have") or "").split(";") if s.strip()],

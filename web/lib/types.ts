@@ -46,6 +46,7 @@ export type Job = {
   title: string;
   department: string;
   seniority: string;
+  role_family: string;   // from taxonomy.yaml::job_family_map — used for the "actively hiring" flag on the pool page
   key_domains: string[];
   required_skills: string[];
   nice_to_have: string[];
