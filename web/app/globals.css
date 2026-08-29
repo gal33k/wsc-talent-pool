@@ -47,6 +47,12 @@
   --sidebar-text:    #0f172a;
   --sidebar-dim:     #475569;
   --sidebar-faint:   #94a3b8;
+
+  /* Custom easing curves (per Emil Kowalski / Apple design engineering).
+     Built-in CSS easings are too weak — these give animations intentional punch. */
+  --ease-out:        cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out:     cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer:     cubic-bezier(0.32, 0.72, 0, 1);
 }
 
 * { border-color: var(--border); }
@@ -102,17 +108,33 @@ input[type="range"]::-moz-range-thumb {
 }
 ::-webkit-scrollbar-thumb:hover { background: var(--text-mute); }
 
-/* Animations */
+/* Animations — never from scale(0); start from scale(0.98) + opacity for organic feel */
 @keyframes fade-up {
-  from { opacity: 0; transform: translateY(4px); }
+  from { opacity: 0; transform: translateY(6px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 @keyframes fade-in {
   from { opacity: 0; }
   to   { opacity: 1; }
 }
-.fade-up  { animation: fade-up 0.3s cubic-bezier(0.2,0.7,0.3,1) both; }
-.fade-in  { animation: fade-in 0.4s ease-out both; }
+@keyframes reveal-pop {
+  from { opacity: 0; transform: translateY(4px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+.fade-up     { animation: fade-up 260ms var(--ease-out) both; }
+.fade-in     { animation: fade-in 320ms var(--ease-out) both; }
+.reveal-pop  { animation: reveal-pop 240ms var(--ease-out) both; }
+
+/* Stagger utility for lists — 40ms increments feel natural without being slow */
+.stagger > *              { animation: fade-up 260ms var(--ease-out) both; }
+.stagger > *:nth-child(1) { animation-delay: 0ms; }
+.stagger > *:nth-child(2) { animation-delay: 40ms; }
+.stagger > *:nth-child(3) { animation-delay: 80ms; }
+.stagger > *:nth-child(4) { animation-delay: 120ms; }
+.stagger > *:nth-child(5) { animation-delay: 160ms; }
+.stagger > *:nth-child(6) { animation-delay: 200ms; }
+.stagger > *:nth-child(7) { animation-delay: 240ms; }
+.stagger > *:nth-child(8) { animation-delay: 280ms; }
 
 button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible {
   outline: 2px solid var(--accent);
@@ -148,16 +170,18 @@ button:focus:not(:focus-visible) { outline: none; }
 
 .overscroll-contain { overscroll-behavior: contain; }
 
-/* Card lift — modern SaaS shadow */
+/* Card lift — Emil / Apple: specify exact transitions, custom easing, active feedback */
 .card {
   background: var(--bg-elevated);
   border: 1px solid var(--border);
   border-radius: 12px;
   box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
-  transition: box-shadow 0.15s, border-color 0.15s;
+  transition: box-shadow 180ms var(--ease-out),
+              border-color 180ms var(--ease-out),
+              transform 200ms var(--ease-out);
 }
 .card:hover {
-  box-shadow: 0 4px 12px -2px rgba(15, 23, 42, 0.08), 0 2px 4px rgba(15, 23, 42, 0.03);
+  box-shadow: 0 6px 18px -4px rgba(15, 23, 42, 0.09), 0 2px 6px rgba(15, 23, 42, 0.04);
   border-color: var(--border-strong);
 }
 .card-interactive {
@@ -165,9 +189,53 @@ button:focus:not(:focus-visible) { outline: none; }
 }
 .card-interactive:hover {
   border-color: var(--accent);
+  transform: translateY(-1px);
+}
+.card-interactive:active {
+  transform: translateY(0) scale(0.995);
+  transition-duration: 100ms;
 }
 .card-interactive:focus-visible {
   outline: none;
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px var(--accent-soft), 0 4px 12px -2px rgba(15, 23, 42, 0.08);
+  box-shadow: 0 0 0 3px var(--accent-soft), 0 6px 18px -4px rgba(15, 23, 42, 0.09);
+}
+
+/* Press feedback for buttons — Emil's rule: buttons must feel responsive */
+button, [role="button"], a.btn {
+  transition: transform 140ms var(--ease-out),
+              background-color 180ms var(--ease-out),
+              color 180ms var(--ease-out),
+              border-color 180ms var(--ease-out),
+              box-shadow 180ms var(--ease-out);
+}
+button:active:not(:disabled),
+[role="button"]:active,
+a.btn:active {
+  transform: scale(0.97);
+  transition-duration: 90ms;
+}
+
+/* Translucent chrome — Apple-style materials on the top disclaimer banner */
+.material-thin {
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+}
+
+/* Larger display text gets negative tracking (Apple / Emil) — build once here,
+   apply via `display-tight` where it matters */
+.display-tight {
+  letter-spacing: -0.022em;
+}
+
+/* Reduced motion — cross-fade only, no transforms */
+@media (prefers-reduced-motion: reduce) {
+  .fade-up, .fade-in, .reveal-pop, .stagger > * {
+    animation: fade-in 200ms ease both;
+  }
+  .card-interactive:hover,
+  .card-interactive:active,
+  button:active {
+    transform: none;
+  }
 }

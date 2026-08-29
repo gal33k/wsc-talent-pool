@@ -70,7 +70,7 @@ export default function JobsIndex() {
             <div className="text-[11px] uppercase tracking-[0.18em] font-semibold text-indigo-200/80 mb-3">
               WSC Talent Intelligence · Take-home 2026
             </div>
-            <h1 className="text-3xl md:text-4xl font-semibold tracking-tight leading-tight mb-3">
+            <h1 className="text-3xl md:text-[42px] font-semibold display-tight leading-[1.05] mb-3">
               Turn your best channels into <span className="font-serif italic text-indigo-100">the shortlist</span> for every open role.
             </h1>
             <p className="text-sm md:text-[15px] text-indigo-100/80 leading-relaxed max-w-2xl mb-4">
@@ -88,7 +88,7 @@ export default function JobsIndex() {
               <Icon name="arrow-right" className="w-4 h-4" strokeWidth={2.25} />
             </Link>
           </div>
-          <div className="flex items-center gap-5 md:gap-8 flex-shrink-0">
+          <div className="flex items-center gap-5 md:gap-8 flex-shrink-0 stagger">
             <HeroMetric n={pool.candidates.length}     label="in the pool" />
             <HeroMetric n={pool.jobs.length}           label="open roles" accent />
             <HeroMetric n={totalCall}                  label="call this week" />
@@ -116,7 +116,7 @@ export default function JobsIndex() {
         </div>
       )}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 stagger">
         {jobSummaries.map(({ job, top3, counts, total }) => {
           const isDemo = job.job_id === "JOB001";
           return (
