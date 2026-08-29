@@ -35,15 +35,32 @@ def test_fit_parity_all_candidates_all_jobs() -> None:
     assert not mismatches, f"fit parity failed for {len(mismatches)} cases: {mismatches[:5]}"
 
 
-def test_warmth_parity_all_candidates() -> None:
+def test_signal_parity_all_candidates() -> None:
+    """Signal (formerly Warmth) — 8 components. Browser recompute must match
+    Python's score_default to 1dp."""
     doc = json.loads(POOL_JSON.read_text(encoding="utf-8"))
-    ww = doc["defaults"]["warmth_weights"]
+    # Prefer new signal_weights; fall back to legacy warmth_weights if the
+    # emitter is old.
+    weights = doc["defaults"].get("signal_weights") or doc["defaults"]["warmth_weights"]
     mismatches = []
     for c in doc["candidates"]:
-        recomputed = _weighted(c["warmth"]["components"], ww)
+        components = c["warmth"]["components"]
+        # Guard: if the pool.json shape and the weights shape drifted, the
+        # test should fail loudly rather than silently miss a component.
+        missing_keys = set(weights.keys()) - set(components.keys())
+        assert not missing_keys, (
+            f"pool.json component shape doesn't match signal_weights — "
+            f"missing keys: {missing_keys}. Regenerate pool.json."
+        )
+        recomputed = _weighted(components, weights)
         if abs(recomputed - c["warmth"]["score_default"]) > 0.11:
             mismatches.append((c["id"], recomputed, c["warmth"]["score_default"]))
-    assert not mismatches, f"warmth parity failed: {mismatches[:5]}"
+    assert not mismatches, f"signal parity failed: {mismatches[:5]}"
+
+
+# Legacy alias — some CI configs still call the old name.
+def test_warmth_parity_all_candidates() -> None:
+    test_signal_parity_all_candidates()
 
 
 def test_critical_admits() -> None:
@@ -72,7 +89,7 @@ def test_jin_park_above_band_not_first() -> None:
 
 
 if __name__ == "__main__":
-    for fn in [test_fit_parity_all_candidates_all_jobs, test_warmth_parity_all_candidates,
+    for fn in [test_fit_parity_all_candidates_all_jobs, test_signal_parity_all_candidates,
                test_critical_admits, test_jin_park_above_band_not_first]:
         try:
             fn()

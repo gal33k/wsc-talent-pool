@@ -108,11 +108,31 @@ fit_weights:
   domain: 15
   nice_to_have: 10
 
-warmth_weights:
-  mutual_connections: 40
-  shared_employer: 30
-  recency: 20
-  notes_present: 10
+signal_weights:                # renamed from warmth_weights in the Signal-axis refactor
+  peer_vouch:            35    # active same-team WSC endorsement (× role_match × tenure, normalized)
+  same_team_overlap:     18    # shared employer with a same-team person, no active vouch
+  cross_team_vouch:      12    # active endorsement from cross-department WSC employee
+  culture_affinity:      12    # OSS in our stack + domain-topic engagement (strict definition)
+  prior_wsc_engagement:   8    # followed WSC, engaged with our posts, past event history
+  recency:                7    # 12-month half-life decay
+  notes_present:          5    # a recorded booth conversation
+  mutual_connections:     3    # bare LinkedIn mutual (no team overlap, no vouch)
+
+vouch_role_match:              # multipliers applied to any active vouch
+  same_role_family:  3.0
+  same_department:   2.0
+  leadership:        1.5
+  adjacent_family:   1.3
+  cross_department:  1.0
+
+vouch_tenure:                  # multipliers based on WSC tenure of the voucher
+  senior_bands:
+    - {min_months: 36, multiplier: 1.25}
+    - {min_months: 12, multiplier: 1.00}
+    - {min_months:  6, multiplier: 0.85}
+    - {min_months:  0, multiplier: 0.60}
+
+vouch_normalizer: 3.75         # divides composite (role × tenure) so vouch component fits 0-1
 
 connection_curve: [0.0, 0.5, 0.8, 1.0]     # index = count, capped
 same_department_multiplier: 1.25

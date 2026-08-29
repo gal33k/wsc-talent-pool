@@ -43,7 +43,7 @@ graded; the web app is the bonus.** Do not let the app eat the README.
 ## Phase 4 — Decision B: match a job
 
 - [ ] `src/score.py` — five fit components as 0–1 values, weights applied last
-- [ ] `src/warmpath.py` — mutuals + shared employers (post-stoplist) → named people,
+- [ ] `src/signal.py` — 8-component signal axis (peer vouch + team overlap + culture affinity + reachability) → named people,
       diminishing-returns curve, recency decay, `best_intro_path`
 - [ ] `src/report.py` — CSV writer, standalone HTML, and the `pool.json` emitter
 - [ ] `run.py` — `python run.py --job-id JOB001 [--emit-json]`

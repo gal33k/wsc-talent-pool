@@ -266,7 +266,7 @@ def emit_pool_json(pool: list[dict], employees: list[dict], jobs: list[dict],
     employees          = WSC employees
     jobs               = job openings
     scored[job_id][person_id] = fit dict from src/score.py
-    warmth_by_person[person_id] = warmth dict from src/warmpath.py
+    warmth_by_person[person_id] = warmth dict from src/signal.py
     narrator_output[job_id][person_id] = {why_summary, outreach_draft, best_intro_path}
     comeet_status[email] = comeet stub row (or absent)
     """
@@ -305,7 +305,14 @@ def emit_pool_json(pool: list[dict], employees: list[dict], jobs: list[dict],
             "gate": r.get("gate"),
             "comeet_status": comeet_status.get((r.get("email") or "").lower()),
             "warmth": warmth_by_person.get(cid, {
-                "components": {"mutual_connections": 0, "shared_employer": 0, "recency": 0, "notes_present": 0},
+                # Zero-value Signal (8 components) — used for HOLD/REJECT candidates
+                # that never got scored. Matches the shape score_signal() emits so the
+                # browser + parity test can treat every candidate uniformly.
+                "components": {
+                    "peer_vouch": 0, "same_team_overlap": 0, "cross_team_vouch": 0,
+                    "culture_affinity": 0, "prior_wsc_engagement": 0,
+                    "recency": 0, "notes_present": 0, "mutual_connections": 0,
+                },
                 "score_default": 0,
                 "mutuals": [],
                 "shared_employers": [],

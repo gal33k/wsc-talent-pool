@@ -302,7 +302,7 @@ traceable statement rather than an anecdote.
   entity-resolution service (Clearbit Reveal, Diffbot KG) rather than a YAML block.
 - **Same-department mutual boost is intro-path-only.** The warmth score uses raw counts; the
   same-dept preference influences only the picked path text, not the number. Rationale in
-  `src/warmpath.py`.
+  `src/signal.py`.
 - **Recency uses `date.today()`.** Reproducibility across runs would want a frozen reference
   date piped in from the ingest timestamp.
 - **No live embedding step.** Deferred as the "with more time" item; the deterministic core
