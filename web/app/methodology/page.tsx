@@ -186,83 +186,64 @@ function HowItWorks() {
           seeLabel="Capture a lead"
         >
           <p>
-            Three doors: <strong>conference badge scans</strong> (post-event export from Cvent),{" "}
-            <strong>employee referrals</strong> (a WSC engineer vouches, form submission), and{" "}
-            <strong>inbound CVs</strong> (Comeet application, adapter stub in this build). All three
-            hit the same downstream — only the source_channel tag differs, and referrals earn a
-            vouched-lift on warmth.
+            Three doors — <strong>conference badge scans</strong>, <strong>employee referrals</strong>,
+            <strong> inbound CVs</strong>. Same downstream pipeline; only the <em>source_channel</em>
+            tag differs, and referrals earn a vouched-lift on warmth.
           </p>
         </NarrativeStep>
 
         <NarrativeStep
           num={2}
           title="Enrich"
-          lead="Fill in what a badge scan doesn't tell us. LinkedIn is the source of truth."
+          lead="Fill in what a badge scan doesn't tell us."
           seeIt="/capture/"
           seeLabel="Watch enrichment run"
         >
           <p>
-            Proxycurl pulls the profile (cached per person, credits accounted). We extract past
-            employers and tag notable-tier ones, scan the last 90 days of posts for JD topic-matches,
-            pull publications, talks and open-source, then cross-check LinkedIn connections against
-            the WSC employee directory. The last one is the money question:{" "}
-            <em>who do we already know that knows them?</em>
+            Proxycurl pulls the LinkedIn profile — past employers, recent posts, publications, connections.
+            The one that pays off: cross-check the candidate's connections against the WSC employee
+            directory. <em>Who do we already know that knows them?</em>
           </p>
         </NarrativeStep>
 
         <NarrativeStep
           num={3}
           title="Gate — decision A"
-          lead="Is this person talent in a domain we hire in? Three signals, 2-of-3 admits."
+          lead="Is this person talent we hire? Three independent signals, 2-of-3 admits."
         >
           <p>
-            <strong>Role family from title</strong> (pattern-matched against a taxonomy),{" "}
-            <strong>skills evidence</strong> (do their skills confirm the claimed family), and{" "}
-            <strong>sports/media proximity</strong> (lexicon hits over industry + employers). No
-            single signal decides. Every excluded person carries a reason string — a recruiter can
-            defend the rejection.
-          </p>
-          <p className="text-xs text-mute pt-2 mt-3 border-t border-border-faint italic">
-            An IT manager at a DevOps conference scores 0/3 and is rejected with a reason. A senior
-            data engineer with no mutual connections but real skill evidence scores 2/3 and is
-            admitted.
+            <strong>Role family from title</strong>, <strong>skills evidence</strong>, and{" "}
+            <strong>sports/media proximity</strong>. No single signal decides. Every excluded person
+            carries a reason string a recruiter can read to them.
           </p>
         </NarrativeStep>
 
         <NarrativeStep
           num={4}
           title="Score — decision B"
-          lead="For each open role, compute two scores. Never combine them."
+          lead="Two scores per role. Never combined."
           seeIt="/jobs/JOB001/"
           seeLabel="Open the shortlist"
         >
           <p>
-            <strong>Fit</strong> — pure competence. Required skills, role family, seniority, domain,
-            nice-to-haves. Never touches network signal.<br />
-            <strong>Warmth</strong> — pure reachability. Mutual connections, shared employers,
-            recency, notes on file.
-          </p>
-          <p>
-            The tier label (<em>Call this week</em>, <em>Direct outreach</em>, <em>Nurture</em>)
-            reads both scores independently. It's a chip on the card, not a sort key. A single
-            &ldquo;compatibility rate&rdquo; would bury strong candidates with no mutual connections —
-            we have five of those in this dataset.
+            <strong>Fit</strong> — competence only (skills, family, seniority, domain).{" "}
+            <strong>Warmth</strong> — reachability only (mutuals, shared employers, recency, notes).
+            A single &ldquo;compatibility rate&rdquo; would bury strong candidates with no mutual
+            connections.
           </p>
         </NarrativeStep>
 
         <NarrativeStep
           num={5}
           title="Shortlist"
-          lead="Ranked list per role. Every card names the WSC employee best placed to make the intro."
+          lead="Ranked list per role, with the person best placed to make the intro."
           seeIt="/pool/"
           seeLabel="Audit the pool"
         >
           <p>
-            Sorted by fit (recruiter can flip to warmth or recency). Each candidate card carries
-            their warm-intro path with a one-click <em>Ask X to introduce</em> action that lands in
-            the outreach queue. Recruiter overrides win — the model can't hallucinate a candidate
-            back onto a list where the recruiter marked them &ldquo;not a fit.&rdquo; Exportable to
-            CSV for anyone who lives in a spreadsheet.
+            Sorted by fit, tier as a label. Each card has a one-click <em>Ask X to introduce</em>{" "}
+            that lands in the outreach queue. Recruiter overrides win — the model can't put a
+            &ldquo;not-a-fit&rdquo; candidate back on the list. Exportable to CSV.
           </p>
         </NarrativeStep>
       </div>

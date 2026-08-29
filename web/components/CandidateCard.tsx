@@ -125,6 +125,32 @@ export default function CandidateCard({
             <ScoreBar label="Warmth" value={warmthScore} tone="good" />
           </div>
 
+          {/* Scoring math — the direct answer to "why is this score what it is?" */}
+          <div className="mt-2.5 flex items-center gap-3 flex-wrap text-[10px] font-mono text-mute">
+            <span className="text-faint uppercase tracking-wider font-semibold">Fit math</span>
+            <span title="Required skills coverage × weight">
+              skills <span className="text-text">{(fit.components.required_skills * 100).toFixed(0)}·35</span>
+            </span>
+            <span className="text-faint">+</span>
+            <span title="Role family match × weight">
+              family <span className="text-text">{(fit.components.role_family * 100).toFixed(0)}·25</span>
+            </span>
+            <span className="text-faint">+</span>
+            <span title="Seniority band fit × weight">
+              seniority <span className="text-text">{(fit.components.seniority * 100).toFixed(0)}·15</span>
+            </span>
+            <span className="text-faint">+</span>
+            <span title="Sports/media domain overlap × weight">
+              domain <span className="text-text">{(fit.components.domain * 100).toFixed(0)}·15</span>
+            </span>
+            <span className="text-faint">+</span>
+            <span title="Nice-to-have bonus × weight">
+              nice <span className="text-text">{(fit.components.nice_to_have * 100).toFixed(0)}·10</span>
+            </span>
+            <span className="text-faint">=</span>
+            <span className="text-text font-semibold">{fit.score_default.toFixed(1)}</span>
+          </div>
+
           <div className="flex flex-wrap gap-1.5 mt-3">
             {fit.matched_required.map(s => <Chip key={"m" + s} variant="success">{s}</Chip>)}
             {fit.matched_required_family.map(s => <Chip key={"f" + s} variant="family">{s} · family</Chip>)}
