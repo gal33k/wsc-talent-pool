@@ -14,6 +14,16 @@ const CONFERENCES = [
   "DevOps World 2025",
 ];
 
+// Example badge-scan payloads — a mock OCR would return one of these from
+// a real badge photo. Clearly labelled as examples in the UI; nothing here
+// persists into the pool without the recruiter hitting "Enrich & score".
+const BADGE_EXAMPLES = [
+  { name: "Alex Chen",     title: "Senior ML Engineer",       company: "DAZN",         linkedinUrl: "linkedin.com/in/alex-chen-example",       note: "Video ML at broadcast latency; came by asking about real-time pose estimation." },
+  { name: "Priya Sharma",  title: "Backend Engineer",         company: "Netflix",      linkedinUrl: "linkedin.com/in/priya-sharma-example",    note: "Owns streaming-service backend; interested in our Kafka footprint." },
+  { name: "Marco Rossi",   title: "Video AI Engineer",        company: "Sky Sports",   linkedinUrl: "linkedin.com/in/marco-rossi-example",     note: "Sports broadcast production; wants to compare our object-detection stack." },
+  { name: "Sofia Nakamura", title: "Sports Data Analyst",     company: "Opta / Stats Perform", linkedinUrl: "linkedin.com/in/sofia-nakamura-example", note: "Sports analytics; asked about our data pipeline architecture." },
+];
+
 export default function CaptureLead() {
   const { pool, loading, error, fitWeights, logBq } = usePool();
   const [name, setName] = useState("");
@@ -25,6 +35,38 @@ export default function CaptureLead() {
   const [playback, setPlayback] = useState<EnrichmentPlayback | null>(null);
   const [validationError, setValidationError] = useState<string | null>(null);
   const [recentCaptures, setRecentCaptures] = useState<string[]>([]);
+  const [scanning, setScanning] = useState(false);
+  const [scannedFilename, setScannedFilename] = useState<string | null>(null);
+
+  const runBadgeScan = (filename: string | null) => {
+    setScanning(true);
+    setScannedFilename(filename);
+    // Pick an example rotating so repeated scans surface different personas.
+    // In production this is the mock_badge_scan → OCR → fields extraction path.
+    const pick = BADGE_EXAMPLES[Math.floor(Math.random() * BADGE_EXAMPLES.length)];
+    logBq({
+      op: "INSERT",
+      table: "wsc.telemetry.badge_scan_events",
+      sql: `INSERT INTO wsc.telemetry.badge_scan_events\n  (source, filename, extracted_name, extracted_company, extracted_title, scanned_at)\nVALUES ('cvent', ${JSON.stringify(filename ?? "example-badge")}, ${JSON.stringify(pick.name)}, ${JSON.stringify(pick.company)}, ${JSON.stringify(pick.title)}, CURRENT_TIMESTAMP())`,
+      rows: 1,
+    });
+    setTimeout(() => {
+      setName(pick.name);
+      setTitle(pick.title);
+      setCompany(pick.company);
+      setLinkedinUrl(pick.linkedinUrl);
+      setNotes(pick.note);
+      setScanning(false);
+    }, 900);
+  };
+
+  const onFilePicked = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    runBadgeScan(file.name);
+    // Reset the input so picking the same file again re-triggers.
+    e.target.value = "";
+  };
 
   if (loading) return <main className="p-8 text-mute text-sm">Loading…</main>;
   if (error) return <main className="p-8 text-red-600 text-sm">Error: {error}</main>;
@@ -133,6 +175,60 @@ export default function CaptureLead() {
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-6">
         <div className="min-w-0">
           {!playback ? (
+            <>
+              {/* Badge scan — the primary way conference contacts actually
+                  enter the pipeline in production. Recruiter uploads/snaps
+                  a badge photo, OCR extracts the fields, they land in the
+                  form below for review before submit. */}
+              <section className="card p-5 mb-4 border-dashed border-2 border-emerald-200 bg-emerald-50/30">
+                <div className="flex items-start gap-4">
+                  <div className="w-11 h-11 rounded-md bg-emerald-100 text-emerald-800 flex items-center justify-center flex-shrink-0">
+                    <Icon name={scanning ? "search" : "download"} className={`w-5 h-5 ${scanning ? "animate-pulse" : ""}`} strokeWidth={2} />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-baseline justify-between gap-2 mb-1 flex-wrap">
+                      <h3 className="text-sm font-semibold text-text">Scan a badge</h3>
+                      <span className="text-[10px] uppercase tracking-wider text-emerald-800 font-semibold">
+                        primary production path
+                      </span>
+                    </div>
+                    <p className="text-xs text-mute leading-relaxed mb-3">
+                      In production, badge scans arrive as a bulk export from Cvent / Swapcard / Brella after the event.
+                      In this demo, upload any image OR try an example — OCR extracts name, title, company, and prefills
+                      the form below. Review and edit before hitting <em>Enrich &amp; score</em>.
+                    </p>
+
+                    {scanning ? (
+                      <div className="rounded-md bg-white border border-emerald-200 px-4 py-3 flex items-center gap-3">
+                        <div className="w-3.5 h-3.5 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin" />
+                        <div className="text-xs text-emerald-900">
+                          Reading badge{scannedFilename ? ` (${scannedFilename})` : ""} — running OCR + field extraction…
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="flex gap-2 flex-wrap">
+                        <label className="inline-flex items-center gap-1.5 text-xs bg-emerald-700 text-white font-medium px-3 py-1.5 rounded-md hover:bg-emerald-600 cursor-pointer shadow-sm">
+                          <Icon name="plus" className="w-3.5 h-3.5" strokeWidth={2.5} />
+                          Upload badge image
+                          <input type="file" accept="image/*" onChange={onFilePicked} className="hidden" />
+                        </label>
+                        <button
+                          type="button"
+                          onClick={() => runBadgeScan(null)}
+                          className="inline-flex items-center gap-1.5 text-xs bg-white text-emerald-800 border border-emerald-300 font-medium px-3 py-1.5 rounded-md hover:bg-emerald-50 hover:border-emerald-500"
+                        >
+                          <Icon name="sparkles" className="w-3.5 h-3.5" strokeWidth={2.25} />
+                          Try example badge scan
+                        </button>
+                        <div className="text-[11px] text-mute self-center italic">
+                          OCR is mocked · real system: POST /cvent/events/{"{id}"}/attendees
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </section>
+
             <form onSubmit={handleSubmit} className="card p-6 space-y-5">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
@@ -232,6 +328,7 @@ export default function CaptureLead() {
                 </button>
               </div>
             </form>
+            </>
           ) : (
             <EnrichmentReveal playback={playback} onDone={resetForm} />
           )}
