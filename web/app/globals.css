@@ -7,48 +7,49 @@
 :root {
   color-scheme: light;
 
-  /* "Broadcast" palette — warm cream ground, near-black text, burnt-amber accent.
-     Distinctive from the generic indigo/blue SaaS look; nods to stadium/studio
-     warmth of sports broadcast (WSC's actual customers). */
-  --bg-base:         #faf7f2;   /* warm cream */
-  --bg-elevated:     #ffffff;
-  --bg-hover:        #f3ede1;
-  --bg-input:        #ffffff;
-  --border:          #e8e1d1;   /* warm border */
-  --border-strong:   #cec2a8;
-  --border-faint:    #f1ebdd;
+  /* Editorial palette — dark ink shell, paper content, broadcast crimson accent.
+     Dark sidebar + light content is the Linear/Notion pattern that reads as
+     considered software instead of another generic SaaS dashboard. */
+  --bg-base:         #f4efe4;   /* warm paper — richer than pure cream */
+  --bg-elevated:     #fdfbf5;   /* card paper white */
+  --bg-hover:        #ebe4d4;
+  --bg-input:        #fdfbf5;
+  --border:          #d9d2be;   /* warm ink-on-paper border */
+  --border-strong:   #b8ad91;
+  --border-faint:    #e7dfc9;
 
-  --text:            #1a1613;   /* warm near-black */
-  --text-dim:        #4a4239;
-  --text-mute:       #78716c;   /* Tailwind stone-500, warm neutral */
-  --text-faint:      #a8a29e;
+  --text:            #12100e;   /* deep ink */
+  --text-dim:        #3a3630;
+  --text-mute:       #6b665e;
+  --text-faint:      #9c968a;
 
-  --accent:          #b45309;   /* Tailwind amber-700 — burnt amber, distinctive */
-  --accent-hi:       #d97706;   /* amber-600 */
-  --accent-dim:      #78350f;   /* amber-900 */
-  --accent-soft:     #fef3c7;   /* amber-100 */
+  --accent:          #c1272d;   /* broadcast crimson — jersey red, distinctive */
+  --accent-hi:       #dc2626;
+  --accent-dim:      #7a1a1e;
+  --accent-soft:     #fee7e0;
 
-  --good:            #15803d;   /* forest green — pops on cream */
+  --good:            #146b3a;   /* deep forest green — pops on paper */
   --good-soft:       #dcfce7;
-  --bad:             #b91c1c;   /* burgundy — warmer than crimson */
+  --bad:             #991b1b;
   --bad-soft:        #fee2e2;
-  --warn:            #ca8a04;
-  --warn-soft:       #fef9c3;
-  --info:            #0369a1;
-  --info-soft:       #e0f2fe;
+  --warn:            #a16207;   /* dark brass */
+  --warn-soft:       #fef3c7;
+  --info:            #1e40af;
+  --info-soft:       #dbeafe;
 
-  --tier-call:       #15803d;
-  --tier-direct:     #b45309;
-  --tier-nurture:    #78716c;
+  --tier-call:       #146b3a;
+  --tier-direct:     #c1272d;
+  --tier-nurture:    #6b665e;
 
-  /* Sidebar — cream matching the base, no visible seam, active state uses accent-soft */
-  --sidebar-bg:      #faf7f2;
-  --sidebar-border:  #e8e1d1;
-  --sidebar-hover:   #f3ede1;
-  --sidebar-active:  #fef3c7;
-  --sidebar-text:    #1a1613;
-  --sidebar-dim:     #4a4239;
-  --sidebar-faint:   #a8a29e;
+  /* Sidebar — DARK INK (opposite temperature from content). Breaks the
+     "everything white" problem in one move. */
+  --sidebar-bg:      #17140f;   /* warm near-black */
+  --sidebar-border:  #2a251d;
+  --sidebar-hover:   #201c15;
+  --sidebar-active:  rgba(193, 39, 45, 0.18);   /* crimson glow */
+  --sidebar-text:    #f4efe4;   /* paper on ink */
+  --sidebar-dim:     #a89f8a;
+  --sidebar-faint:   #6b665e;
 
   /* Custom easing curves (per Emil Kowalski / Apple design engineering).
      Built-in CSS easings are too weak — these give animations intentional punch. */
@@ -67,6 +68,25 @@ html, body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   letter-spacing: -0.005em;
+}
+
+/* Paper grain — subtle texture on the base bg breaks the "flat AI-generated" feel */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  z-index: 0;
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(120,90,50,0.03) 0px, transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(90,70,40,0.025) 0px, transparent 50%);
+  background-size: 100% 100%;
+  mix-blend-mode: multiply;
+}
+main, aside {
+  position: relative;
+  z-index: 1;
 }
 
 ::selection { background: var(--accent-soft); color: var(--accent-dim); }

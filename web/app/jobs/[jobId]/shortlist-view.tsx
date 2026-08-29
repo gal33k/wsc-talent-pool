@@ -165,15 +165,15 @@ export default function ShortlistView({ jobId }: { jobId: string }) {
         <button
           onClick={() => setTierFilter("all")}
           className={`card card-interactive p-4 text-left transition-colors ${
-            tierFilter === "all" ? "ring-2 ring-amber-400 border-amber-400" : ""
+            tierFilter === "all" ? "ring-2 ring-red-500 border-red-500" : ""
           }`}
           title="Show every shortlisted candidate"
         >
           <div className="flex items-center justify-between mb-2">
             <div className="text-[11px] uppercase tracking-wider text-mute font-medium">Shortlisted</div>
-            <Icon name="list" className="w-3.5 h-3.5 text-amber-600" strokeWidth={2} />
+            <Icon name="list" className="w-3.5 h-3.5 text-red-600" strokeWidth={2} />
           </div>
-          <div className="text-2xl font-semibold tabular text-amber-700">{ranked.length}</div>
+          <div className="text-2xl font-semibold tabular text-red-700">{ranked.length}</div>
           <div className="text-[11px] text-mute mt-1">click to reset filter</div>
         </button>
 
@@ -258,7 +258,7 @@ export default function ShortlistView({ jobId }: { jobId: string }) {
                   const label = t === "all" ? "All" : t === "call_this_week" ? "Call" : t === "direct_outreach" ? "Outreach" : "Nurture";
                   const count = t === "all" ? ranked.length : grouped[t]?.length ?? 0;
                   const active = tierFilter === t;
-                  const dot = t === "call_this_week" ? "bg-emerald-500" : t === "direct_outreach" ? "bg-amber-500" : t === "nurture" ? "bg-stone-400" : "";
+                  const dot = t === "call_this_week" ? "bg-emerald-500" : t === "direct_outreach" ? "bg-red-500" : t === "nurture" ? "bg-stone-400" : "";
                   return (
                     <button
                       key={t}
@@ -331,7 +331,7 @@ export default function ShortlistView({ jobId }: { jobId: string }) {
               <div className="text-xs text-mute mt-1">
                 {ranked.length === 0
                   ? "Try dragging the Nurture threshold down in the tuner."
-                  : <>Try <button onClick={() => setTierFilter("all")} className="underline text-amber-700">clearing the filter</button> or a different tier.</>}
+                  : <>Try <button onClick={() => setTierFilter("all")} className="underline text-red-700">clearing the filter</button> or a different tier.</>}
               </div>
             </div>
           )}

@@ -39,7 +39,7 @@ export default function Methodology() {
             onClick={() => setTab(t.id)}
             className={`px-4 py-2.5 text-sm font-medium -mb-px border-b-2 transition-colors whitespace-nowrap ${
               tab === t.id
-                ? "border-indigo-600 text-indigo-700"
+                ? "border-red-600 text-red-700"
                 : "border-transparent text-mute hover:text-text"
             }`}
           >
@@ -135,118 +135,159 @@ function TLDR({ pool, onDeeper }: { pool: ReturnType<typeof usePool>["pool"]; on
 
 function HowItWorks({ onDeeper }: { onDeeper: () => void }) {
   return (
-    <section className="space-y-10">
-      <div>
-        <div className="text-xs uppercase tracking-wider text-mute font-semibold mb-4">The pipeline, in 5 boxes</div>
-        <FlowDiagramLarge />
-      </div>
+    <section className="max-w-3xl">
+      {/* The flow diagram — one visual, not one visual + five cards saying the same thing */}
+      <FlowDiagramLarge />
 
-      <div className="space-y-4">
-        <FlowBoxDetail
+      {/* Pull quote — the design's central claim */}
+      <blockquote className="my-10 pl-6 border-l-2 border-red-500 relative">
+        <span className="font-serif text-6xl text-red-500 leading-none absolute -left-1 -top-3 opacity-30">&ldquo;</span>
+        <p className="font-serif text-2xl leading-tight text-text mb-3 italic">
+          Two decisions, never one scoring function. Two scores, never one compatibility rate.
+        </p>
+        <cite className="text-xs uppercase tracking-widest text-mute font-semibold not-italic">
+          The design invariant — everything below serves it
+        </cite>
+      </blockquote>
+
+      {/* Narrative sections — no card-in-card, editorial rhythm */}
+      <div className="space-y-12">
+        <NarrativeStep
           num={1}
           title="Source"
-          iconName="download"
-          plain="Where every contact comes in. Three doors."
-          detail={[
-            "**Conference badge scans** — post-event export from Cvent / Swapcard / Brella. Bulk ingest, usually a few hundred rows.",
-            "**Employee referrals** — a WSC engineer submits someone they'd vouch for through the /referrals form.",
-            "**Inbound CVs** — someone applies through Comeet; the CV lands here (in this build a stub adapter — see the Comeet integration).",
-          ]}
-        />
-        <FlowBoxDetail
+          lead="Where every contact comes in."
+          seeIt="/capture/"
+          seeLabel="Capture a lead"
+        >
+          <p>
+            Three doors: <strong>conference badge scans</strong> (post-event export from Cvent),{" "}
+            <strong>employee referrals</strong> (a WSC engineer vouches, form submission), and{" "}
+            <strong>inbound CVs</strong> (Comeet application, adapter stub in this build). All three
+            hit the same downstream — only the source_channel tag differs, and referrals earn a
+            vouched-lift on warmth.
+          </p>
+        </NarrativeStep>
+
+        <NarrativeStep
           num={2}
           title="Enrich"
-          iconName="search"
-          plain="Fill in what we don't know. LinkedIn is the primary source."
-          detail={[
-            "**Fetch profile** via Proxycurl — cached per person; costs credits (visible in /analytics).",
-            "**Extract past employers** and tag notable-tier ones (feeds a caliber signal).",
-            "**Scan recent posts** for topic-matches against JD keywords (evidence signal).",
-            "**Pull publications, talks, repos** from Featured section + GitHub cross-reference.",
-            "**Cross-check connections** against the WSC employee directory — finds warm-intro paths.",
-          ]}
+          lead="Fill in what a badge scan doesn't tell us. LinkedIn is the source of truth."
           seeIt="/capture/"
-        />
-        <FlowBoxDetail
+          seeLabel="Watch enrichment run"
+        >
+          <p>
+            Proxycurl pulls the profile (cached per person, credits accounted). We extract past
+            employers and tag notable-tier ones, scan the last 90 days of posts for JD topic-matches,
+            pull publications, talks and open-source, then cross-check LinkedIn connections against
+            the WSC employee directory. The last one is the money question:{" "}
+            <em>who do we already know that knows them?</em>
+          </p>
+        </NarrativeStep>
+
+        <NarrativeStep
           num={3}
-          title="Gate"
-          iconName="filter"
-          plain="Is this person talent in a domain we hire in? 3 signals, 2-of-3 admits."
-          detail={[
-            "**Signal 1: Role family from title.** Pattern list in the taxonomy — first-match-wins. Ten families including a `not_talent` bucket.",
-            "**Signal 2: Skills evidence.** Do their skills confirm the claimed family? At least one hit required.",
-            "**Signal 3: Sports / media proximity.** Keyword lexicon over industry, employers, and skills.",
-            "**Every excluded person carries a reason string** — no silent drops.",
-          ]}
-        />
-        <FlowBoxDetail
+          title="Gate — decision A"
+          lead="Is this person talent in a domain we hire in? Three signals, 2-of-3 admits."
+        >
+          <p>
+            <strong>Role family from title</strong> (pattern-matched against a taxonomy),{" "}
+            <strong>skills evidence</strong> (do their skills confirm the claimed family), and{" "}
+            <strong>sports/media proximity</strong> (lexicon hits over industry + employers). No
+            single signal decides. Every excluded person carries a reason string — a recruiter can
+            defend the rejection.
+          </p>
+          <p className="text-xs text-mute pt-2 mt-3 border-t border-border-faint italic">
+            An IT manager at a DevOps conference scores 0/3 and is rejected with a reason. A senior
+            data engineer with no mutual connections but real skill evidence scores 2/3 and is
+            admitted.
+          </p>
+        </NarrativeStep>
+
+        <NarrativeStep
           num={4}
-          title="Score"
-          iconName="sliders"
-          plain="For each open role, compute two scores. Kept separate on purpose."
-          detail={[
-            "**Fit score (competence)** — required skills, role family, seniority band, domain overlap, nice-to-haves. Never touches network.",
-            "**Warmth score (reachability)** — mutual connections, shared employers, recency of contact, notes on file.",
-            "**Never combined into a single number.** Combining hides strong candidates who happen to have no mutual connections.",
-            "**Tier** ('Call this week', 'Direct outreach', 'Nurture') is a label that reads both scores independently — not a sort key.",
-          ]}
+          title="Score — decision B"
+          lead="For each open role, compute two scores. Never combine them."
           seeIt="/jobs/JOB001/"
-        />
-        <FlowBoxDetail
+          seeLabel="Open the shortlist"
+        >
+          <p>
+            <strong>Fit</strong> — pure competence. Required skills, role family, seniority, domain,
+            nice-to-haves. Never touches network signal.<br />
+            <strong>Warmth</strong> — pure reachability. Mutual connections, shared employers,
+            recency, notes on file.
+          </p>
+          <p>
+            The tier label (<em>Call this week</em>, <em>Direct outreach</em>, <em>Nurture</em>)
+            reads both scores independently. It's a chip on the card, not a sort key. A single
+            &ldquo;compatibility rate&rdquo; would bury strong candidates with no mutual connections —
+            we have five of those in this dataset.
+          </p>
+        </NarrativeStep>
+
+        <NarrativeStep
           num={5}
           title="Shortlist"
-          iconName="list"
-          plain="Ranked list per open role. Every card names the WSC employee best placed to make the intro."
-          detail={[
-            "**Sorted by fit** (competence), tier shows as a chip on the card.",
-            "**Warm-intro path per candidate** — the recruiter sees the name, not just a warmth number.",
-            "**Recruiter overrides win.** 'Not a fit for this role' hides them from this role only; 'Blacklist' hides them everywhere. Both audited.",
-            "**Exportable** — CSV or Excel from the shortlist page.",
-          ]}
+          lead="Ranked list per role. Every card names the WSC employee best placed to make the intro."
           seeIt="/pool/"
-        />
+          seeLabel="Audit the pool"
+        >
+          <p>
+            Sorted by fit (recruiter can flip to warmth or recency). Each candidate card carries
+            their warm-intro path with a one-click <em>Ask X to introduce</em> action that lands in
+            the outreach queue. Recruiter overrides win — the model can't hallucinate a candidate
+            back onto a list where the recruiter marked them &ldquo;not a fit.&rdquo; Exportable to
+            CSV for anyone who lives in a spreadsheet.
+          </p>
+        </NarrativeStep>
       </div>
 
-      <div className="pt-4 border-t border-border">
-        <div className="text-xs uppercase tracking-wider text-mute font-semibold mb-3">Two things worth understanding</div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="card p-5">
-            <div className="flex items-baseline gap-2 mb-2">
-              <span className="text-[10px] font-mono uppercase tracking-wider text-indigo-700 font-semibold">Two decisions</span>
-            </div>
-            <div className="text-sm text-text font-medium mb-2">
-              Pool admission (once per person) vs job match (once per person × job)
-            </div>
-            <div className="text-sm text-mute leading-relaxed">
-              We admit a person to the pool once — the expensive enrichment runs then. Scoring them against
-              a specific role is cheap and re-runnable. Enrichment cost scales with admissions, not with roles.
-            </div>
-          </div>
-          <div className="card p-5">
-            <div className="flex items-baseline gap-2 mb-2">
-              <span className="text-[10px] font-mono uppercase tracking-wider text-indigo-700 font-semibold">Two scores</span>
-            </div>
-            <div className="text-sm text-text font-medium mb-2">
-              Fit and Warmth stay separate. Always.
-            </div>
-            <div className="text-sm text-mute leading-relaxed">
-              Fit = can they do the job. Warmth = can we get to them. A single "compatibility rate" buries
-              strong candidates with no mutual connections. Two scores keep the trade-off visible.
-            </div>
-          </div>
+      {/* Depth link — inline, not a callout card */}
+      <div className="mt-16 pt-8 border-t border-border flex items-baseline justify-between gap-4 flex-wrap">
+        <div className="text-sm text-mute max-w-md">
+          Weights, adjacency tables, the exact formulas, and every trade-off we defended —
+          it's all in the design doc.
         </div>
-      </div>
-
-      <div className="rounded-lg border border-indigo-100 bg-indigo-50/40 p-5 flex items-start gap-4">
-        <Icon name="info" className="w-5 h-5 text-indigo-600 flex-shrink-0 mt-0.5" strokeWidth={2.25} />
-        <div className="text-sm text-indigo-900 flex-1">
-          Want the maths — weights, thresholds, adjacency tables, formulas?
-          <button onClick={onDeeper} className="ml-2 underline hover:no-underline font-medium">
-            Design doc →
-          </button>
-        </div>
+        <button onClick={onDeeper} className="inline-flex items-center gap-1.5 text-sm font-semibold text-red-700 hover:text-red-900">
+          Design doc <Icon name="arrow-right" className="w-4 h-4" strokeWidth={2.25} />
+        </button>
       </div>
     </section>
+  );
+}
+
+/* A single narrative step — big serif number, clean prose, no bullet lists inside a card.
+   Editorial rhythm: number, title, lead paragraph, body. Optional inline "see it" link. */
+function NarrativeStep({
+  num, title, lead, seeIt, seeLabel, children,
+}: {
+  num: number;
+  title: string;
+  lead: string;
+  seeIt?: string;
+  seeLabel?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="grid grid-cols-[auto_1fr] gap-6 md:gap-8">
+      <div className="text-right">
+        <div className="font-serif italic text-5xl md:text-6xl leading-none text-red-500 tabular">
+          {String(num).padStart(2, "0")}
+        </div>
+      </div>
+      <div className="min-w-0 pt-1">
+        <h3 className="text-xl md:text-2xl font-semibold text-text tracking-tight mb-2 display-tight">{title}</h3>
+        <p className="text-base text-text font-medium leading-snug mb-3">{lead}</p>
+        <div className="text-[15px] text-dim leading-relaxed space-y-3 [&_strong]:text-text [&_strong]:font-semibold [&_em]:italic [&_em]:not-italic">
+          {children}
+        </div>
+        {seeIt && seeLabel && (
+          <a href={seeIt} className="inline-flex items-center gap-1.5 mt-3 text-sm font-medium text-red-700 hover:text-red-900">
+            {seeLabel}
+            <Icon name="arrow-right" className="w-3.5 h-3.5" strokeWidth={2.25} />
+          </a>
+        )}
+      </div>
+    </div>
   );
 }
 

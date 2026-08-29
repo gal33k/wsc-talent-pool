@@ -95,7 +95,7 @@ export default function CandidateCard({
                   {tierStyle.label}
                 </span>
               )}
-              <span className="hidden group-hover:inline-flex items-center gap-1 text-[10px] font-medium text-amber-700 whitespace-nowrap">
+              <span className="hidden group-hover:inline-flex items-center gap-1 text-[10px] font-medium text-red-700 whitespace-nowrap">
                 View dossier <Icon name="arrow-right" className="w-3 h-3" strokeWidth={2.5} />
               </span>
             </div>
