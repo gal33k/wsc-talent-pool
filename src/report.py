@@ -334,6 +334,7 @@ def emit_pool_json(pool: list[dict], employees: list[dict], jobs: list[dict],
         "defaults": {
             "fit_weights": cfg["fit_weights"],
             "warmth_weights": cfg["warmth_weights"],
+            "signal_weights": cfg.get("signal_weights", cfg["warmth_weights"]),
             "tiers": cfg["tiers"],
         },
         "jobs": [

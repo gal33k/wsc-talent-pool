@@ -25,7 +25,7 @@ from src.enrich import enrich
 from src.normalize import normalise
 from src.gate import gate
 from src.score import score_fit
-from src.warmpath import score_warmth, best_intro_path
+from src.signal import score_signal, best_intro_path
 from src.report import (
     SHORTLIST_COLUMNS, assign_tier, days_since, fit_breakdown,
     suggested_action, write_shortlist_csv, write_shortlist_html,
@@ -131,7 +131,7 @@ def _score_job(pool: list[dict], job: dict, employees: list[dict],
 
     for r in admitted:
         fit = score_fit(r, job)
-        warmth = score_warmth(r, employees)
+        warmth = score_signal(r, employees, job=job)
         warmths[r["hubspot_id"]] = warmth
         fit_by_id[r["hubspot_id"]] = fit
 
@@ -370,7 +370,7 @@ def main() -> None:
         # Every admitted candidate gets warmth (job-agnostic apart from best_intro_path)
         for r in pool:
             if r["gate"]["decision"] == "ADMIT" and r["hubspot_id"] not in warmth_by_person:
-                warmth_by_person[r["hubspot_id"]] = score_warmth(r, employees)
+                warmth_by_person[r["hubspot_id"]] = score_signal(r, employees, job=None)
 
         # Write CSVs and HTML per job
         jid = job["job_id"]

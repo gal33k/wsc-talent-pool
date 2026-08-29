@@ -1,8 +1,22 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState, ReactNode, useCallback } from "react";
-import type { Pool, FitWeights, WarmthWeights, Tiers } from "./types";
+import type { Pool, FitWeights, WarmthWeights, SignalWeights, Tiers } from "./types";
 import { computeFit, computeWarmth } from "./scoring";
+
+// Signal weights (new 8-component) — the second-axis defaults live here so the
+// context has a valid shape before pool.json loads. Overwritten with server
+// defaults on load.
+const DEFAULT_SIGNAL_WEIGHTS: SignalWeights = {
+  peer_vouch: 35,
+  same_team_overlap: 18,
+  cross_team_vouch: 12,
+  culture_affinity: 12,
+  prior_wsc_engagement: 8,
+  recency: 7,
+  notes_present: 5,
+  mutual_connections: 3,
+};
 
 export type OverrideEntry = {
   candidateId: string;
@@ -54,10 +68,10 @@ type Ctx = {
   selectedJobId: string;
   setSelectedJobId: (id: string) => void;
   fitWeights: FitWeights;
-  warmthWeights: WarmthWeights;
+  warmthWeights: WarmthWeights | SignalWeights;
   tiers: Tiers;
   setFitWeights: (w: FitWeights) => void;
-  setWarmthWeights: (w: WarmthWeights) => void;
+  setWarmthWeights: (w: WarmthWeights | SignalWeights) => void;
   setTiers: (t: Tiers) => void;
   resetWeights: () => void;
   parityOk: boolean;
@@ -102,9 +116,12 @@ export function PoolProvider({ children }: { children: ReactNode }) {
   const [fitWeights, setFitWeights] = useState<FitWeights>({
     required_skills: 35, role_family: 25, seniority: 15, domain: 15, nice_to_have: 10,
   });
-  const [warmthWeights, setWarmthWeights] = useState<WarmthWeights>({
-    mutual_connections: 40, shared_employer: 30, recency: 20, notes_present: 10,
-  });
+  // The `warmthWeights` state name is kept for backward-compat with call sites,
+  // but its VALUE is now the 8-component Signal weights (see DEFAULT_SIGNAL_WEIGHTS).
+  // computeWarmth() dispatches to computeSignal based on shape.
+  const [warmthWeights, setWarmthWeights] = useState<WarmthWeights | SignalWeights>(
+    DEFAULT_SIGNAL_WEIGHTS
+  );
   const [tiers, setTiers] = useState<Tiers>({
     call_this_week: { min_fit: 70, min_warmth: 50 },
     direct_outreach: { min_fit: 70 },
@@ -128,7 +145,9 @@ export function PoolProvider({ children }: { children: ReactNode }) {
       .then((data: Pool) => {
         setPool(data);
         setFitWeights(data.defaults.fit_weights);
-        setWarmthWeights(data.defaults.warmth_weights);
+        // Prefer the new 8-component signal_weights emitted by the pipeline;
+        // fall back to legacy warmth_weights for older pool.json files.
+        setWarmthWeights(data.defaults.signal_weights ?? data.defaults.warmth_weights);
         setTiers(data.defaults.tiers);
 
         let ok = true;
@@ -171,7 +190,7 @@ export function PoolProvider({ children }: { children: ReactNode }) {
   const resetWeights = () => {
     if (!pool) return;
     setFitWeights(pool.defaults.fit_weights);
-    setWarmthWeights(pool.defaults.warmth_weights);
+    setWarmthWeights(pool.defaults.signal_weights ?? pool.defaults.warmth_weights);
     setTiers(pool.defaults.tiers);
   };
 

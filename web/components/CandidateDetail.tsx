@@ -109,12 +109,27 @@ export default function CandidateDetail({
             </div>
           </Section>
 
-          <Section title="Warmth breakdown" sub="4 components">
+          <Section title="Signal breakdown" sub="8 components — endorsements + team + culture + reachability">
             <div className="rounded-lg border border-border bg-white p-4">
-              <ComponentBar label="Mutual connections" value={candidate.warmth.components.mutual_connections} weight={warmthWeights.mutual_connections} weightMax={maxWarmthWeight} />
-              <ComponentBar label="Shared employer"    value={candidate.warmth.components.shared_employer}    weight={warmthWeights.shared_employer}    weightMax={maxWarmthWeight} />
-              <ComponentBar label="Recency"            value={candidate.warmth.components.recency}            weight={warmthWeights.recency}            weightMax={maxWarmthWeight} />
-              <ComponentBar label="Notes present"      value={candidate.warmth.components.notes_present}      weight={warmthWeights.notes_present}      weightMax={maxWarmthWeight} />
+              {(() => {
+                const c = candidate.warmth.components as Record<string, number>;
+                const w = warmthWeights as Record<string, number>;
+                const rows: Array<[string, string]> = [
+                  ["Peer vouch",            "peer_vouch"],
+                  ["Same-team overlap",     "same_team_overlap"],
+                  ["Cross-team vouch",      "cross_team_vouch"],
+                  ["Culture affinity",      "culture_affinity"],
+                  ["Prior WSC engagement",  "prior_wsc_engagement"],
+                  ["Recency",               "recency"],
+                  ["Recruiter notes",       "notes_present"],
+                  ["Mutual connections",    "mutual_connections"],
+                ];
+                return rows.map(([label, key]) => (
+                  c[key] !== undefined && w[key] !== undefined ? (
+                    <ComponentBar key={key} label={label} value={c[key]} weight={w[key]} weightMax={maxWarmthWeight} />
+                  ) : null
+                ));
+              })()}
             </div>
           </Section>
 

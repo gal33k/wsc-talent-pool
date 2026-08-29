@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-08-28T23:01:18+00:00",
-  "config_version": "scoring.yaml@8b5a9d82",
+  "generated_at": "2026-08-29T14:09:57+00:00",
+  "config_version": "scoring.yaml@cb65b8b7",
   "defaults": {
     "fit_weights": {
       "required_skills": 35,
@@ -10,10 +10,20 @@
       "nice_to_have": 10
     },
     "warmth_weights": {
-      "mutual_connections": 40,
-      "shared_employer": 30,
-      "recency": 20,
-      "notes_present": 10
+      "mutual_connections": 3,
+      "shared_employer": 18,
+      "recency": 7,
+      "notes_present": 5
+    },
+    "signal_weights": {
+      "peer_vouch": 35,
+      "same_team_overlap": 18,
+      "cross_team_vouch": 12,
+      "culture_affinity": 12,
+      "prior_wsc_engagement": 8,
+      "recency": 7,
+      "notes_present": 5,
+      "mutual_connections": 3
     },
     "tiers": {
       "call_this_week": {
@@ -280,12 +290,16 @@
       "comeet_status": null,
       "warmth": {
         "components": {
-          "mutual_connections": 0.8,
-          "shared_employer": 1.0,
+          "peer_vouch": 0.0,
+          "same_team_overlap": 0.0,
+          "cross_team_vouch": 0.0,
+          "culture_affinity": 1.0,
+          "prior_wsc_engagement": 0.0,
           "recency": 0.2973,
-          "notes_present": 0.0
+          "notes_present": 0.0,
+          "mutual_connections": 0.8
         },
-        "score_default": 67.9,
+        "score_default": 16.5,
         "mutuals": [
           {
             "employee_id": "WSC002",
@@ -325,7 +339,8 @@
             "department": "Content",
             "overlap": "2018-2019"
           }
-        ]
+        ],
+        "vouch_evidence": []
       },
       "jobs": {
         "JOB001": {
@@ -518,12 +533,16 @@
       },
       "warmth": {
         "components": {
-          "mutual_connections": 0.8,
-          "shared_employer": 0.8,
+          "peer_vouch": 0.0,
+          "same_team_overlap": 0.0,
+          "cross_team_vouch": 0.0,
+          "culture_affinity": 0.8,
+          "prior_wsc_engagement": 0.0,
           "recency": 0.2973,
-          "notes_present": 1.0
+          "notes_present": 1.0,
+          "mutual_connections": 0.8
         },
-        "score_default": 71.9,
+        "score_default": 19.1,
         "mutuals": [
           {
             "employee_id": "WSC002",
@@ -555,7 +574,8 @@
             "department": "AI/ML",
             "overlap": "2017-2018"
           }
-        ]
+        ],
+        "vouch_evidence": []
       },
       "jobs": {
         "JOB001": {
@@ -799,12 +819,16 @@
       "comeet_status": null,
       "warmth": {
         "components": {
-          "mutual_connections": 0.8,
-          "shared_employer": 0.0,
+          "peer_vouch": 0.0,
+          "same_team_overlap": 0.0,
+          "cross_team_vouch": 0.0,
+          "culture_affinity": 1.0,
+          "prior_wsc_engagement": 0.0,
           "recency": 0.2973,
-          "notes_present": 1.0
+          "notes_present": 1.0,
+          "mutual_connections": 0.8
         },
-        "score_default": 47.9,
+        "score_default": 21.5,
         "mutuals": [
           {
             "employee_id": "WSC001",
@@ -819,7 +843,8 @@
             "department": "AI/ML"
           }
         ],
-        "shared_employers": []
+        "shared_employers": [],
+        "vouch_evidence": []
       },
       "jobs": {
         "JOB001": {
@@ -1010,14 +1035,19 @@
       },
       "warmth": {
         "components": {
-          "mutual_connections": 0.0,
-          "shared_employer": 0.0,
+          "peer_vouch": 0.0,
+          "same_team_overlap": 0.0,
+          "cross_team_vouch": 0.0,
+          "culture_affinity": 0.5,
+          "prior_wsc_engagement": 0.0,
           "recency": 0.2973,
-          "notes_present": 0.0
+          "notes_present": 0.0,
+          "mutual_connections": 0.0
         },
-        "score_default": 5.9,
+        "score_default": 8.1,
         "mutuals": [],
-        "shared_employers": []
+        "shared_employers": [],
+        "vouch_evidence": []
       },
       "jobs": {
         "JOB001": {
@@ -1206,12 +1236,16 @@
       "comeet_status": null,
       "warmth": {
         "components": {
-          "mutual_connections": 0.8,
-          "shared_employer": 0.0,
+          "peer_vouch": 0.0,
+          "same_team_overlap": 0.0,
+          "cross_team_vouch": 0.0,
+          "culture_affinity": 1.0,
+          "prior_wsc_engagement": 0.0,
           "recency": 0.2973,
-          "notes_present": 1.0
+          "notes_present": 1.0,
+          "mutual_connections": 0.8
         },
-        "score_default": 47.9,
+        "score_default": 21.5,
         "mutuals": [
           {
             "employee_id": "WSC004",
@@ -1226,7 +1260,8 @@
             "department": "Data"
           }
         ],
-        "shared_employers": []
+        "shared_employers": [],
+        "vouch_evidence": []
       },
       "jobs": {
         "JOB001": {
@@ -1413,12 +1448,16 @@
       "comeet_status": null,
       "warmth": {
         "components": {
-          "mutual_connections": 0.5,
-          "shared_employer": 0.0,
+          "peer_vouch": 0.0,
+          "same_team_overlap": 0.0,
+          "cross_team_vouch": 0.0,
+          "culture_affinity": 0.5,
+          "prior_wsc_engagement": 0.0,
           "recency": 0.2973,
-          "notes_present": 0.0
+          "notes_present": 0.0,
+          "mutual_connections": 0.5
         },
-        "score_default": 25.9,
+        "score_default": 9.6,
         "mutuals": [
           {
             "employee_id": "WSC006",
@@ -1427,7 +1466,8 @@
             "department": "Engineering"
           }
         ],
-        "shared_employers": []
+        "shared_employers": [],
+        "vouch_evidence": []
       },
       "jobs": {
         "JOB001": {
@@ -1615,14 +1655,19 @@
       "comeet_status": null,
       "warmth": {
         "components": {
-          "mutual_connections": 0.0,
-          "shared_employer": 0.0,
+          "peer_vouch": 0.0,
+          "same_team_overlap": 0.0,
+          "cross_team_vouch": 0.0,
+          "culture_affinity": 0.5,
+          "prior_wsc_engagement": 0.0,
           "recency": 0.2973,
-          "notes_present": 0.0
+          "notes_present": 0.0,
+          "mutual_connections": 0.0
         },
-        "score_default": 5.9,
+        "score_default": 8.1,
         "mutuals": [],
-        "shared_employers": []
+        "shared_employers": [],
+        "vouch_evidence": []
       },
       "jobs": {
         "JOB001": {
@@ -1803,12 +1848,16 @@
       "comeet_status": null,
       "warmth": {
         "components": {
-          "mutual_connections": 0.8,
-          "shared_employer": 0.8,
+          "peer_vouch": 0.0,
+          "same_team_overlap": 0.0,
+          "cross_team_vouch": 0.0,
+          "culture_affinity": 1.0,
+          "prior_wsc_engagement": 0.0,
           "recency": 0.2973,
-          "notes_present": 1.0
+          "notes_present": 1.0,
+          "mutual_connections": 0.8
         },
-        "score_default": 71.9,
+        "score_default": 21.5,
         "mutuals": [
           {
             "employee_id": "WSC001",
@@ -1840,7 +1889,8 @@
             "department": "Engineering",
             "overlap": "2019-2020"
           }
-        ]
+        ],
+        "vouch_evidence": []
       },
       "jobs": {
         "JOB001": {
@@ -2029,14 +2079,19 @@
       "comeet_status": null,
       "warmth": {
         "components": {
-          "mutual_connections": 0.0,
-          "shared_employer": 0.0,
+          "peer_vouch": 0.0,
+          "same_team_overlap": 0.0,
+          "cross_team_vouch": 0.0,
+          "culture_affinity": 0.5,
+          "prior_wsc_engagement": 0.0,
           "recency": 0.2973,
-          "notes_present": 0.0
+          "notes_present": 0.0,
+          "mutual_connections": 0.0
         },
-        "score_default": 5.9,
+        "score_default": 8.1,
         "mutuals": [],
-        "shared_employers": []
+        "shared_employers": [],
+        "vouch_evidence": []
       },
       "jobs": {
         "JOB001": {
@@ -2221,12 +2276,16 @@
       "comeet_status": null,
       "warmth": {
         "components": {
-          "mutual_connections": 0.5,
-          "shared_employer": 1.0,
+          "peer_vouch": 0.0,
+          "same_team_overlap": 0.0,
+          "cross_team_vouch": 0.0,
+          "culture_affinity": 1.0,
+          "prior_wsc_engagement": 0.0,
           "recency": 0.2973,
-          "notes_present": 1.0
+          "notes_present": 1.0,
+          "mutual_connections": 0.5
         },
-        "score_default": 65.9,
+        "score_default": 20.6,
         "mutuals": [
           {
             "employee_id": "WSC004",
@@ -2260,7 +2319,8 @@
             "department": "Data",
             "overlap": null
           }
-        ]
+        ],
+        "vouch_evidence": []
       },
       "jobs": {
         "JOB001": {
@@ -2507,12 +2567,16 @@
       "comeet_status": null,
       "warmth": {
         "components": {
-          "mutual_connections": 1.0,
-          "shared_employer": 0.8,
+          "peer_vouch": 0.0,
+          "same_team_overlap": 0.0,
+          "cross_team_vouch": 0.0,
+          "culture_affinity": 1.0,
+          "prior_wsc_engagement": 0.0,
           "recency": 0.2973,
-          "notes_present": 1.0
+          "notes_present": 1.0,
+          "mutual_connections": 1.0
         },
-        "score_default": 79.9,
+        "score_default": 22.1,
         "mutuals": [
           {
             "employee_id": "WSC002",
@@ -2550,7 +2614,8 @@
             "department": "AI/ML",
             "overlap": null
           }
-        ]
+        ],
+        "vouch_evidence": []
       },
       "jobs": {
         "JOB001": {
@@ -2735,14 +2800,19 @@
       "comeet_status": null,
       "warmth": {
         "components": {
-          "mutual_connections": 0.0,
-          "shared_employer": 0.0,
+          "peer_vouch": 0.0,
+          "same_team_overlap": 0.0,
+          "cross_team_vouch": 0.0,
+          "culture_affinity": 0.5,
+          "prior_wsc_engagement": 0.0,
           "recency": 0.2973,
-          "notes_present": 0.0
+          "notes_present": 0.0,
+          "mutual_connections": 0.0
         },
-        "score_default": 5.9,
+        "score_default": 8.1,
         "mutuals": [],
-        "shared_employers": []
+        "shared_employers": [],
+        "vouch_evidence": []
       },
       "jobs": {
         "JOB001": {
@@ -2927,12 +2997,16 @@
       "comeet_status": null,
       "warmth": {
         "components": {
-          "mutual_connections": 0.8,
-          "shared_employer": 0.5,
+          "peer_vouch": 0.0,
+          "same_team_overlap": 0.0,
+          "cross_team_vouch": 0.0,
+          "culture_affinity": 1.0,
+          "prior_wsc_engagement": 0.0,
           "recency": 0.2973,
-          "notes_present": 1.0
+          "notes_present": 1.0,
+          "mutual_connections": 0.8
         },
-        "score_default": 62.9,
+        "score_default": 21.5,
         "mutuals": [
           {
             "employee_id": "WSC006",
@@ -2956,7 +3030,8 @@
             "department": "Engineering",
             "overlap": null
           }
-        ]
+        ],
+        "vouch_evidence": []
       },
       "jobs": {
         "JOB001": {
@@ -3145,14 +3220,19 @@
       "comeet_status": null,
       "warmth": {
         "components": {
-          "mutual_connections": 0.0,
-          "shared_employer": 0.0,
+          "peer_vouch": 0.0,
+          "same_team_overlap": 0.0,
+          "cross_team_vouch": 0.0,
+          "culture_affinity": 0.5,
+          "prior_wsc_engagement": 0.0,
           "recency": 0.2973,
-          "notes_present": 0.0
+          "notes_present": 0.0,
+          "mutual_connections": 0.0
         },
-        "score_default": 5.9,
+        "score_default": 8.1,
         "mutuals": [],
-        "shared_employers": []
+        "shared_employers": [],
+        "vouch_evidence": []
       },
       "jobs": {
         "JOB001": {
@@ -3337,12 +3417,16 @@
       "comeet_status": null,
       "warmth": {
         "components": {
-          "mutual_connections": 1.0,
-          "shared_employer": 0.0,
+          "peer_vouch": 0.0,
+          "same_team_overlap": 0.0,
+          "cross_team_vouch": 0.0,
+          "culture_affinity": 0.8,
+          "prior_wsc_engagement": 0.0,
           "recency": 0.2973,
-          "notes_present": 1.0
+          "notes_present": 1.0,
+          "mutual_connections": 1.0
         },
-        "score_default": 55.9,
+        "score_default": 19.7,
         "mutuals": [
           {
             "employee_id": "WSC004",
@@ -3363,7 +3447,8 @@
             "department": "Engineering"
           }
         ],
-        "shared_employers": []
+        "shared_employers": [],
+        "vouch_evidence": []
       },
       "jobs": {
         "JOB001": {
@@ -3611,12 +3696,16 @@
       "comeet_status": null,
       "warmth": {
         "components": {
-          "mutual_connections": 0.5,
-          "shared_employer": 0.0,
+          "peer_vouch": 0.0,
+          "same_team_overlap": 0.0,
+          "cross_team_vouch": 0.0,
+          "culture_affinity": 0.8,
+          "prior_wsc_engagement": 0.0,
           "recency": 0.2973,
-          "notes_present": 1.0
+          "notes_present": 1.0,
+          "mutual_connections": 0.5
         },
-        "score_default": 35.9,
+        "score_default": 18.2,
         "mutuals": [
           {
             "employee_id": "WSC002",
@@ -3625,7 +3714,8 @@
             "department": "AI/ML"
           }
         ],
-        "shared_employers": []
+        "shared_employers": [],
+        "vouch_evidence": []
       },
       "jobs": {
         "JOB001": {
@@ -3809,14 +3899,19 @@
       "comeet_status": null,
       "warmth": {
         "components": {
-          "mutual_connections": 0.0,
-          "shared_employer": 0.0,
+          "peer_vouch": 0.0,
+          "same_team_overlap": 0.0,
+          "cross_team_vouch": 0.0,
+          "culture_affinity": 0.5,
+          "prior_wsc_engagement": 0.0,
           "recency": 0.2973,
-          "notes_present": 0.0
+          "notes_present": 0.0,
+          "mutual_connections": 0.0
         },
-        "score_default": 5.9,
+        "score_default": 8.1,
         "mutuals": [],
-        "shared_employers": []
+        "shared_employers": [],
+        "vouch_evidence": []
       },
       "jobs": {
         "JOB001": {
@@ -4000,12 +4095,16 @@
       "comeet_status": null,
       "warmth": {
         "components": {
-          "mutual_connections": 0.8,
-          "shared_employer": 0.0,
+          "peer_vouch": 0.0,
+          "same_team_overlap": 0.0,
+          "cross_team_vouch": 0.0,
+          "culture_affinity": 1.0,
+          "prior_wsc_engagement": 0.0,
           "recency": 0.2973,
-          "notes_present": 1.0
+          "notes_present": 1.0,
+          "mutual_connections": 0.8
         },
-        "score_default": 47.9,
+        "score_default": 21.5,
         "mutuals": [
           {
             "employee_id": "WSC003",
@@ -4020,7 +4119,8 @@
             "department": "Sales"
           }
         ],
-        "shared_employers": []
+        "shared_employers": [],
+        "vouch_evidence": []
       },
       "jobs": {
         "JOB001": {
@@ -4204,14 +4304,19 @@
       "comeet_status": null,
       "warmth": {
         "components": {
-          "mutual_connections": 0.0,
-          "shared_employer": 0.0,
+          "peer_vouch": 0.0,
+          "same_team_overlap": 0.0,
+          "cross_team_vouch": 0.0,
+          "culture_affinity": 0.5,
+          "prior_wsc_engagement": 0.0,
           "recency": 0.2973,
-          "notes_present": 0.0
+          "notes_present": 0.0,
+          "mutual_connections": 0.0
         },
-        "score_default": 5.9,
+        "score_default": 8.1,
         "mutuals": [],
-        "shared_employers": []
+        "shared_employers": [],
+        "vouch_evidence": []
       },
       "jobs": {
         "JOB001": {
@@ -4397,12 +4502,16 @@
       "comeet_status": null,
       "warmth": {
         "components": {
-          "mutual_connections": 0.8,
-          "shared_employer": 0.0,
+          "peer_vouch": 0.0,
+          "same_team_overlap": 0.0,
+          "cross_team_vouch": 0.0,
+          "culture_affinity": 1.0,
+          "prior_wsc_engagement": 0.0,
           "recency": 0.2973,
-          "notes_present": 1.0
+          "notes_present": 1.0,
+          "mutual_connections": 0.8
         },
-        "score_default": 47.9,
+        "score_default": 21.5,
         "mutuals": [
           {
             "employee_id": "WSC009",
@@ -4417,7 +4526,8 @@
             "department": "Engineering"
           }
         ],
-        "shared_employers": []
+        "shared_employers": [],
+        "vouch_evidence": []
       },
       "jobs": {
         "JOB001": {
@@ -4605,14 +4715,19 @@
       "comeet_status": null,
       "warmth": {
         "components": {
-          "mutual_connections": 0.0,
-          "shared_employer": 0.0,
+          "peer_vouch": 0.0,
+          "same_team_overlap": 0.0,
+          "cross_team_vouch": 0.0,
+          "culture_affinity": 0.5,
+          "prior_wsc_engagement": 0.0,
           "recency": 0.2973,
-          "notes_present": 0.0
+          "notes_present": 0.0,
+          "mutual_connections": 0.0
         },
-        "score_default": 5.9,
+        "score_default": 8.1,
         "mutuals": [],
-        "shared_employers": []
+        "shared_employers": [],
+        "vouch_evidence": []
       },
       "jobs": {
         "JOB001": {
@@ -4797,12 +4912,16 @@
       "comeet_status": null,
       "warmth": {
         "components": {
-          "mutual_connections": 1.0,
-          "shared_employer": 0.0,
+          "peer_vouch": 0.0,
+          "same_team_overlap": 0.0,
+          "cross_team_vouch": 0.0,
+          "culture_affinity": 1.0,
+          "prior_wsc_engagement": 0.0,
           "recency": 0.2973,
-          "notes_present": 1.0
+          "notes_present": 1.0,
+          "mutual_connections": 1.0
         },
-        "score_default": 55.9,
+        "score_default": 22.1,
         "mutuals": [
           {
             "employee_id": "WSC002",
@@ -4823,7 +4942,8 @@
             "department": "AI/ML"
           }
         ],
-        "shared_employers": []
+        "shared_employers": [],
+        "vouch_evidence": []
       },
       "jobs": {
         "JOB001": {
@@ -5005,12 +5125,16 @@
       "comeet_status": null,
       "warmth": {
         "components": {
-          "mutual_connections": 0.0,
-          "shared_employer": 1.0,
+          "peer_vouch": 0.0,
+          "same_team_overlap": 0.0,
+          "cross_team_vouch": 0.0,
+          "culture_affinity": 0.5,
+          "prior_wsc_engagement": 0.0,
           "recency": 0.2973,
-          "notes_present": 0.0
+          "notes_present": 0.0,
+          "mutual_connections": 0.0
         },
-        "score_default": 35.9,
+        "score_default": 8.1,
         "mutuals": [],
         "shared_employers": [
           {
@@ -5037,7 +5161,8 @@
             "department": "AI/ML",
             "overlap": null
           }
-        ]
+        ],
+        "vouch_evidence": []
       },
       "jobs": {
         "JOB001": {
@@ -5224,12 +5349,16 @@
       "comeet_status": null,
       "warmth": {
         "components": {
-          "mutual_connections": 0.5,
-          "shared_employer": 0.0,
+          "peer_vouch": 0.0,
+          "same_team_overlap": 0.0,
+          "cross_team_vouch": 0.0,
+          "culture_affinity": 1.0,
+          "prior_wsc_engagement": 0.0,
           "recency": 0.2973,
-          "notes_present": 1.0
+          "notes_present": 1.0,
+          "mutual_connections": 0.5
         },
-        "score_default": 35.9,
+        "score_default": 20.6,
         "mutuals": [
           {
             "employee_id": "WSC008",
@@ -5238,7 +5367,8 @@
             "department": "Data"
           }
         ],
-        "shared_employers": []
+        "shared_employers": [],
+        "vouch_evidence": []
       },
       "jobs": {
         "JOB001": {
@@ -5425,14 +5555,19 @@
       "comeet_status": null,
       "warmth": {
         "components": {
-          "mutual_connections": 0.0,
-          "shared_employer": 0.0,
+          "peer_vouch": 0.0,
+          "same_team_overlap": 0.0,
+          "cross_team_vouch": 0.0,
+          "culture_affinity": 0.5,
+          "prior_wsc_engagement": 0.0,
           "recency": 0.2973,
-          "notes_present": 0.0
+          "notes_present": 0.0,
+          "mutual_connections": 0.0
         },
-        "score_default": 5.9,
+        "score_default": 8.1,
         "mutuals": [],
-        "shared_employers": []
+        "shared_employers": [],
+        "vouch_evidence": []
       },
       "jobs": {
         "JOB001": {
@@ -5623,12 +5758,16 @@
       },
       "warmth": {
         "components": {
-          "mutual_connections": 0.8,
-          "shared_employer": 0.0,
+          "peer_vouch": 0.0,
+          "same_team_overlap": 0.0,
+          "cross_team_vouch": 0.0,
+          "culture_affinity": 1.0,
+          "prior_wsc_engagement": 0.0,
           "recency": 0.2973,
-          "notes_present": 1.0
+          "notes_present": 1.0,
+          "mutual_connections": 0.8
         },
-        "score_default": 47.9,
+        "score_default": 21.5,
         "mutuals": [
           {
             "employee_id": "WSC004",
@@ -5643,7 +5782,8 @@
             "department": "Engineering"
           }
         ],
-        "shared_employers": []
+        "shared_employers": [],
+        "vouch_evidence": []
       },
       "jobs": {
         "JOB001": {
@@ -5893,12 +6033,16 @@
       "comeet_status": null,
       "warmth": {
         "components": {
-          "mutual_connections": 0.8,
-          "shared_employer": 0.0,
+          "peer_vouch": 0.0,
+          "same_team_overlap": 0.0,
+          "cross_team_vouch": 0.0,
+          "culture_affinity": 1.0,
+          "prior_wsc_engagement": 0.0,
           "recency": 0.2973,
-          "notes_present": 1.0
+          "notes_present": 1.0,
+          "mutual_connections": 0.8
         },
-        "score_default": 47.9,
+        "score_default": 21.5,
         "mutuals": [
           {
             "employee_id": "WSC006",
@@ -5913,7 +6057,8 @@
             "department": "Engineering"
           }
         ],
-        "shared_employers": []
+        "shared_employers": [],
+        "vouch_evidence": []
       },
       "jobs": {
         "JOB001": {
@@ -6102,14 +6247,19 @@
       "comeet_status": null,
       "warmth": {
         "components": {
-          "mutual_connections": 0.0,
-          "shared_employer": 0.0,
+          "peer_vouch": 0.0,
+          "same_team_overlap": 0.0,
+          "cross_team_vouch": 0.0,
+          "culture_affinity": 0.5,
+          "prior_wsc_engagement": 0.0,
           "recency": 0.2973,
-          "notes_present": 0.0
+          "notes_present": 0.0,
+          "mutual_connections": 0.0
         },
-        "score_default": 5.9,
+        "score_default": 8.1,
         "mutuals": [],
-        "shared_employers": []
+        "shared_employers": [],
+        "vouch_evidence": []
       },
       "jobs": {
         "JOB001": {
@@ -6295,12 +6445,16 @@
       "comeet_status": null,
       "warmth": {
         "components": {
-          "mutual_connections": 0.8,
-          "shared_employer": 0.5,
+          "peer_vouch": 0.0,
+          "same_team_overlap": 0.0,
+          "cross_team_vouch": 0.0,
+          "culture_affinity": 0.8,
+          "prior_wsc_engagement": 0.0,
           "recency": 0.2973,
-          "notes_present": 1.0
+          "notes_present": 1.0,
+          "mutual_connections": 0.8
         },
-        "score_default": 62.9,
+        "score_default": 19.1,
         "mutuals": [
           {
             "employee_id": "WSC006",
@@ -6324,7 +6478,8 @@
             "department": "Engineering",
             "overlap": null
           }
-        ]
+        ],
+        "vouch_evidence": []
       },
       "jobs": {
         "JOB001": {
@@ -6511,14 +6666,19 @@
       "comeet_status": null,
       "warmth": {
         "components": {
-          "mutual_connections": 0.0,
-          "shared_employer": 0.0,
+          "peer_vouch": 0.0,
+          "same_team_overlap": 0.0,
+          "cross_team_vouch": 0.0,
+          "culture_affinity": 0.5,
+          "prior_wsc_engagement": 0.0,
           "recency": 0.2973,
-          "notes_present": 0.0
+          "notes_present": 0.0,
+          "mutual_connections": 0.0
         },
-        "score_default": 5.9,
+        "score_default": 8.1,
         "mutuals": [],
-        "shared_employers": []
+        "shared_employers": [],
+        "vouch_evidence": []
       },
       "jobs": {
         "JOB001": {
@@ -6697,12 +6857,16 @@
       "comeet_status": null,
       "warmth": {
         "components": {
-          "mutual_connections": 0.8,
-          "shared_employer": 0.5,
+          "peer_vouch": 0.0,
+          "same_team_overlap": 0.0,
+          "cross_team_vouch": 0.0,
+          "culture_affinity": 1.0,
+          "prior_wsc_engagement": 0.0,
           "recency": 0.2973,
-          "notes_present": 1.0
+          "notes_present": 1.0,
+          "mutual_connections": 0.8
         },
-        "score_default": 62.9,
+        "score_default": 21.5,
         "mutuals": [
           {
             "employee_id": "WSC002",
@@ -6726,7 +6890,8 @@
             "department": "Content",
             "overlap": null
           }
-        ]
+        ],
+        "vouch_evidence": []
       },
       "jobs": {
         "JOB001": {
@@ -6973,12 +7138,16 @@
       "comeet_status": null,
       "warmth": {
         "components": {
-          "mutual_connections": 1.0,
-          "shared_employer": 0.5,
+          "peer_vouch": 0.0,
+          "same_team_overlap": 0.0,
+          "cross_team_vouch": 0.0,
+          "culture_affinity": 1.0,
+          "prior_wsc_engagement": 0.0,
           "recency": 0.2973,
-          "notes_present": 1.0
+          "notes_present": 1.0,
+          "mutual_connections": 1.0
         },
-        "score_default": 70.9,
+        "score_default": 22.1,
         "mutuals": [
           {
             "employee_id": "WSC003",
@@ -7008,7 +7177,8 @@
             "department": "Sales",
             "overlap": null
           }
-        ]
+        ],
+        "vouch_evidence": []
       },
       "jobs": {
         "JOB001": {
@@ -7192,14 +7362,19 @@
       "comeet_status": null,
       "warmth": {
         "components": {
-          "mutual_connections": 0.0,
-          "shared_employer": 0.0,
+          "peer_vouch": 0.0,
+          "same_team_overlap": 0.0,
+          "cross_team_vouch": 0.0,
+          "culture_affinity": 0.5,
+          "prior_wsc_engagement": 0.0,
           "recency": 0.2973,
-          "notes_present": 0.0
+          "notes_present": 0.0,
+          "mutual_connections": 0.0
         },
-        "score_default": 5.9,
+        "score_default": 8.1,
         "mutuals": [],
-        "shared_employers": []
+        "shared_employers": [],
+        "vouch_evidence": []
       },
       "jobs": {
         "JOB001": {
@@ -7386,12 +7561,16 @@
       "comeet_status": null,
       "warmth": {
         "components": {
-          "mutual_connections": 0.8,
-          "shared_employer": 0.0,
+          "peer_vouch": 0.0,
+          "same_team_overlap": 0.0,
+          "cross_team_vouch": 0.0,
+          "culture_affinity": 0.8,
+          "prior_wsc_engagement": 0.0,
           "recency": 0.2973,
-          "notes_present": 1.0
+          "notes_present": 1.0,
+          "mutual_connections": 0.8
         },
-        "score_default": 47.9,
+        "score_default": 19.1,
         "mutuals": [
           {
             "employee_id": "WSC004",
@@ -7406,7 +7585,8 @@
             "department": "Engineering"
           }
         ],
-        "shared_employers": []
+        "shared_employers": [],
+        "vouch_evidence": []
       },
       "jobs": {
         "JOB001": {
@@ -7593,12 +7773,16 @@
       "comeet_status": null,
       "warmth": {
         "components": {
-          "mutual_connections": 1.0,
-          "shared_employer": 0.8,
+          "peer_vouch": 0.0,
+          "same_team_overlap": 0.0,
+          "cross_team_vouch": 0.0,
+          "culture_affinity": 1.0,
+          "prior_wsc_engagement": 0.0,
           "recency": 0.2973,
-          "notes_present": 1.0
+          "notes_present": 1.0,
+          "mutual_connections": 1.0
         },
-        "score_default": 79.9,
+        "score_default": 22.1,
         "mutuals": [
           {
             "employee_id": "WSC004",
@@ -7636,7 +7820,8 @@
             "department": "Data",
             "overlap": null
           }
-        ]
+        ],
+        "vouch_evidence": []
       },
       "jobs": {
         "JOB001": {
@@ -7825,14 +8010,19 @@
       "comeet_status": null,
       "warmth": {
         "components": {
-          "mutual_connections": 0.0,
-          "shared_employer": 0.0,
+          "peer_vouch": 0.0,
+          "same_team_overlap": 0.0,
+          "cross_team_vouch": 0.0,
+          "culture_affinity": 0.0,
+          "prior_wsc_engagement": 0.0,
           "recency": 0.3746,
-          "notes_present": 1.0
+          "notes_present": 1.0,
+          "mutual_connections": 0.0
         },
-        "score_default": 17.5,
+        "score_default": 7.6,
         "mutuals": [],
-        "shared_employers": []
+        "shared_employers": [],
+        "vouch_evidence": []
       },
       "jobs": {
         "JOB001": {
@@ -8017,12 +8207,16 @@
       "comeet_status": null,
       "warmth": {
         "components": {
-          "mutual_connections": 0.8,
-          "shared_employer": 0.0,
+          "peer_vouch": 0.0,
+          "same_team_overlap": 0.0,
+          "cross_team_vouch": 0.0,
+          "culture_affinity": 1.0,
+          "prior_wsc_engagement": 0.0,
           "recency": 0.3746,
-          "notes_present": 1.0
+          "notes_present": 1.0,
+          "mutual_connections": 0.8
         },
-        "score_default": 49.5,
+        "score_default": 22.0,
         "mutuals": [
           {
             "employee_id": "WSC004",
@@ -8037,7 +8231,8 @@
             "department": "Data"
           }
         ],
-        "shared_employers": []
+        "shared_employers": [],
+        "vouch_evidence": []
       },
       "jobs": {
         "JOB001": {
@@ -8224,14 +8419,19 @@
       "comeet_status": null,
       "warmth": {
         "components": {
-          "mutual_connections": 0.0,
-          "shared_employer": 0.0,
+          "peer_vouch": 0.0,
+          "same_team_overlap": 0.0,
+          "cross_team_vouch": 0.0,
+          "culture_affinity": 0.0,
+          "prior_wsc_engagement": 0.0,
           "recency": 0.3746,
-          "notes_present": 0.0
+          "notes_present": 0.0,
+          "mutual_connections": 0.0
         },
-        "score_default": 7.5,
+        "score_default": 2.6,
         "mutuals": [],
-        "shared_employers": []
+        "shared_employers": [],
+        "vouch_evidence": []
       },
       "jobs": {
         "JOB001": {
@@ -8416,12 +8616,16 @@
       "comeet_status": null,
       "warmth": {
         "components": {
-          "mutual_connections": 0.5,
-          "shared_employer": 0.0,
+          "peer_vouch": 0.0,
+          "same_team_overlap": 0.0,
+          "cross_team_vouch": 0.0,
+          "culture_affinity": 0.8,
+          "prior_wsc_engagement": 0.0,
           "recency": 0.3746,
-          "notes_present": 1.0
+          "notes_present": 1.0,
+          "mutual_connections": 0.5
         },
-        "score_default": 37.5,
+        "score_default": 18.7,
         "mutuals": [
           {
             "employee_id": "WSC002",
@@ -8430,7 +8634,8 @@
             "department": "AI/ML"
           }
         ],
-        "shared_employers": []
+        "shared_employers": [],
+        "vouch_evidence": []
       },
       "jobs": {
         "JOB001": {
@@ -8617,14 +8822,19 @@
       "comeet_status": null,
       "warmth": {
         "components": {
-          "mutual_connections": 0.0,
-          "shared_employer": 0.0,
+          "peer_vouch": 0.0,
+          "same_team_overlap": 0.0,
+          "cross_team_vouch": 0.0,
+          "culture_affinity": 0.0,
+          "prior_wsc_engagement": 0.0,
           "recency": 0.3746,
-          "notes_present": 0.0
+          "notes_present": 0.0,
+          "mutual_connections": 0.0
         },
-        "score_default": 7.5,
+        "score_default": 2.6,
         "mutuals": [],
-        "shared_employers": []
+        "shared_employers": [],
+        "vouch_evidence": []
       },
       "jobs": {
         "JOB001": {
@@ -8809,12 +9019,16 @@
       "comeet_status": null,
       "warmth": {
         "components": {
-          "mutual_connections": 0.8,
-          "shared_employer": 0.8,
+          "peer_vouch": 0.0,
+          "same_team_overlap": 0.0,
+          "cross_team_vouch": 0.0,
+          "culture_affinity": 0.8,
+          "prior_wsc_engagement": 0.0,
           "recency": 0.3746,
-          "notes_present": 1.0
+          "notes_present": 1.0,
+          "mutual_connections": 0.8
         },
-        "score_default": 73.5,
+        "score_default": 19.6,
         "mutuals": [
           {
             "employee_id": "WSC013",
@@ -8846,7 +9060,8 @@
             "department": "AI/ML",
             "overlap": null
           }
-        ]
+        ],
+        "vouch_evidence": []
       },
       "jobs": {
         "JOB001": {
@@ -9032,14 +9247,19 @@
       "comeet_status": null,
       "warmth": {
         "components": {
-          "mutual_connections": 0.0,
-          "shared_employer": 0.0,
+          "peer_vouch": 0.0,
+          "same_team_overlap": 0.0,
+          "cross_team_vouch": 0.0,
+          "culture_affinity": 0.0,
+          "prior_wsc_engagement": 0.0,
           "recency": 0.3746,
-          "notes_present": 0.0
+          "notes_present": 0.0,
+          "mutual_connections": 0.0
         },
-        "score_default": 7.5,
+        "score_default": 2.6,
         "mutuals": [],
-        "shared_employers": []
+        "shared_employers": [],
+        "vouch_evidence": []
       },
       "jobs": {
         "JOB001": {
@@ -9224,12 +9444,16 @@
       "comeet_status": null,
       "warmth": {
         "components": {
-          "mutual_connections": 0.5,
-          "shared_employer": 0.0,
+          "peer_vouch": 0.0,
+          "same_team_overlap": 0.0,
+          "cross_team_vouch": 0.0,
+          "culture_affinity": 0.8,
+          "prior_wsc_engagement": 0.0,
           "recency": 0.3746,
-          "notes_present": 1.0
+          "notes_present": 1.0,
+          "mutual_connections": 0.5
         },
-        "score_default": 37.5,
+        "score_default": 18.7,
         "mutuals": [
           {
             "employee_id": "WSC008",
@@ -9238,7 +9462,8 @@
             "department": "Data"
           }
         ],
-        "shared_employers": []
+        "shared_employers": [],
+        "vouch_evidence": []
       },
       "jobs": {
         "JOB001": {
@@ -9423,14 +9648,19 @@
       "comeet_status": null,
       "warmth": {
         "components": {
-          "mutual_connections": 0.0,
-          "shared_employer": 0.0,
+          "peer_vouch": 0.0,
+          "same_team_overlap": 0.0,
+          "cross_team_vouch": 0.0,
+          "culture_affinity": 0.0,
+          "prior_wsc_engagement": 0.0,
           "recency": 0.3746,
-          "notes_present": 0.0
+          "notes_present": 0.0,
+          "mutual_connections": 0.0
         },
-        "score_default": 7.5,
+        "score_default": 2.6,
         "mutuals": [],
-        "shared_employers": []
+        "shared_employers": [],
+        "vouch_evidence": []
       },
       "jobs": {
         "JOB001": {
@@ -9617,12 +9847,16 @@
       "comeet_status": null,
       "warmth": {
         "components": {
-          "mutual_connections": 0.8,
-          "shared_employer": 0.0,
+          "peer_vouch": 0.0,
+          "same_team_overlap": 0.0,
+          "cross_team_vouch": 0.0,
+          "culture_affinity": 0.8,
+          "prior_wsc_engagement": 0.0,
           "recency": 0.3746,
-          "notes_present": 1.0
+          "notes_present": 1.0,
+          "mutual_connections": 0.8
         },
-        "score_default": 49.5,
+        "score_default": 19.6,
         "mutuals": [
           {
             "employee_id": "WSC001",
@@ -9637,7 +9871,8 @@
             "department": "Engineering"
           }
         ],
-        "shared_employers": []
+        "shared_employers": [],
+        "vouch_evidence": []
       },
       "jobs": {
         "JOB001": {
@@ -9824,12 +10059,16 @@
       "comeet_status": null,
       "warmth": {
         "components": {
-          "mutual_connections": 0.5,
-          "shared_employer": 0.0,
+          "peer_vouch": 0.0,
+          "same_team_overlap": 0.0,
+          "cross_team_vouch": 0.0,
+          "culture_affinity": 1.0,
+          "prior_wsc_engagement": 0.0,
           "recency": 0.3746,
-          "notes_present": 1.0
+          "notes_present": 1.0,
+          "mutual_connections": 0.5
         },
-        "score_default": 37.5,
+        "score_default": 21.1,
         "mutuals": [
           {
             "employee_id": "WSC011",
@@ -9838,7 +10077,8 @@
             "department": "Leadership"
           }
         ],
-        "shared_employers": []
+        "shared_employers": [],
+        "vouch_evidence": []
       },
       "jobs": {
         "JOB001": {
@@ -10020,14 +10260,19 @@
       "comeet_status": null,
       "warmth": {
         "components": {
-          "mutual_connections": 0.0,
-          "shared_employer": 0.0,
+          "peer_vouch": 0.0,
+          "same_team_overlap": 0.0,
+          "cross_team_vouch": 0.0,
+          "culture_affinity": 0.0,
+          "prior_wsc_engagement": 0.0,
           "recency": 0.3746,
-          "notes_present": 0.0
+          "notes_present": 0.0,
+          "mutual_connections": 0.0
         },
-        "score_default": 7.5,
+        "score_default": 2.6,
         "mutuals": [],
-        "shared_employers": []
+        "shared_employers": [],
+        "vouch_evidence": []
       },
       "jobs": {
         "JOB001": {
@@ -10213,12 +10458,16 @@
       "comeet_status": null,
       "warmth": {
         "components": {
-          "mutual_connections": 0.5,
-          "shared_employer": 0.8,
+          "peer_vouch": 0.0,
+          "same_team_overlap": 0.0,
+          "cross_team_vouch": 0.0,
+          "culture_affinity": 1.0,
+          "prior_wsc_engagement": 0.0,
           "recency": 0.3969,
-          "notes_present": 1.0
+          "notes_present": 1.0,
+          "mutual_connections": 0.5
         },
-        "score_default": 61.9,
+        "score_default": 21.3,
         "mutuals": [
           {
             "employee_id": "WSC009",
@@ -10244,7 +10493,8 @@
             "department": "Engineering",
             "overlap": null
           }
-        ]
+        ],
+        "vouch_evidence": []
       },
       "jobs": {
         "JOB001": {
@@ -10434,14 +10684,19 @@
       "comeet_status": null,
       "warmth": {
         "components": {
-          "mutual_connections": 0.0,
-          "shared_employer": 0.0,
+          "peer_vouch": 0.0,
+          "same_team_overlap": 0.0,
+          "cross_team_vouch": 0.0,
+          "culture_affinity": 0.0,
+          "prior_wsc_engagement": 0.0,
           "recency": 0.3969,
-          "notes_present": 0.0
+          "notes_present": 0.0,
+          "mutual_connections": 0.0
         },
-        "score_default": 7.9,
+        "score_default": 2.8,
         "mutuals": [],
-        "shared_employers": []
+        "shared_employers": [],
+        "vouch_evidence": []
       },
       "jobs": {
         "JOB001": {
@@ -10629,12 +10884,16 @@
       "comeet_status": null,
       "warmth": {
         "components": {
-          "mutual_connections": 0.8,
-          "shared_employer": 0.5,
+          "peer_vouch": 0.0,
+          "same_team_overlap": 0.0,
+          "cross_team_vouch": 0.0,
+          "culture_affinity": 0.8,
+          "prior_wsc_engagement": 0.0,
           "recency": 0.3969,
-          "notes_present": 1.0
+          "notes_present": 1.0,
+          "mutual_connections": 0.8
         },
-        "score_default": 64.9,
+        "score_default": 19.8,
         "mutuals": [
           {
             "employee_id": "WSC006",
@@ -10658,7 +10917,8 @@
             "department": "Engineering",
             "overlap": null
           }
-        ]
+        ],
+        "vouch_evidence": []
       },
       "jobs": {
         "JOB001": {
@@ -10848,14 +11108,19 @@
       "comeet_status": null,
       "warmth": {
         "components": {
-          "mutual_connections": 0.0,
-          "shared_employer": 0.0,
+          "peer_vouch": 0.0,
+          "same_team_overlap": 0.0,
+          "cross_team_vouch": 0.0,
+          "culture_affinity": 0.0,
+          "prior_wsc_engagement": 0.0,
           "recency": 0.3969,
-          "notes_present": 0.0
+          "notes_present": 0.0,
+          "mutual_connections": 0.0
         },
-        "score_default": 7.9,
+        "score_default": 2.8,
         "mutuals": [],
-        "shared_employers": []
+        "shared_employers": [],
+        "vouch_evidence": []
       },
       "jobs": {
         "JOB001": {
@@ -11041,12 +11306,16 @@
       "comeet_status": null,
       "warmth": {
         "components": {
-          "mutual_connections": 0.8,
-          "shared_employer": 0.0,
+          "peer_vouch": 0.0,
+          "same_team_overlap": 0.0,
+          "cross_team_vouch": 0.0,
+          "culture_affinity": 1.0,
+          "prior_wsc_engagement": 0.0,
           "recency": 0.3969,
-          "notes_present": 1.0
+          "notes_present": 1.0,
+          "mutual_connections": 0.8
         },
-        "score_default": 49.9,
+        "score_default": 22.2,
         "mutuals": [
           {
             "employee_id": "WSC009",
@@ -11061,7 +11330,8 @@
             "department": "Engineering"
           }
         ],
-        "shared_employers": []
+        "shared_employers": [],
+        "vouch_evidence": []
       },
       "jobs": {
         "JOB001": {
@@ -11252,14 +11522,19 @@
       "comeet_status": null,
       "warmth": {
         "components": {
-          "mutual_connections": 0.0,
-          "shared_employer": 0.0,
+          "peer_vouch": 0.0,
+          "same_team_overlap": 0.0,
+          "cross_team_vouch": 0.0,
+          "culture_affinity": 0.0,
+          "prior_wsc_engagement": 0.0,
           "recency": 0.3969,
-          "notes_present": 0.0
+          "notes_present": 0.0,
+          "mutual_connections": 0.0
         },
-        "score_default": 7.9,
+        "score_default": 2.8,
         "mutuals": [],
-        "shared_employers": []
+        "shared_employers": [],
+        "vouch_evidence": []
       },
       "jobs": {
         "JOB001": {
@@ -11445,12 +11720,16 @@
       "comeet_status": null,
       "warmth": {
         "components": {
-          "mutual_connections": 0.8,
-          "shared_employer": 0.0,
+          "peer_vouch": 0.0,
+          "same_team_overlap": 0.0,
+          "cross_team_vouch": 0.0,
+          "culture_affinity": 1.0,
+          "prior_wsc_engagement": 0.0,
           "recency": 0.3969,
-          "notes_present": 1.0
+          "notes_present": 1.0,
+          "mutual_connections": 0.8
         },
-        "score_default": 49.9,
+        "score_default": 22.2,
         "mutuals": [
           {
             "employee_id": "WSC009",
@@ -11465,7 +11744,8 @@
             "department": "Engineering"
           }
         ],
-        "shared_employers": []
+        "shared_employers": [],
+        "vouch_evidence": []
       },
       "jobs": {
         "JOB001": {
@@ -11654,14 +11934,19 @@
       "comeet_status": null,
       "warmth": {
         "components": {
-          "mutual_connections": 0.0,
-          "shared_employer": 0.0,
+          "peer_vouch": 0.0,
+          "same_team_overlap": 0.0,
+          "cross_team_vouch": 0.0,
+          "culture_affinity": 0.0,
+          "prior_wsc_engagement": 0.0,
           "recency": 0.3969,
-          "notes_present": 0.0
+          "notes_present": 0.0,
+          "mutual_connections": 0.0
         },
-        "score_default": 7.9,
+        "score_default": 2.8,
         "mutuals": [],
-        "shared_employers": []
+        "shared_employers": [],
+        "vouch_evidence": []
       },
       "jobs": {
         "JOB001": {
@@ -11849,12 +12134,16 @@
       "comeet_status": null,
       "warmth": {
         "components": {
-          "mutual_connections": 0.8,
-          "shared_employer": 0.0,
+          "peer_vouch": 0.0,
+          "same_team_overlap": 0.0,
+          "cross_team_vouch": 0.0,
+          "culture_affinity": 1.0,
+          "prior_wsc_engagement": 0.0,
           "recency": 0.3969,
-          "notes_present": 1.0
+          "notes_present": 1.0,
+          "mutual_connections": 0.8
         },
-        "score_default": 49.9,
+        "score_default": 22.2,
         "mutuals": [
           {
             "employee_id": "WSC009",
@@ -11869,7 +12158,8 @@
             "department": "Leadership"
           }
         ],
-        "shared_employers": []
+        "shared_employers": [],
+        "vouch_evidence": []
       },
       "jobs": {
         "JOB001": {
@@ -12061,12 +12351,16 @@
       "comeet_status": null,
       "warmth": {
         "components": {
-          "mutual_connections": 0.5,
-          "shared_employer": 0.0,
+          "peer_vouch": 0.0,
+          "same_team_overlap": 0.0,
+          "cross_team_vouch": 0.0,
+          "culture_affinity": 1.0,
+          "prior_wsc_engagement": 0.0,
           "recency": 0.3969,
-          "notes_present": 1.0
+          "notes_present": 1.0,
+          "mutual_connections": 0.5
         },
-        "score_default": 37.9,
+        "score_default": 21.3,
         "mutuals": [
           {
             "employee_id": "WSC009",
@@ -12075,7 +12369,8 @@
             "department": "Engineering"
           }
         ],
-        "shared_employers": []
+        "shared_employers": [],
+        "vouch_evidence": []
       },
       "jobs": {
         "JOB001": {
@@ -12327,12 +12622,16 @@
       "comeet_status": null,
       "warmth": {
         "components": {
-          "mutual_connections": 0.8,
-          "shared_employer": 0.0,
+          "peer_vouch": 0.0,
+          "same_team_overlap": 0.0,
+          "cross_team_vouch": 0.0,
+          "culture_affinity": 1.0,
+          "prior_wsc_engagement": 0.0,
           "recency": 0.3536,
-          "notes_present": 1.0
+          "notes_present": 1.0,
+          "mutual_connections": 0.8
         },
-        "score_default": 49.1,
+        "score_default": 21.9,
         "mutuals": [
           {
             "employee_id": "WSC006",
@@ -12347,7 +12646,8 @@
             "department": "Engineering"
           }
         ],
-        "shared_employers": []
+        "shared_employers": [],
+        "vouch_evidence": []
       },
       "jobs": {
         "JOB001": {
@@ -12536,14 +12836,19 @@
       "comeet_status": null,
       "warmth": {
         "components": {
-          "mutual_connections": 0.0,
-          "shared_employer": 0.0,
+          "peer_vouch": 0.0,
+          "same_team_overlap": 0.0,
+          "cross_team_vouch": 0.0,
+          "culture_affinity": 1.0,
+          "prior_wsc_engagement": 0.0,
           "recency": 0.3536,
-          "notes_present": 0.0
+          "notes_present": 0.0,
+          "mutual_connections": 0.0
         },
-        "score_default": 7.1,
+        "score_default": 14.5,
         "mutuals": [],
-        "shared_employers": []
+        "shared_employers": [],
+        "vouch_evidence": []
       },
       "jobs": {
         "JOB001": {
@@ -12728,12 +13033,16 @@
       "comeet_status": null,
       "warmth": {
         "components": {
-          "mutual_connections": 0.8,
-          "shared_employer": 0.5,
+          "peer_vouch": 0.0,
+          "same_team_overlap": 0.0,
+          "cross_team_vouch": 0.0,
+          "culture_affinity": 1.0,
+          "prior_wsc_engagement": 0.0,
           "recency": 0.3536,
-          "notes_present": 1.0
+          "notes_present": 1.0,
+          "mutual_connections": 0.8
         },
-        "score_default": 64.1,
+        "score_default": 21.9,
         "mutuals": [
           {
             "employee_id": "WSC001",
@@ -12757,7 +13066,8 @@
             "department": "Content",
             "overlap": null
           }
-        ]
+        ],
+        "vouch_evidence": []
       },
       "jobs": {
         "JOB001": {
@@ -12943,14 +13253,19 @@
       "comeet_status": null,
       "warmth": {
         "components": {
-          "mutual_connections": 0.0,
-          "shared_employer": 0.0,
+          "peer_vouch": 0.0,
+          "same_team_overlap": 0.0,
+          "cross_team_vouch": 0.0,
+          "culture_affinity": 1.0,
+          "prior_wsc_engagement": 0.0,
           "recency": 0.3536,
-          "notes_present": 0.0
+          "notes_present": 0.0,
+          "mutual_connections": 0.0
         },
-        "score_default": 7.1,
+        "score_default": 14.5,
         "mutuals": [],
-        "shared_employers": []
+        "shared_employers": [],
+        "vouch_evidence": []
       },
       "jobs": {
         "JOB001": {
@@ -13137,12 +13452,16 @@
       "comeet_status": null,
       "warmth": {
         "components": {
-          "mutual_connections": 0.8,
-          "shared_employer": 0.0,
+          "peer_vouch": 0.0,
+          "same_team_overlap": 0.0,
+          "cross_team_vouch": 0.0,
+          "culture_affinity": 1.0,
+          "prior_wsc_engagement": 0.0,
           "recency": 0.3536,
-          "notes_present": 1.0
+          "notes_present": 1.0,
+          "mutual_connections": 0.8
         },
-        "score_default": 49.1,
+        "score_default": 21.9,
         "mutuals": [
           {
             "employee_id": "WSC002",
@@ -13157,7 +13476,8 @@
             "department": "AI/ML"
           }
         ],
-        "shared_employers": []
+        "shared_employers": [],
+        "vouch_evidence": []
       },
       "jobs": {
         "JOB001": {
@@ -13340,12 +13660,16 @@
       "comeet_status": null,
       "warmth": {
         "components": {
-          "mutual_connections": 0.5,
-          "shared_employer": 0.0,
+          "peer_vouch": 0.0,
+          "same_team_overlap": 0.0,
+          "cross_team_vouch": 0.0,
+          "culture_affinity": 1.0,
+          "prior_wsc_engagement": 0.0,
           "recency": 0.3536,
-          "notes_present": 1.0
+          "notes_present": 1.0,
+          "mutual_connections": 0.5
         },
-        "score_default": 37.1,
+        "score_default": 21.0,
         "mutuals": [
           {
             "employee_id": "WSC009",
@@ -13354,7 +13678,8 @@
             "department": "Engineering"
           }
         ],
-        "shared_employers": []
+        "shared_employers": [],
+        "vouch_evidence": []
       },
       "jobs": {
         "JOB001": {
@@ -13546,12 +13871,16 @@
       "comeet_status": null,
       "warmth": {
         "components": {
-          "mutual_connections": 0.8,
-          "shared_employer": 1.0,
+          "peer_vouch": 0.0,
+          "same_team_overlap": 0.0,
+          "cross_team_vouch": 0.0,
+          "culture_affinity": 1.0,
+          "prior_wsc_engagement": 0.0,
           "recency": 0.3536,
-          "notes_present": 1.0
+          "notes_present": 1.0,
+          "mutual_connections": 0.8
         },
-        "score_default": 79.1,
+        "score_default": 21.9,
         "mutuals": [
           {
             "employee_id": "WSC009",
@@ -13607,7 +13936,8 @@
             "department": "AI/ML",
             "overlap": null
           }
-        ]
+        ],
+        "vouch_evidence": []
       },
       "jobs": {
         "JOB001": {
@@ -13857,12 +14187,16 @@
       "comeet_status": null,
       "warmth": {
         "components": {
-          "mutual_connections": 0.8,
-          "shared_employer": 0.0,
+          "peer_vouch": 0.0,
+          "same_team_overlap": 0.0,
+          "cross_team_vouch": 0.0,
+          "culture_affinity": 1.0,
+          "prior_wsc_engagement": 0.0,
           "recency": 0.3536,
-          "notes_present": 1.0
+          "notes_present": 1.0,
+          "mutual_connections": 0.8
         },
-        "score_default": 49.1,
+        "score_default": 21.9,
         "mutuals": [
           {
             "employee_id": "WSC001",
@@ -13877,7 +14211,8 @@
             "department": "Engineering"
           }
         ],
-        "shared_employers": []
+        "shared_employers": [],
+        "vouch_evidence": []
       },
       "jobs": {
         "JOB001": {
@@ -14064,14 +14399,19 @@
       "comeet_status": null,
       "warmth": {
         "components": {
-          "mutual_connections": 0.0,
-          "shared_employer": 0.0,
+          "peer_vouch": 0.0,
+          "same_team_overlap": 0.0,
+          "cross_team_vouch": 0.0,
+          "culture_affinity": 0.5,
+          "prior_wsc_engagement": 0.0,
           "recency": 0.3536,
-          "notes_present": 0.0
+          "notes_present": 0.0,
+          "mutual_connections": 0.0
         },
-        "score_default": 7.1,
+        "score_default": 8.5,
         "mutuals": [],
-        "shared_employers": []
+        "shared_employers": [],
+        "vouch_evidence": []
       },
       "jobs": {
         "JOB001": {
@@ -14251,12 +14591,16 @@
       "comeet_status": null,
       "warmth": {
         "components": {
-          "mutual_connections": 0.8,
-          "shared_employer": 0.0,
+          "peer_vouch": 0.0,
+          "same_team_overlap": 0.0,
+          "cross_team_vouch": 0.0,
+          "culture_affinity": 1.0,
+          "prior_wsc_engagement": 0.0,
           "recency": 0.3536,
-          "notes_present": 1.0
+          "notes_present": 1.0,
+          "mutual_connections": 0.8
         },
-        "score_default": 49.1,
+        "score_default": 21.9,
         "mutuals": [
           {
             "employee_id": "WSC003",
@@ -14271,7 +14615,8 @@
             "department": "Sales"
           }
         ],
-        "shared_employers": []
+        "shared_employers": [],
+        "vouch_evidence": []
       },
       "jobs": {
         "JOB001": {
@@ -14458,12 +14803,16 @@
       "comeet_status": null,
       "warmth": {
         "components": {
-          "mutual_connections": 0.8,
-          "shared_employer": 0.8,
+          "peer_vouch": 0.0,
+          "same_team_overlap": 0.0,
+          "cross_team_vouch": 0.0,
+          "culture_affinity": 1.0,
+          "prior_wsc_engagement": 0.0,
           "recency": 0.3536,
-          "notes_present": 1.0
+          "notes_present": 1.0,
+          "mutual_connections": 0.8
         },
-        "score_default": 73.1,
+        "score_default": 21.9,
         "mutuals": [
           {
             "employee_id": "WSC001",
@@ -14495,7 +14844,8 @@
             "department": "Engineering",
             "overlap": "2017-2020"
           }
-        ]
+        ],
+        "vouch_evidence": []
       },
       "jobs": {
         "JOB001": {
@@ -14638,7 +14988,7 @@
   ],
   "call_log": [
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "badge_scan",
       "method": "GET",
       "endpoint": "/events/conference_attendees/attendees",
@@ -14646,607 +14996,607 @@
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/james-thornton-ml",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/james-thornton-ml",
       "result": "200 ok, credits 1/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/priya-anand-cv",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/priya-anand-cv",
       "result": "200 ok, credits 2/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/carlos-mendez-ds",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/carlos-mendez-ds",
       "result": "200 ok, credits 3/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/emily-carter-video",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/emily-carter-video",
       "result": "200 ok, credits 4/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/tom-nguyen-fin",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/tom-nguyen-fin",
       "result": "200 ok, credits 5/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/amir-hassan-sports",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/amir-hassan-sports",
       "result": "200 ok, credits 6/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/rachel-kim-be",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/rachel-kim-be",
       "result": "200 ok, credits 7/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/daniel-brown-pm",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/daniel-brown-pm",
       "result": "200 ok, credits 8/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/sophie-martin-ott",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/sophie-martin-ott",
       "result": "200 ok, credits 9/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/ben-walker-retail",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/ben-walker-retail",
       "result": "200 ok, credits 10/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/yuki-tanaka-nba",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/yuki-tanaka-nba",
       "result": "200 ok, credits 11/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/laura-gibson-health",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/laura-gibson-health",
       "result": "200 ok, credits 12/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/marcus-reid-ml",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/marcus-reid-ml",
       "result": "200 ok, credits 13/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/anna-petrov-gov",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/anna-petrov-gov",
       "result": "200 ok, credits 14/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/chris-lee-sportradar",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/chris-lee-sportradar",
       "result": "200 ok, credits 15/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/jennifer-adams-ins",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/jennifer-adams-ins",
       "result": "200 ok, credits 16/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/ryan-patel-dazn",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/ryan-patel-dazn",
       "result": "200 ok, credits 17/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/olivia-scott-mktg",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/olivia-scott-mktg",
       "result": "200 ok, credits 18/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/nathan-brooks-cv",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/nathan-brooks-cv",
       "result": "200 ok, credits 19/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/zoe-wright-legal",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/zoe-wright-legal",
       "result": "200 ok, credits 20/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/alex-turner-olym",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/alex-turner-olym",
       "result": "200 ok, credits 21/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/isabella-moore-edu",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/isabella-moore-edu",
       "result": "200 ok, credits 22/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/ethan-clark-aws",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/ethan-clark-aws",
       "result": "200 ok, credits 23/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/mia-johnson-food",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/mia-johnson-food",
       "result": "200 ok, credits 24/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/lucas-evans-img",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/lucas-evans-img",
       "result": "200 ok, credits 25/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/grace-wilson-cyber",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/grace-wilson-cyber",
       "result": "200 ok, credits 26/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/jack-thomas-sport",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/jack-thomas-sport",
       "result": "200 ok, credits 27/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/chloe-martinez-bank",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/chloe-martinez-bank",
       "result": "200 ok, credits 28/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/noah-anderson-gs",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/noah-anderson-gs",
       "result": "200 ok, credits 29/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/lily-thompson-pharma",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/lily-thompson-pharma",
       "result": "200 ok, credits 30/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/owen-jackson-fox",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/owen-jackson-fox",
       "result": "200 ok, credits 31/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/aria-white-logi",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/aria-white-logi",
       "result": "200 ok, credits 32/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/liam-harris-kinexon",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/liam-harris-kinexon",
       "result": "200 ok, credits 33/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/emma-lewis-agri",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/emma-lewis-agri",
       "result": "200 ok, credits 34/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/mason-young-sky",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/mason-young-sky",
       "result": "200 ok, credits 35/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/charlotte-hall-tel",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/charlotte-hall-tel",
       "result": "200 ok, credits 36/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/elijah-allen-deltatre",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/elijah-allen-deltatre",
       "result": "200 ok, credits 37/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/amelia-king-pet",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/amelia-king-pet",
       "result": "200 ok, credits 38/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/henry-wright-wm",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/henry-wright-wm",
       "result": "200 ok, credits 39/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/scarlett-green-nfl",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/scarlett-green-nfl",
       "result": "200 ok, credits 40/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/viktor-novak-de",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/viktor-novak-de",
       "result": "200 ok, credits 41/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/fatima-alrashid-data",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/fatima-alrashid-data",
       "result": "200 ok, credits 42/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/george-patterson-cloud",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/george-patterson-cloud",
       "result": "200 ok, credits 43/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/sara-lindqvist-ml",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/sara-lindqvist-ml",
       "result": "200 ok, credits 44/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/marcus-webb-pharma",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/marcus-webb-pharma",
       "result": "200 ok, credits 45/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/jin-park-stats",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/jin-park-stats",
       "result": "200 ok, credits 46/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/katarzyna-wojcik-ins",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/katarzyna-wojcik-ins",
       "result": "200 ok, credits 47/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/bruno-ferreira-benfica",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/bruno-ferreira-benfica",
       "result": "200 ok, credits 48/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/ingrid-svensson-klarna",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/ingrid-svensson-klarna",
       "result": "200 ok, credits 49/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/tobias-braun-aws",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/tobias-braun-aws",
       "result": "200 ok, credits 50/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/adaora-okafor-tech",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/adaora-okafor-tech",
       "result": "200 ok, credits 51/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/pavel-horak-gov",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/pavel-horak-gov",
       "result": "200 ok, credits 52/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/tom-barker-akamai",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/tom-barker-akamai",
       "result": "200 ok, credits 53/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/mei-zhang-platform",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/mei-zhang-platform",
       "result": "200 ok, credits 54/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/rafa-torres-sre",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/rafa-torres-sre",
       "result": "200 ok, credits 55/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/kim-soojin-devops",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/kim-soojin-devops",
       "result": "200 ok, credits 56/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/alexei-volkov-dazn",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/alexei-volkov-dazn",
       "result": "200 ok, credits 57/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/nadia-osei-cloud",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/nadia-osei-cloud",
       "result": "200 ok, credits 58/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/david-petersen-sre",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/david-petersen-sre",
       "result": "200 ok, credits 59/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/hana-blum-agtech",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/hana-blum-agtech",
       "result": "200 ok, credits 60/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/stefano-conti-sky",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/stefano-conti-sky",
       "result": "200 ok, credits 61/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/jerome-blanc-canal",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/jerome-blanc-canal",
       "result": "200 ok, credits 62/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/amara-diallo-telecom",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/amara-diallo-telecom",
       "result": "200 ok, credits 63/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/pilar-reyes-ott",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/pilar-reyes-ott",
       "result": "200 ok, credits 64/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/sven-hartmann-arri",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/sven-hartmann-arri",
       "result": "200 ok, credits 65/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/nia-campbell-bbc",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/nia-campbell-bbc",
       "result": "200 ok, credits 66/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/javier-morales-tv",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/javier-morales-tv",
       "result": "200 ok, credits 67/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/chiara-russo-video",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/chiara-russo-video",
       "result": "200 ok, credits 68/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/lars-andersen-ericsson",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/lars-andersen-ericsson",
       "result": "200 ok, credits 69/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/yael-bendavid-akamai",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/yael-bendavid-akamai",
       "result": "200 ok, credits 70/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/patrick-duval-textile",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/patrick-duval-textile",
       "result": "200 ok, credits 71/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/marta-kowalska-img",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/marta-kowalska-img",
       "result": "200 ok, credits 72/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/felix-obi-health",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/felix-obi-health",
       "result": "200 ok, credits 73/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/claudia-vogel-eurosport",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/claudia-vogel-eurosport",
       "result": "200 ok, credits 74/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "enrichment",
       "method": "GET",
-      "endpoint": "/profile?url=linkedin.com/in/david-strauss-nba",
+      "endpoint": "/clay/v1/enrichment/people?linkedin=linkedin.com/in/david-strauss-nba",
       "result": "200 ok, credits 75/500",
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS001",
@@ -15261,7 +15611,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS002",
@@ -15276,7 +15626,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS004",
@@ -15291,7 +15641,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS005",
@@ -15306,7 +15656,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS006",
@@ -15321,7 +15671,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS007",
@@ -15336,7 +15686,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS008",
@@ -15351,7 +15701,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS009",
@@ -15366,7 +15716,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS010",
@@ -15381,7 +15731,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS011",
@@ -15396,7 +15746,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS013",
@@ -15411,7 +15761,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS014",
@@ -15426,7 +15776,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS015",
@@ -15441,7 +15791,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS016",
@@ -15456,7 +15806,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS017",
@@ -15471,7 +15821,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS019",
@@ -15486,7 +15836,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS020",
@@ -15501,7 +15851,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS021",
@@ -15516,7 +15866,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS022",
@@ -15531,7 +15881,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS023",
@@ -15546,7 +15896,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS024",
@@ -15561,7 +15911,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS025",
@@ -15576,7 +15926,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS026",
@@ -15591,7 +15941,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS027",
@@ -15606,7 +15956,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS028",
@@ -15621,7 +15971,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS029",
@@ -15636,7 +15986,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS031",
@@ -15651,7 +16001,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS032",
@@ -15666,7 +16016,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS033",
@@ -15681,7 +16031,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS034",
@@ -15696,7 +16046,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS035",
@@ -15711,7 +16061,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS037",
@@ -15726,7 +16076,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS038",
@@ -15741,7 +16091,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS039",
@@ -15756,7 +16106,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS040",
@@ -15771,7 +16121,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS041",
@@ -15786,7 +16136,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS042",
@@ -15801,7 +16151,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS043",
@@ -15816,7 +16166,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS044",
@@ -15831,7 +16181,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS045",
@@ -15846,7 +16196,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS046",
@@ -15861,7 +16211,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS047",
@@ -15876,7 +16226,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS048",
@@ -15891,7 +16241,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS049",
@@ -15906,7 +16256,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS050",
@@ -15921,7 +16271,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS051",
@@ -15936,7 +16286,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS052",
@@ -15951,7 +16301,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS053",
@@ -15966,7 +16316,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS054",
@@ -15981,7 +16331,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS055",
@@ -15996,7 +16346,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS056",
@@ -16011,7 +16361,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS057",
@@ -16026,7 +16376,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS058",
@@ -16041,7 +16391,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS059",
@@ -16056,7 +16406,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS060",
@@ -16071,7 +16421,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS061",
@@ -16086,7 +16436,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS062",
@@ -16101,7 +16451,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS064",
@@ -16116,7 +16466,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS065",
@@ -16131,7 +16481,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS066",
@@ -16146,7 +16496,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS067",
@@ -16161,7 +16511,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS068",
@@ -16176,7 +16526,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS069",
@@ -16191,7 +16541,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS070",
@@ -16206,7 +16556,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS072",
@@ -16221,7 +16571,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS073",
@@ -16236,7 +16586,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS074",
@@ -16251,7 +16601,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "hubspot",
       "method": "PATCH",
       "endpoint": "/crm/v3/objects/contacts/HS075",
@@ -16266,17 +16616,17 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "bigquery",
       "method": "INSERT",
       "endpoint": "wsc.talent_pool.pipeline_runs",
       "result": "1 row \u00b7 75 contacts \u00b7 68 admitted",
       "payload": {
-        "sql": "INSERT INTO `wsc.talent_pool.pipeline_runs`\n  (run_ts, contacts_scored, admitted, held, rejected, jobs_scored)\nVALUES ('2026-08-28T23:01:17+00:00', 75, 68,\n  3,\n  4,\n  0)"
+        "sql": "INSERT INTO `wsc.talent_pool.pipeline_runs`\n  (run_ts, contacts_scored, admitted, held, rejected, jobs_scored)\nVALUES ('2026-08-29T14:09:56+00:00', 75, 68,\n  3,\n  4,\n  0)"
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "bigquery",
       "method": "SELECT",
       "endpoint": "wsc.talent_pool.contacts",
@@ -16286,7 +16636,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:56+00:00",
       "system": "comeet",
       "method": "GET",
       "endpoint": "/company/wsc/positions",
@@ -16294,7 +16644,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -16316,7 +16666,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -16338,7 +16688,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "comeet",
       "method": "GET",
       "endpoint": "/candidates?email=priya.anand@vidstream.com",
@@ -16346,7 +16696,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -16369,7 +16719,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -16392,7 +16742,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -16414,7 +16764,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -16436,7 +16786,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "comeet",
       "method": "GET",
       "endpoint": "/candidates?email=tom.nguyen@financeflow.com",
@@ -16444,7 +16794,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -16463,7 +16813,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -16482,7 +16832,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -16502,7 +16852,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -16522,7 +16872,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -16542,7 +16892,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -16562,7 +16912,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -16583,7 +16933,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -16604,7 +16954,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -16624,7 +16974,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -16644,7 +16994,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -16666,7 +17016,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -16688,7 +17038,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -16711,7 +17061,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -16734,7 +17084,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "comeet",
       "method": "GET",
       "endpoint": "/candidates?email=n.anderson@genius-sports.com",
@@ -16742,7 +17092,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -16762,7 +17112,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -16782,7 +17132,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -16804,7 +17154,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -16826,7 +17176,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -16846,7 +17196,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -16866,7 +17216,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -16886,7 +17236,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -16906,7 +17256,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -16927,7 +17277,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -16948,7 +17298,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -16968,7 +17318,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -16988,7 +17338,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -17009,7 +17359,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -17030,7 +17380,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -17052,7 +17402,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -17074,7 +17424,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -17094,7 +17444,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -17114,7 +17464,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -17134,7 +17484,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -17154,7 +17504,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -17174,7 +17524,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -17194,7 +17544,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -17214,7 +17564,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -17234,7 +17584,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -17254,7 +17604,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -17274,7 +17624,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -17297,7 +17647,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -17320,7 +17670,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -17340,7 +17690,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -17360,7 +17710,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -17379,7 +17729,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -17398,7 +17748,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -17418,7 +17768,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:17+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -17438,7 +17788,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "comeet",
       "method": "GET",
       "endpoint": "/candidates?email=priya.anand@vidstream.com",
@@ -17446,7 +17796,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -17466,7 +17816,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -17486,7 +17836,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "comeet",
       "method": "GET",
       "endpoint": "/candidates?email=tom.nguyen@financeflow.com",
@@ -17494,7 +17844,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -17513,7 +17863,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -17532,7 +17882,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -17555,7 +17905,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -17578,7 +17928,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -17599,7 +17949,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -17620,7 +17970,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -17640,7 +17990,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -17660,7 +18010,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -17679,7 +18029,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -17698,7 +18048,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -17721,7 +18071,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -17744,7 +18094,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -17765,7 +18115,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -17786,7 +18136,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -17807,7 +18157,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -17828,7 +18178,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "comeet",
       "method": "GET",
       "endpoint": "/candidates?email=n.anderson@genius-sports.com",
@@ -17836,7 +18186,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -17857,7 +18207,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -17878,7 +18228,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -17900,7 +18250,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -17922,7 +18272,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -17941,7 +18291,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -17960,7 +18310,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -17981,7 +18331,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -18002,7 +18352,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -18022,7 +18372,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -18042,7 +18392,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -18063,7 +18413,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -18084,7 +18434,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -18104,7 +18454,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -18124,7 +18474,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -18144,7 +18494,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -18164,7 +18514,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -18183,7 +18533,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -18202,7 +18552,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -18222,7 +18572,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -18242,7 +18592,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -18261,7 +18611,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -18280,7 +18630,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -18299,7 +18649,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -18318,7 +18668,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -18338,7 +18688,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -18358,7 +18708,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -18378,7 +18728,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -18398,7 +18748,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -18418,7 +18768,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -18438,7 +18788,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -18458,7 +18808,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -18478,7 +18828,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "comeet",
       "method": "GET",
       "endpoint": "/candidates?email=priya.anand@vidstream.com",
@@ -18486,7 +18836,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "comeet",
       "method": "GET",
       "endpoint": "/candidates?email=tom.nguyen@financeflow.com",
@@ -18494,7 +18844,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -18513,7 +18863,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -18532,7 +18882,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -18553,7 +18903,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -18574,7 +18924,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "comeet",
       "method": "GET",
       "endpoint": "/candidates?email=n.anderson@genius-sports.com",
@@ -18582,7 +18932,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -18601,7 +18951,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -18620,7 +18970,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -18640,7 +18990,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -18660,7 +19010,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -18677,7 +19027,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -18694,7 +19044,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -18713,7 +19063,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -18732,7 +19082,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -18751,7 +19101,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -18770,7 +19120,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "comeet",
       "method": "GET",
       "endpoint": "/candidates?email=priya.anand@vidstream.com",
@@ -18778,7 +19128,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "comeet",
       "method": "GET",
       "endpoint": "/candidates?email=tom.nguyen@financeflow.com",
@@ -18786,7 +19136,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -18809,7 +19159,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -18832,7 +19182,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -18851,7 +19201,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -18870,7 +19220,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -18890,7 +19240,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -18910,7 +19260,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -18934,7 +19284,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -18958,7 +19308,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -18977,7 +19327,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -18996,7 +19346,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -19015,7 +19365,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -19034,7 +19384,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -19057,7 +19407,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -19080,7 +19430,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -19102,7 +19452,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -19124,7 +19474,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -19144,7 +19494,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -19164,7 +19514,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "comeet",
       "method": "GET",
       "endpoint": "/candidates?email=n.anderson@genius-sports.com",
@@ -19172,7 +19522,7 @@
       "payload": null
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -19195,7 +19545,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -19218,7 +19568,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -19238,7 +19588,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -19258,7 +19608,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -19277,7 +19627,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -19296,7 +19646,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -19315,7 +19665,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -19334,7 +19684,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -19358,7 +19708,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -19382,7 +19732,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -19405,7 +19755,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -19428,7 +19778,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -19451,7 +19801,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -19474,7 +19824,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -19496,7 +19846,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -19518,7 +19868,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -19540,7 +19890,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -19562,7 +19912,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -19582,7 +19932,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -19602,7 +19952,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -19624,7 +19974,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -19646,7 +19996,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -19667,7 +20017,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -19688,7 +20038,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -19710,7 +20060,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -19732,7 +20082,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -19752,7 +20102,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -19772,7 +20122,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -19792,7 +20142,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -19812,7 +20162,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -19831,7 +20181,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -19850,7 +20200,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -19870,7 +20220,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -19890,7 +20240,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -19909,7 +20259,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -19928,7 +20278,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -19948,7 +20298,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",
@@ -19968,7 +20318,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "why_summary",
@@ -19988,7 +20338,7 @@
       }
     },
     {
-      "ts": "2026-08-28T23:01:18+00:00",
+      "ts": "2026-08-29T14:09:57+00:00",
       "system": "narrator",
       "method": "RENDER",
       "endpoint": "outreach_draft",

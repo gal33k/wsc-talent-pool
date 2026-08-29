@@ -131,26 +131,68 @@ below_band_penalty:     0.5   # component drops to 1 - this if below_band
 band_floor:             0.2   # never below this
 
 # -----------------------------------------------------------------------------
-# Warmth — reachability. Everything about getting a reply.
+# Signal — everything non-competence that predicts success:
+#   reachability + endorsement + team overlap + culture fit + engagement
+#
+# Renamed from "Warmth" because reachability alone is too narrow. What we
+# actually want to measure is: "beyond can-they-do-the-job, what evidence do we
+# have they'd convert AND fit here?" That includes reachability but also
+# active endorsements, team overlap without endorsement, and culture affinity.
 # -----------------------------------------------------------------------------
-warmth_weights:
-  mutual_connections: 40
-  shared_employer:    30
-  recency:            20
-  notes_present:      10
+signal_weights:
+  peer_vouch:             35    # active endorsement from same-team WSC employee (with role × tenure multiplier, normalized 0-1)
+  same_team_overlap:      18    # shared employer/team WITHOUT an active vouch
+  cross_team_vouch:       12    # active endorsement from cross-department WSC employee
+  culture_affinity:       12    # OSS in our stack + domain-topic overlap + past adjacent conferences
+  prior_wsc_engagement:    8    # followed WSC, engaged with our posts, attended past WSC events
+  recency:                 7    # freshness of last contact — 12-month half-life
+  notes_present:           5    # a booth conversation actually happened
+  mutual_connections:      3    # bare LinkedIn mutuals (passive, no endorsement, no team overlap)
 
-# Diminishing returns on connection count. Index = count (capped at end).
-# 0 -> 0.0; 1 -> 0.5; 2 -> 0.8; 3+ -> 1.0. Same curve for shared employers.
+# Vouch multipliers — the peer_vouch and cross_team_vouch components are
+# computed as: base_vouch × role_match × tenure_multiplier, then normalized
+# to 0-1 by dividing by the theoretical max composite (3.75).
+#
+# Rationale: a same-team senior peer's vouch is dramatically stronger than a
+# cross-dept new hire's. The multipliers encode this. Normalization keeps the
+# component 0-1 like every other sub-score.
+vouch_role_match:
+  same_role_family:  3.0     # exact role family match — the strongest possible vouch
+  same_department:   2.0     # same dept, different specialization
+  leadership:        1.5     # CTO/VP vouch carries organizational weight regardless of dept
+  adjacent_family:   1.3     # backend → data_engineering, etc.
+  cross_department:  1.0     # baseline
+
+vouch_tenure:
+  senior_bands:              # months → multiplier
+    - {min_months: 36, multiplier: 1.25}   # 3+ years — deep culture knowledge, high signal
+    - {min_months: 12, multiplier: 1.00}   # 1-3 years — established, credible baseline
+    - {min_months:  6, multiplier: 0.85}   # 6-12 months — onboarded, forming judgment
+    - {min_months:  0, multiplier: 0.60}   # <6 months — knows candidate, not WSC's bar
+
+# Theoretical max composite = max(role_match) × max(tenure) = 3.0 × 1.25 = 3.75
+# Normalize vouch scores by this. Multiple vouches sum, capped at 1.0.
+vouch_normalizer: 3.75
+
+# Diminishing returns on count-based sub-scores (mutual_connections,
+# same_team_overlap, prior_wsc_engagement). Index = count, capped at end.
+# 0 -> 0.0; 1 -> 0.5; 2 -> 0.8; 3+ -> 1.0.
 connection_curve:      [0.0, 0.5, 0.8, 1.0]
 
-# Same-department employees are worth more as intro paths — a peer is better
-# placed to answer "will you introduce us" than a cross-department colleague.
+# Recency decay — skills don't expire, memory of a booth conversation does.
+# Half-life 12 months = a Nov 2024 contact is worth ~0.71 of an Apr 2025 one.
+recency_half_life_months: 12
+
+# Same-department preference — kept as a lever for intro-path selection.
 same_department_multiplier: 1.25
 
-# Recency decay on warmth ONLY. Skills don't expire; memory of a booth
-# conversation does. Half-life 12 months = a Nov 2024 contact is worth ~0.71 of
-# an Apr 2025 one on the recency component.
-recency_half_life_months: 12
+# Backwards compatibility: warmth_weights kept as an alias to signal_weights
+# during the transition — some legacy tests reference it. Prefer signal_weights.
+warmth_weights:
+  mutual_connections: 3
+  shared_employer:    18
+  recency:            7
+  notes_present:      5
 
 # -----------------------------------------------------------------------------
 # Gate (Decision A) — 3 signals, 2-of-3 admits

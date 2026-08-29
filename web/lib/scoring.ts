@@ -10,6 +10,8 @@ import type {
   FitWeights,
   WarmthComponents,
   WarmthWeights,
+  SignalComponents,
+  SignalWeights,
   Tiers,
 } from "./types";
 
@@ -25,14 +27,42 @@ export function computeFit(c: FitComponents, w: FitWeights): number {
   return Math.round((weighted / total) * 1000) / 10;
 }
 
-export function computeWarmth(c: WarmthComponents, w: WarmthWeights): number {
-  const total = w.mutual_connections + w.shared_employer + w.recency + w.notes_present;
+// New: signal (renamed from warmth) — 8 components covering endorsements,
+// team overlap, culture affinity, engagement, and passive reachability.
+export function computeSignal(c: SignalComponents, w: SignalWeights): number {
+  const total =
+    w.peer_vouch + w.same_team_overlap + w.cross_team_vouch + w.culture_affinity +
+    w.prior_wsc_engagement + w.recency + w.notes_present + w.mutual_connections;
   if (total <= 0) return 0;
   const weighted =
-    c.mutual_connections * w.mutual_connections +
-    c.shared_employer * w.shared_employer +
-    c.recency * w.recency +
-    c.notes_present * w.notes_present;
+    c.peer_vouch            * w.peer_vouch +
+    c.same_team_overlap     * w.same_team_overlap +
+    c.cross_team_vouch      * w.cross_team_vouch +
+    c.culture_affinity      * w.culture_affinity +
+    c.prior_wsc_engagement  * w.prior_wsc_engagement +
+    c.recency               * w.recency +
+    c.notes_present         * w.notes_present +
+    c.mutual_connections    * w.mutual_connections;
+  return Math.round((weighted / total) * 1000) / 10;
+}
+
+// Backwards-compatible alias. Callers passing WarmthWeights + WarmthComponents
+// still work — internally we dispatch to computeSignal.
+export function computeWarmth(c: WarmthComponents | SignalComponents, w: WarmthWeights | SignalWeights): number {
+  // Detect signal (8-component) vs warmth (4-component) shape.
+  if ("peer_vouch" in c && "peer_vouch" in w) {
+    return computeSignal(c as SignalComponents, w as SignalWeights);
+  }
+  // Legacy warmth path
+  const wc = c as WarmthComponents;
+  const ww = w as WarmthWeights;
+  const total = ww.mutual_connections + ww.shared_employer + ww.recency + ww.notes_present;
+  if (total <= 0) return 0;
+  const weighted =
+    wc.mutual_connections * ww.mutual_connections +
+    wc.shared_employer * ww.shared_employer +
+    wc.recency * ww.recency +
+    wc.notes_present * ww.notes_present;
   return Math.round((weighted / total) * 1000) / 10;
 }
 

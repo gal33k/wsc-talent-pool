@@ -1,7 +1,7 @@
 "use client";
 
 import { usePool } from "@/lib/data";
-import type { FitWeights, WarmthWeights } from "@/lib/types";
+import type { FitWeights, WarmthWeights, SignalWeights } from "@/lib/types";
 import { Icon } from "./Icon";
 
 const FIT_LABELS: Record<keyof FitWeights, [string, string]> = {
@@ -28,21 +28,46 @@ const FIT_LABELS: Record<keyof FitWeights, [string, string]> = {
 };
 
 const WARMTH_LABELS: Record<keyof WarmthWeights, [string, string]> = {
-  mutual_connections: [
-    "Mutual connections",
-    "How much having shared LinkedIn contacts counts. 3+ mutuals = full credit; the jump from 0 to 1 is the whole value.",
+  mutual_connections: ["Mutual connections", "3+ mutuals = full credit."],
+  shared_employer:    ["Shared employer",    "Post-stoplist, alias-normalized."],
+  recency:            ["Recency",            "12-month half-life decay."],
+  notes_present:      ["Recruiter notes",    "A recorded booth conversation."],
+};
+
+// New 8-component Signal — replaces Warmth. Each slider has plain-English
+// help text explaining what dragging it up/down does.
+const SIGNAL_LABELS: Record<keyof SignalWeights, [string, string]> = {
+  peer_vouch: [
+    "Peer vouch",
+    "Highest signal — an active endorsement from a same-team WSC employee (with tenure + role-match multipliers). Drag up if peer vouches should dominate.",
   ],
-  shared_employer: [
-    "Shared employer",
-    "How much overlapping past employers with a WSC person counts. Generic employers (freelance, startup, IDF-bare) are filtered out.",
+  same_team_overlap: [
+    "Same-team overlap",
+    "Shared employer with a same-team WSC person, WITHOUT an active vouch. They've been in the same room — real signal, no endorsement yet.",
+  ],
+  cross_team_vouch: [
+    "Cross-team vouch",
+    "An active endorsement from a WSC employee in a different area. Still valuable, but weaker judgment on role-fit than a peer vouch.",
+  ],
+  culture_affinity: [
+    "Culture affinity",
+    "Domain-topic engagement — OSS in our stack, publications on adjacent problems, past sports-tech conference attendance. Strict signals only, no bias-prone proxies.",
+  ],
+  prior_wsc_engagement: [
+    "Prior WSC engagement",
+    "Followed WSC, engaged with our posts, attended past WSC events. Passive interest — they know us.",
   ],
   recency: [
     "Recency",
-    "How much recent contact counts. Someone met 3 months ago outranks someone met 2 years ago; 12-month half-life decay.",
+    "Freshness of contact. Someone met 3 months ago outranks someone met 2 years ago; 12-month half-life.",
   ],
   notes_present: [
     "Recruiter notes",
-    "Bonus for candidates you actually had a conversation with — a recorded booth chat is a real warmth signal.",
+    "A recorded booth conversation happened. Small but real warmth signal.",
+  ],
+  mutual_connections: [
+    "Mutual connections",
+    "Bare LinkedIn mutuals with no team overlap and no vouch. Weakest signal — a passive social-graph fact.",
   ],
 };
 
@@ -63,6 +88,10 @@ function Slider({
       {tip && <div className="text-[11px] text-mute mt-1">{tip}</div>}
     </div>
   );
+}
+
+function isSignalShape(w: WarmthWeights | SignalWeights): w is SignalWeights {
+  return typeof (w as SignalWeights).peer_vouch === "number";
 }
 
 export default function WeightTuner() {
@@ -100,15 +129,26 @@ export default function WeightTuner() {
           })}
         </Group>
 
-        <Group label="Warmth — reachability (how easy to get to them?)" dot="bg-emerald-500">
-          {(Object.keys(WARMTH_LABELS) as Array<keyof WarmthWeights>).map(k => {
-            const [label, tip] = WARMTH_LABELS[k];
-            return (
-              <Slider key={k} label={label} tip={tip}
-                      value={warmthWeights[k]}
-                      onChange={v => setWarmthWeights({ ...warmthWeights, [k]: v })} />
-            );
-          })}
+        <Group label="Signal — reachability + endorsement + culture (how likely they convert)" dot="bg-emerald-500">
+          {isSignalShape(warmthWeights) ? (
+            (Object.keys(SIGNAL_LABELS) as Array<keyof SignalWeights>).map(k => {
+              const [label, tip] = SIGNAL_LABELS[k];
+              return (
+                <Slider key={k} label={label} tip={tip}
+                        value={(warmthWeights as SignalWeights)[k]}
+                        onChange={v => setWarmthWeights({ ...warmthWeights, [k]: v } as SignalWeights)} />
+              );
+            })
+          ) : (
+            (Object.keys(WARMTH_LABELS) as Array<keyof WarmthWeights>).map(k => {
+              const [label, tip] = WARMTH_LABELS[k];
+              return (
+                <Slider key={k} label={label} tip={tip}
+                        value={(warmthWeights as WarmthWeights)[k]}
+                        onChange={v => setWarmthWeights({ ...warmthWeights, [k]: v } as WarmthWeights)} />
+              );
+            })
+          )}
         </Group>
 
         <Group label="Tier thresholds — decides who lands where" dot="bg-emerald-600">

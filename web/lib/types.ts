@@ -16,6 +16,18 @@ export type WarmthWeights = {
   notes_present: number;
 };
 
+// New 8-component Signal — replaces Warmth as the second scoring axis.
+export type SignalWeights = {
+  peer_vouch: number;
+  same_team_overlap: number;
+  cross_team_vouch: number;
+  culture_affinity: number;
+  prior_wsc_engagement: number;
+  recency: number;
+  notes_present: number;
+  mutual_connections: number;
+};
+
 export type Tiers = {
   call_this_week: { min_fit: number; min_warmth: number };
   direct_outreach: { min_fit: number };
@@ -25,6 +37,7 @@ export type Tiers = {
 export type Defaults = {
   fit_weights: FitWeights;
   warmth_weights: WarmthWeights;
+  signal_weights?: SignalWeights;
   tiers: Tiers;
 };
 
@@ -79,6 +92,17 @@ export type WarmthComponents = {
   shared_employer: number;
   recency: number;
   notes_present: number;
+};
+
+export type SignalComponents = {
+  peer_vouch: number;
+  same_team_overlap: number;
+  cross_team_vouch: number;
+  culture_affinity: number;
+  prior_wsc_engagement: number;
+  recency: number;
+  notes_present: number;
+  mutual_connections: number;
 };
 
 export type Warmth = {
