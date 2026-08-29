@@ -44,7 +44,7 @@ missing-profile path is exercisable on demand.
 
 ### `mock_enrichment.py`
 Looks up `data/linkedin_profiles.csv` by LinkedIn URL.
-Real counterpart: **Proxycurl / People Data Labs** — `GET /proxycurl/v2/linkedin?url=…`
+Real counterpart: **Clay (enrichment orchestrator)** — `GET /proxycurl/v2/linkedin?url=…`
 Behaviours to simulate, because they are what production actually does:
 - a **cache** — second lookup for the same URL is a cache hit and is logged as such
 - a **miss rate** — return `None` for a configurable fraction, so `enrichment_status` and the

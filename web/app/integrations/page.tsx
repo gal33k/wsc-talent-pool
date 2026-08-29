@@ -7,7 +7,8 @@ import StatsBar from "@/components/StatsBar";
 
 const SYSTEM_LABELS: Record<string, string> = {
   badge_scan: "Cvent",
-  enrichment: "Proxycurl",
+  enrichment: "Clay",
+  salesnav:   "LinkedIn Sales Navigator",
   hubspot:    "HubSpot",
   comeet:     "Comeet",
   notifier:   "Slack",
@@ -19,11 +20,12 @@ const SYSTEM_LABELS: Record<string, string> = {
 const SYSTEM_COLORS: Record<string, string> = {
   badge_scan: "bg-sky-100 text-sky-800",
   enrichment: "bg-fuchsia-100 text-fuchsia-800",
+  salesnav:   "bg-blue-100 text-blue-800",
   hubspot:    "bg-orange-100 text-orange-800",
   comeet:     "bg-emerald-100 text-emerald-800",
   notifier:   "bg-indigo-100 text-indigo-800",
   narrator:   "bg-violet-100 text-violet-800",
-  bigquery:   "bg-blue-100 text-blue-800",
+  bigquery:   "bg-cyan-100 text-cyan-800",
   referral:   "bg-pink-100 text-pink-800",
 };
 
@@ -36,11 +38,18 @@ const SYSTEM_ROLES: Record<string, { role: string; blurb: string; saves: string;
     iconName: "download",
   },
   enrichment: {
-    role: "Fills in what we don't know",
-    blurb: "Looks up each contact's LinkedIn profile — skills, past employers, recent posts, publications, mutual connections. Credited API.",
-    saves: "Turns a name + URL into structured evidence you can defend a shortlist with. Replaces the ~3 hrs/day recruiters spend hunting LinkedIn for context on lukewarm leads.",
-    endpoint: "GET /proxycurl/api/v2/linkedin?url=…",
+    role: "Enrichment orchestrator (waterfall)",
+    blurb: "Clay is the pipeline that turns a name + LinkedIn URL into a structured profile — past employers, skills, recent posts, publications, mutual connections. Waterfalls through Apollo → PDL → Sales-Nav-backed data → GitHub in one request. Enterprise-grade, no scraping.",
+    saves: "Turns a name + URL into structured evidence you can defend a shortlist with. Replaces the ~3 hrs/day recruiters spend hunting LinkedIn for context on lukewarm leads — and swaps a compliant orchestrator in for the scraper you'd otherwise be tempted to build.",
+    endpoint: "POST https://api.clay.com/v1/enrichment/people",
     iconName: "search",
+  },
+  salesnav: {
+    role: "Recruiter search + outreach layer",
+    blurb: "LinkedIn Sales Navigator is where recruiters do targeted lead search (title/industry/company/geo), maintain saved lead lists, and send InMail to people we can't reach any other way. Feeds Clay with the connection graph and recent activity data.",
+    saves: "Legitimate InMail delivery + real-time lead search on the LinkedIn graph — the tool recruiters would open anyway. Rather than paralleling it, our pipeline hooks in: saved leads sync into the pool, InMail sends fire from the /intros outreach queue.",
+    endpoint: "Sales Nav API + partner InMail endpoints",
+    iconName: "link",
   },
   hubspot: {
     role: "The contact bank",
@@ -153,7 +162,7 @@ export default function IntegrationsLog() {
           <span className="text-xs text-mute">business value first · technical trace below</span>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          {["enrichment", "badge_scan", "referral", "notifier", "narrator", "comeet", "hubspot", "bigquery"].map(sysKey => {
+          {["enrichment", "salesnav", "badge_scan", "referral", "notifier", "narrator", "comeet", "hubspot", "bigquery"].map(sysKey => {
             const role = SYSTEM_ROLES[sysKey];
             const calls = bySys[sysKey] || 0;
             return (

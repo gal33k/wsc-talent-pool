@@ -16,7 +16,7 @@ Tables (mock schema):
   wsc.hitl.overrides             per-role recruiter overrides
   wsc.hitl.blacklist             globally excluded contacts
   wsc.hitl.recruiter_notes       free-text notes per contact
-  wsc.telemetry.enrichment_calls Proxycurl call log with credit accounting
+  wsc.telemetry.enrichment_calls Clay call log with credit accounting
 
 Every INSERT/SELECT is logged via call_log so the /integrations page shows the
 production SQL surface. Swapping to real BigQuery is a one-file change —

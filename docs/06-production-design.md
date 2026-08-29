@@ -10,7 +10,7 @@ answers become indistinguishable from each other.
 |---|---|---|
 | `conference_attendees.csv` | Badge-scan vendors — Cvent, Swapcard, Brella, Eventbrite | Post-event export or API pull into HubSpot as contacts, tagged with the event and its domain. Business cards via OCR; booth conversations via a mobile capture form so notes are structured at the source. |
 | *(the pool itself)* | **HubSpot** | A custom object, or a contact-property namespace: `talent_role_family`, `talent_domain_score`, `talent_pool_status`, `last_enriched`, `source_channel`. Lists and workflows come free. The team already lives here — that is why the brief names it. |
-| `linkedin_profiles.csv` | A compliant enrichment vendor | Proxycurl, People Data Labs, Clearbit or similar, keyed on LinkedIn URL or work email, with a credit budget and a persistent cache. |
+| `linkedin_profiles.csv` | A compliant enrichment vendor | Clay, People Data Labs, Clearbit or similar, keyed on LinkedIn URL or work email, with a credit budget and a persistent cache. |
 | `wsc_employees.csv` | HRIS — HiBob, BambooHR, Workday | Nightly roster sync. Mutual connections require each employee to opt into a network-sharing integration; where that isn't available, **shared-employer overlap from HRIS work history is the fallback** — which is exactly why that column matters. |
 | `job_openings.csv` | **Comeet** | Pull open positions via API; webhook on job-published to auto-trigger a shortlist; write shortlisted candidates back as sourced candidates with the score and evidence attached. |
 

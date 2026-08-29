@@ -5,7 +5,7 @@ Real counterpart:  a form embedded in Slack (or a HubSpot form) that WSC
 Real endpoints:
   POST /forms/referrals/submissions          - receive the payload
   POST /crm/v3/objects/contacts              - create the HubSpot contact
-  GET  /proxycurl/api/v2/linkedin?url=       - enrich the profile
+  GET  /clay/v1/enrichment/people?url=       - enrich the profile
   POST /positions/{pid}/candidates           - push to Comeet if fit >= threshold
 
 Referrals are the highest-converting channel by a wide margin (see

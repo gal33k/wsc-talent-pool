@@ -50,7 +50,7 @@ different backend — the swap to production is a one-file change per integratio
 
 ```
 S1  Ingest       <-- mock_badge_scan     (real: Cvent / Swapcard export)
-S3  Enrich       <-- mock_enrichment     (real: Proxycurl / PDL)  [cache + miss rate + credit counter]
+S3  Enrich       <-- mock_enrichment     (real: Clay / PDL)  [cache + miss rate + credit counter]
 POOL             <-- mock_hubspot        (real: HubSpot CRM v3 write-back)
 S6  jobs list    <-- mock_comeet         (real: Comeet ATS)
 S6  dedupe       <-- mock_comeet         (real: candidate status lookup)

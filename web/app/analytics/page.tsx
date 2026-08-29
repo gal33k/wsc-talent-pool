@@ -232,7 +232,7 @@ export default function Analytics() {
 
           <Panel title="Enrichment cost efficiency">
             <div className="rounded-lg bg-slate-50 border border-border p-4">
-              <div className="text-xs uppercase tracking-wider text-mute font-medium mb-2">Proxycurl credits</div>
+              <div className="text-xs uppercase tracking-wider text-mute font-medium mb-2">Clay credits</div>
               <div className="flex items-baseline gap-2 mb-3">
                 <span className="text-3xl font-semibold text-text tabular">{derived.creditsUsed}</span>
                 <span className="text-sm text-mute">/ 500 budget</span>

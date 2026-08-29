@@ -126,7 +126,7 @@ export default function CaptureLead() {
       <StatsBar stats={[
         { label: "In the pool",         value: pool.candidates.length, sub: "grows with every capture", iconName: "users" },
         { label: "Captured this session", value: recentCaptures.length, sub: "mock — not persisted", iconName: "plus", accent: true },
-        { label: "Enrichment credits",  value: `${pool.call_log.filter(c => c.system === "enrichment").length}/500`, sub: "per Proxycurl budget", iconName: "database" },
+        { label: "Enrichment credits",  value: `${pool.call_log.filter(c => c.system === "enrichment").length}/500`, sub: "per Clay budget", iconName: "database" },
         { label: "Open roles",          value: pool.jobs.length,       sub: "scored against each capture", iconName: "briefcase" },
       ]} />
 

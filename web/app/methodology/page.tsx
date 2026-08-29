@@ -200,7 +200,7 @@ function HowItWorks() {
           seeLabel="Watch enrichment run"
         >
           <p>
-            Proxycurl pulls the LinkedIn profile — past employers, recent posts, publications, connections.
+            Clay pulls the profile via its provider waterfall (Apollo → PDL → Sales-Nav-backed) the LinkedIn profile — past employers, recent posts, publications, connections.
             The one that pays off: cross-check the candidate's connections against the WSC employee
             directory. <em>Who do we already know that knows them?</em>
           </p>
@@ -499,7 +499,7 @@ function WorkedExamples() {
             tint="sky"
             steps={[
               { title: "Source",    body: "SportsTech Innovation Summit — 240 badge scans exported from Cvent." },
-              { title: "Enrich",    body: "Proxycurl pulls profile → past employers (DAZN, Meta), 3 recent posts on real-time inference, CVPR paper, 2.1k-star GitHub." },
+              { title: "Enrich",    body: "Clay pulls the profile via its provider waterfall (Apollo → PDL → Sales-Nav-backed) profile → past employers (DAZN, Meta), 3 recent posts on real-time inference, CVPR paper, 2.1k-star GitHub." },
               { title: "Gate",      body: "family=ml_cv ✓ · skills evidence ✓ · sports proximity ✓ → ADMIT (3/3)." },
               { title: "Score",     body: "JOB001 fit 82 (Computer Vision + Object Detection matched), warmth 45 (Maya Levi 2°)." },
               { title: "Shortlist", body: "Tier: Direct outreach. Warm intro via Maya Levi (2° via shared Meta stint)." },
@@ -664,7 +664,7 @@ function DesignDoc({ pool: _pool }: { pool: ReturnType<typeof usePool>["pool"] }
             Of these, <strong>only skills, mutual connections, shared employers, and the gate + fit
             scoring are computed by the shipped Python pipeline</strong> from the CSVs. The other
             reveal cards — posts, publications, employer-tier flag — illustrate what a production
-            enrichment adapter <em>would</em> return (Proxycurl + GitHub API + a Featured-section
+            enrichment adapter <em>would</em> return (Clay + GitHub API + a Featured-section
             parse), rendered from a clearly-labeled example payload so the recruiter can see the
             shape of the data. They are not scored today; the UI marks each such reveal &ldquo;example
             enrichment output.&rdquo;
@@ -673,7 +673,7 @@ function DesignDoc({ pool: _pool }: { pool: ReturnType<typeof usePool>["pool"] }
             Why keep them visible instead of dropping them: enrichment is the invisible half of a
             talent-pool pipeline. Showing the shape recruiters would see makes the credit spend,
             latency, and privacy trade-offs concrete — and marks the exact swap surface where a real
-            Proxycurl + Claude-normalisation call plugs in.
+            Clay + Claude-normalisation call plugs in.
           </p>
         </Section>
 
@@ -728,7 +728,7 @@ function DesignDoc({ pool: _pool }: { pool: ReturnType<typeof usePool>["pool"] }
                 <tr className="border-t border-border-faint"><td className="py-1.5 pr-4 text-indigo-700">wsc.talent_pool.score_events</td><td className="py-1.5 text-mute">immutable · one row per (contact × job × run)</td></tr>
                 <tr className="border-t border-border-faint"><td className="py-1.5 pr-4 text-indigo-700">wsc.hitl.overrides</td><td className="py-1.5 text-mute">per-role recruiter overrides</td></tr>
                 <tr className="border-t border-border-faint"><td className="py-1.5 pr-4 text-indigo-700">wsc.hitl.blacklist</td><td className="py-1.5 text-mute">globally excluded contacts</td></tr>
-                <tr className="border-t border-border-faint"><td className="py-1.5 pr-4 text-indigo-700">wsc.telemetry.enrichment_calls</td><td className="py-1.5 text-mute">Proxycurl call log with credit accounting</td></tr>
+                <tr className="border-t border-border-faint"><td className="py-1.5 pr-4 text-indigo-700">wsc.telemetry.enrichment_calls</td><td className="py-1.5 text-mute">Clay call log with credit accounting</td></tr>
               </tbody>
             </table>
           </div>

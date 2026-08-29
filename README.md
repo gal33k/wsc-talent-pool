@@ -252,7 +252,7 @@ Swapping to production is a one-file change per integration:
 |---|---|---|
 | `mock_badge_scan.py` | Cvent / Swapcard / Brella | Post-event export or webhook file-drop |
 | *(the pool itself)* | **HubSpot** custom object or contact-property namespace | `PATCH /crm/v3/objects/contacts/{id}` |
-| `mock_enrichment.py` | **Proxycurl / People Data Labs** | `GET /proxycurl/api/v2/linkedin?url=…`, credited + cached |
+| `mock_enrichment.py` | **Clay (enrichment orchestrator)** | `POST /clay/v1/enrichment/people`, credited + cached |
 | `mock_comeet.py` | **Comeet** ATS | `GET /company/{uid}/positions`, candidate status webhook |
 | `mock_notifier.py` | Slack (or SendGrid fallback) | `POST /chat.postMessage` |
 | `mock_narrator.py` | Claude API | Single call over the assembled evidence dict |

@@ -26,9 +26,9 @@ export type EnrichmentPlayback = {
 };
 
 const CONFERENCE_STEPS = [
-  { id: "fetch",       label: "Fetch LinkedIn profile",              detail: "GET /proxycurl/api/v2/linkedin?url=…" },
+  { id: "fetch",       label: "Fetch LinkedIn profile",              detail: "POST /clay/v1/enrichment/people" },
   { id: "employers",   label: "Extract past employers + tier flag",  detail: "6 roles read · check against notable-employer list" },
-  { id: "posts",       label: "Scan recent posts (last 90 days)",    detail: "GET /proxycurl/posts · topic classification" },
+  { id: "posts",       label: "Scan recent posts (last 90 days)",    detail: "POST /clay/v1/enrichment/people (posts included) · topic classification" },
   { id: "featured",    label: "Pull publications, talks, repos",     detail: "Featured section + GitHub cross-reference" },
   { id: "gate",        label: "Run pool-admission gate",             detail: "3 signals · 2-of-3 admits" },
   { id: "connections", label: "Cross-check with WSC directory",      detail: "1st + 2nd degree · returns warm-intro paths" },
