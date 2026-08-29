@@ -2,8 +2,13 @@
 
 Take-home submission for the **AI Solution Manager** role.
 
-**Live demo:** `https://web-phi-ivory-95.vercel.app`
-**Repo:** `https://github.com/gal33k/wsc-talent-pool`
+> ### 🚀 Live demo → **https://wsc-talent.gforcesolutions.xyz**
+>
+> Full recruiter-facing app. Open positions → click a job → ranked shortlist, weight tuner,
+> per-candidate scoring visualisation, warm-intro paths, HITL controls, badge scan capture,
+> Claude-assisted taxonomy editor, one-scroll methodology doc.
+
+**Repo:** https://github.com/gal33k/wsc-talent-pool
 
 ---
 
