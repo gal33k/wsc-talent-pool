@@ -123,7 +123,7 @@ function TLDR({ pool }: { pool: ReturnType<typeof usePool>["pool"] }) {
           <StatBig n={pool.candidates.length}   label="contacts in the pool"  sub="across 4 conferences" />
           <StatBig n={pool.jobs.length}         label="open roles scored"     sub="on demand, per job" />
           <StatBig n={pool.employees.length}    label="WSC employees"         sub="the warm-intro graph" />
-          <StatBig n={32}                       label="tests passing"         sub="scoring maths locked" />
+          <StatBig n={41}                       label="tests passing"         sub="scoring maths locked" />
         </div>
       )}
 
@@ -200,9 +200,10 @@ function HowItWorks() {
           seeLabel="Watch enrichment run"
         >
           <p>
-            Clay pulls the profile via its provider waterfall (Apollo → PDL → Sales-Nav-backed) the LinkedIn profile — past employers, recent posts, publications, connections.
-            The one that pays off: cross-check the candidate's connections against the WSC employee
-            directory. <em>Who do we already know that knows them?</em>
+            Clay pulls the LinkedIn profile via its provider waterfall (Apollo → PDL → Sales-Nav-backed):
+            past employers, recent posts, publications, and connections. The one that pays off:
+            cross-check the candidate's connections against the WSC employee directory.{" "}
+            <em>Who do we already know that knows them?</em>
           </p>
         </NarrativeStep>
 
@@ -344,7 +345,8 @@ const ASSUMPTIONS: Array<{ q: string; short: string; answer: React.ReactNode }> 
         <div className="mt-2">
           This lives in the <em>Signal</em> score (about reachability), never the <em>Fit</em>{" "}
           score (about competence). Mixing them would bury strong candidates who happen to have
-          zero mutual connections with WSC — of which we have five in this dataset.
+          zero mutual connections with WSC — 33 of the 75 people in the pool are in exactly
+          that boat.
         </div>
       </>
     ),
@@ -519,7 +521,7 @@ function WorkedExamples() {
             tint="sky"
             steps={[
               { title: "Source",    body: "SportsTech Innovation Summit — 240 badge scans exported from Cvent." },
-              { title: "Enrich",    body: "Clay pulls the profile via its provider waterfall (Apollo → PDL → Sales-Nav-backed) profile → past employers (DAZN, Meta), 3 recent posts on real-time inference, CVPR paper, 2.1k-star GitHub." },
+              { title: "Enrich",    body: "Clay pulls the LinkedIn profile via its provider waterfall (Apollo → PDL → Sales-Nav-backed): past employers (DAZN, Meta), 3 recent posts on real-time inference, CVPR paper, 2.1k-star GitHub." },
               { title: "Gate",      body: "family=ml_cv ✓ · skills evidence ✓ · sports proximity ✓ → ADMIT (3/3)." },
               { title: "Score",     body: "JOB001 fit 82 (Computer Vision + Object Detection matched), signal 45 (Maya Levi 2°)." },
               { title: "Shortlist", body: "Tier: Direct outreach. Warm intro via Maya Levi (2° via shared Meta stint)." },
@@ -638,10 +640,14 @@ function DesignDoc({ pool: _pool }: { pool: ReturnType<typeof usePool>["pool"] }
               ["Nice-to-have",    10, "Bonus skills"],
             ]} />
             <ScoreTable title="Signal" subtitle="Endorsements + reachability" tone="emerald" rows={[
-              ["Mutual connections", 40, "Diminishing returns"],
-              ["Shared employer",    30, "Post-stoplist, aliased"],
-              ["Recency",            20, "12-month half-life"],
-              ["Notes present",      10, "Real conversation"],
+              ["Peer vouch",           35, "Active same-team endorsement (× role × tenure)"],
+              ["Same-team overlap",    18, "Shared employer with a same-team person"],
+              ["Cross-team vouch",     12, "Endorsement from cross-department peer"],
+              ["Culture affinity",     12, "OSS in our stack + domain-topic engagement"],
+              ["Prior WSC engagement",  8, "Followed WSC, engaged with our posts"],
+              ["Recency",               7, "12-month half-life"],
+              ["Notes present",         5, "A recorded conversation"],
+              ["Mutual connections",    3, "Bare LinkedIn mutual, diminishing returns"],
             ]} />
           </div>
           <Callout tint="indigo">
@@ -821,13 +827,13 @@ function DesignDoc({ pool: _pool }: { pool: ReturnType<typeof usePool>["pool"] }
 
         <Section id="tests" num={10} title="What we tested">
           <p className="mb-3">
-            <strong>32 tests across 4 files, all passing.</strong> Focused on the invariants that
+            <strong>41 tests across 4 files, all passing.</strong> Focused on the invariants that
             would silently break the tuner, the pool, or the gate if they drifted.
           </p>
           <div className="space-y-2 my-3">
-            <TestRow status="pass" name="tests/test_json_parity.py"    detail="Browser weighted-sum recompute matches Python's default within 0.1dp." />
+            <TestRow status="pass" name="tests/test_json_parity.py · 5 tests" detail="Browser weighted-sum recompute matches Python's default within 0.1dp; critical admits present; Jin Park above_band." />
             <TestRow status="pass" name="tests/test_gate.py · 7 tests" detail="Critical admits, known rejects, every row has a reason, stoplist filters generic employers." />
-            <TestRow status="pass" name="tests/test_scoring.py · 16 tests" detail="Connection curve, exact-vs-family skill credit, seniority bands, adjacency, ceilings." />
+            <TestRow status="pass" name="tests/test_scoring.py · 20 tests" detail="Connection curve, exact-vs-family skill credit, seniority bands, adjacency, ceilings." />
             <TestRow status="pass" name="tests/test_missing_data.py · 9 tests" detail="Missing enrichment, blank fields, dedupe, miss-rate simulator." />
           </div>
         </Section>
