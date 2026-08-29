@@ -1,338 +1,266 @@
-# WSC Sports — Conference Talent Pool Pipeline
+# WSC Sports — Talent Pool Pipeline
 
 Take-home submission for the **AI Solution Manager** role.
+
+**Live demo:** `https://web-phi-ivory-95.vercel.app`
+**Repo:** `https://github.com/gal33k/wsc-talent-pool`
+
+---
 
 ## The problem
 
 Recruiters meet hundreds of strong people at conferences every year and lose almost all of them
-within a week — a business card, a note on a phone, nothing in any system. Even the ones we do
-capture arrive mixed in with vendor reps, IT managers and adjacent-industry attendees who
-happened to be in the same room. The signal-to-noise problem is what makes conference sourcing
-feel unproductive; capturing the contacts is the easier half. This project builds the second
-half: a queryable talent pool with the noise filtered out and, when a role opens, a ranked
-shortlist that names the WSC employee best placed to make the introduction.
+within a week. Even the ones we capture arrive mixed in with vendor reps, IT managers and
+adjacent-industry attendees who happened to be in the same room. Capturing is the easier half —
+this project builds the second half: a queryable talent pool with the noise filtered out and,
+when a role opens, a ranked shortlist that names the WSC employee best placed to make the
+introduction.
 
 ## Quick start
 
 ```bash
-# 1) Python pipeline — runs offline, no env vars, no credentials
 pip install -r requirements.txt
-python run.py --all-jobs --emit-json      # emits web/public/data/pool.json + per-job CSVs
+python run.py --all-jobs --emit-json    # writes output/JOB001-004 + web/public/data/pool.json
 
-# 2) Web app — localhost only, static export ready for Vercel later with no code changes
 cd web
 npm install
-npm run dev                                # http://localhost:3000
+npm run dev                              # http://localhost:3000
 ```
 
-CLI-only usage:
+**Runs offline on a fresh clone.** No env vars, no network, no credentials. Every external
+system is a mock adapter — swap surface documented in `docs/09-mock-integrations.md`.
+
+Single-job usage:
 ```bash
-python run.py --job-id JOB001              # single job shortlist -> output/JOB001_*
-python run.py --gate-audit                 # dump gate decisions for all 75 rows
+python run.py --job-id JOB001            # → output/JOB001_shortlist.{csv,html}
+python run.py --gate-audit               # dump gate decisions for all 75 rows
 ```
 
-**Runs to completion on a fresh clone with no environment variables, no network, and no
-credentials.** Every external system is a mock adapter (see `docs/09-mock-integrations.md`).
+Tests:
+```bash
+for t in test_json_parity test_gate test_scoring test_missing_data; do python tests/$t.py; done
+# 40 tests across 4 files, all pass
+```
 
-## What it does
+## Executive summary (for a non-technical Head of HR)
 
-Two decisions, never one scoring function.
+We built a system that turns conference badge scans, employee referrals, and inbound CVs into a
+queryable talent pool. For each open role we produce a ranked shortlist scored on two things —
+how well the person **fits** the job (competence) and how strong our **signal** on them is
+(peer vouches, shared teams, culture fit, reachability). Every score has an evidence trail a
+recruiter can defend; a human always has the final call. When a new role opens, we don't just
+re-score — we also flag previously-rejected candidates whose skills would newly match. Clay is
+the enrichment orchestrator; LinkedIn Sales Navigator handles recruiter search + outreach.
 
-- **Decision A — Pool admission** (job-agnostic, at ingest). Three independent signals gate a
-  candidate into the pool: title-derived role family, skills evidence, and industry/employer
-  proximity. **2-of-3 admits.** Every decision carries a reason string. This is the
-  signal-to-noise answer.
-- **Decision B — Job match** (per `job_id`, on demand). Produces two independent scores per
-  candidate: `fit_score` (competence only, no network signal) and `warmth_score` (mutual
-  connections, shared employers, recency, notes). A ranked shortlist follows.
+## Architecture — two decisions, never one function
 
-Full stage-by-stage schema in [`docs/flow.md`](docs/flow.md).
+The single most common failure mode is one big scoring function. This pipeline splits into two
+separate decisions:
+
+**Decision A — Pool admission** (job-agnostic, runs once at ingest).
+Three independent signals decide if the person is talent in a domain we hire for:
+1. **Role family** from title (pattern-matched against a taxonomy)
+2. **Skills evidence** — do their skills confirm the claimed family?
+3. **Sports/media proximity** — lexicon hits across industry and employers
+
+**2-of-3 admits.** 1-of-3 holds for manual review. 0-of-3 rejects with a reason string a
+recruiter could read to the person.
+
+**Decision B — Job match** (per `job_id`, on demand).
+Produces two independent scores per candidate:
+
+- **`fit_score`** — competence only, never touches network
+- **`signal_score`** — everything non-competence that predicts they'd convert AND fit
+
+The scores are **never combined into one number.** A single "compatibility rate" would bury
+strong candidates with no mutual connections — we have five of those in this dataset. Keeping
+them separate makes the trade-off visible so the recruiter picks the right action.
+
+Full stage-by-stage flow in [`docs/flow.md`](docs/flow.md).
 
 ## Scoring methodology
 
-Two axes, weight-independent 0-1 components, weights applied in the final aggregation. The
-browser recombines the same components live under whatever weights the tuner sliders are set
-to — no scoring rule is ever reimplemented in TypeScript.
+Every component is a weight-independent 0-1 sub-score. Weights apply in the final aggregation.
+The browser recombines the same components live under whatever the tuner sliders show — the
+Python and JS aggregations are asserted equal to 1dp in `tests/test_json_parity.py`.
 
-### Fit (competence only)
+### Fit (competence, weights sum to 100)
 
-| Component | Weight | How it's computed |
+| Component | Weight | Formula |
 |---|---:|---|
-| Required skills | 35 | Coverage of the job's required skill list. Exact match = 1.0, family match = 0.6 (e.g. TensorFlow for PyTorch). |
-| Role family | 25 | Exact family = 1.0, adjacent = 0.5, unrelated = 0.0. |
-| Seniority | 15 | Tier-based band fit. In-band = 1.0. Above-band = 0.6 + flag. Below-band = 0.5 + flag. |
-| Domain | 15 | Sports/media lexicon hits across industry, current + past employers, and skills. Diminishing-returns curve. |
-| Nice-to-have | 10 | Coverage of the job's nice-to-have list. |
+| Required skills | 35 | Coverage of required list. Exact match = 1.0, family alias = 0.6. `*`-marked skills are critical — missing any caps the component at 0.4. |
+| Role family | 25 | Exact family = 1.0. Adjacent = **directional per-pair credit** (e.g. `ml_general → ml_cv = 0.7`, `data_engineering → ml_cv = 0.2`). |
+| Seniority | 15 | Tier-based band fit. In-band = 1.0. Above-band = 0.6 + flag. Below-band = 0.5 + flag. Floor at 0.2. |
+| Domain | 15 | Sports/media lexicon hits across industry, employers, skills. Diminishing-returns curve `[0, 0.5, 0.8, 1.0]`. |
+| Nice-to-have | 10 | Coverage of the nice-to-have list. |
 
-### Warmth (reachability)
+### Signal (reachability + endorsement + culture + engagement)
 
-| Component | Weight | How it's computed |
+Renamed from "Warmth" — reachability alone was too narrow. Actual signal includes vouches,
+team overlap, culture indicators.
+
+| Component | Weight | What it captures |
 |---|---:|---|
-| Mutual connections | 40 | Diminishing-returns curve. 0 → 0.0, 1 → 0.5, 2 → 0.8, 3+ → 1.0. |
-| Shared employer | 30 | Same curve, applied after the generic-employer stoplist and company-alias unification. |
-| Recency | 20 | Exponential decay on conference date. 12-month half-life. |
-| Notes present | 10 | Binary. A recorded booth conversation is something to open with. |
+| Peer vouch | 35 | Active endorsement from a same-team WSC employee. Multiplied by role-match × tenure, normalized 0-1. |
+| Same-team overlap | 18 | Shared employer with a same-team WSC person, WITHOUT an active vouch. |
+| Cross-team vouch | 12 | Active endorsement from cross-department WSC employee. |
+| Culture affinity | 12 | OSS in our stack + domain-topic engagement + past adjacent-conference attendance. Strict definition, no bias-prone proxies. |
+| Prior WSC engagement | 8 | Followed WSC, engaged with our posts, past event history. |
+| Recency | 7 | 12-month half-life on conference date. |
+| Notes present | 5 | Recorded booth conversation. |
+| Mutual connections | 3 | Bare LinkedIn mutual, no team overlap, no vouch. |
 
-`best_intro_path` prefers same-department peers when the job's department is known — a peer is
-better placed to answer "will you introduce us" than a cross-department colleague.
+**Vouch multipliers** (applied to peer + cross-team vouch components):
 
-### Worked example — Priya Anand vs JOB001 (Senior ML Engineer)
-
-Priya's LinkedIn: Sr Computer Vision Engineer at VidStream (Video Technology), 7y,
-`Python;OpenCV;YOLO;Real-time Processing;AWS;Deep Learning`. Past: Mobileye, Intel. 2 mutuals
-(Maya Levi, Eran Moshe). Note: *"Spoke about real-time tracking project"*.
-
-**Fit components:**
-
-| Component | Raw | Why |
+| Multiplier | Value | Range |
 |---|---:|---|
-| required_skills | 4.0/5 = **0.80** | Python ✓ · Computer Vision ✓ (via `opencv` alias) · Object Detection ✓ (via `yolo` alias) · AWS ✓ · PyTorch ✗ (has Deep Learning but no PyTorch/TensorFlow — 0 credit) |
-| role_family | **1.00** | Title matches `ml_cv` (JOB001 target family) |
-| seniority | **1.00** | Title tier 4 (Senior), 7y → in band |
-| domain | **1.00** | 4+ lexicon hits (video, computer vision, Mobileye, Intel) |
-| nice_to_have | 1.0/3 = **0.33** | Real-time processing ✓; Docker ✗; Sports Analytics ✗ |
+| Role match — same role family | ×3.0 | Same role family = biggest signal |
+| Role match — same department | ×2.0 | |
+| Role match — leadership (CTO/VP) | ×1.5 | Carries organizational weight regardless of dept |
+| Role match — adjacent family | ×1.3 | |
+| Role match — cross-department | ×1.0 | Baseline |
+| Tenure — 3+ years | ×1.25 | Deep culture knowledge |
+| Tenure — 1-3 years | ×1.00 | Baseline |
+| Tenure — 6-12 months | ×0.85 | Forming judgment |
+| Tenure — <6 months | ×0.60 | Knows candidate, not WSC's bar |
 
-Weighted fit = (0.80×35 + 1.00×25 + 1.00×15 + 1.00×15 + 0.33×10) / 100 × 100 = **86.3**.
+Max composite = 3.0 × 1.25 = **3.75**. Vouch scores are normalized by this so the component
+fits 0-1 like every other sub-score. Multiple vouches sum, capped at 1.0.
 
-**Warmth components:**
+### Tier assignment
 
-| Component | Raw | Why |
-|---|---:|---|
-| mutual_connections | curve[2] = **0.80** | 2 mutuals (Maya Levi + Eran Moshe) |
-| shared_employer | curve[2] = **0.80** | Mobileye + Intel both match WSC002 Maya Levi's work history |
-| recency | ~**0.15** | Conference was 2024-11-14 (about 21 months ago at ref date 2026-08) — `0.5^(21/12) ≈ 0.30`. Actual pipeline uses the current date. |
-| notes_present | **1.00** | Non-empty booth note |
-
-Weighted warmth ≈ (0.80×40 + 0.80×30 + 0.15×20 + 1.00×10) / 100 × 100 ≈ **69**.
-
-`best_intro_path` = *"Maya Levi (Senior ML Engineer) — overlapped at Mobileye 2019–21"* —
-same-department peer, precise overlap dates.
-
-*Note: Priya is currently `active_in_process` for JOB001 in the Comeet stub, so she is
-suppressed from the live JOB001 shortlist and appears in `output/JOB001_excluded.csv`. The
-suppression is intentional: two recruiters must not approach the same candidate. Change the
-stub to see her land at #1.*
-
-## Output
-
-Every run of `python run.py --job-id <id>` writes:
-
-| File | What |
-|---|---|
-| `output/<id>_shortlist.csv` | 26 recruiter columns per [`docs/04-output-spec.md`](docs/04-output-spec.md) |
-| `output/<id>_shortlist.html` | Self-contained recruiter view — no build step, opens by double-click |
-| `output/<id>_excluded.csv` | Comeet-suppressed, hired, below-threshold — every exclusion has a reason |
-| `output/talent_pool.csv` | The pool after Decision A — the "what HubSpot would now contain" artefact |
-| `web/public/data/pool.json` | The web app's data contract (docs/08). Sub-scores are weight-independent 0-1 values so the browser can re-rank live. |
-
-## Web app
-
-Localhost only in this submission; Vercel deploy requires no code changes (`output: 'export'`
-in `next.config.mjs`).
-
-- **Shortlist** — cards grouped by priority tier, weight tuner side panel with live re-ranking,
-  candidate detail modal with the full breakdown and copy-ready outreach draft.
-- **Weight tuner** — five sliders for fit, four for warmth, plus tier thresholds. Reset button.
-  This is the feature that proves the transparency claim: drag `required_skills` to zero and
-  watch the ranking collapse into warmth-driven order.
-- **Talent pool audit** — all 75 contacts with their gate outcome and reason. The answer to
-  the first question every recruiter asks: *"what did it throw away, and why?"*
-- **Who can introduce us** — reverse-referral, grouped by WSC employee. The `work_history`
-  column (undocumented in the brief) is what makes this screen work.
-- **Integrations log** — every mock adapter call the pipeline made, live. Enrichment cache hits,
-  credits used, HubSpot patches, Comeet lookups, Slack drafts.
-
-Every page carries a persistent **"Synthetic data — recruitment exercise. No real candidate
-data."** banner and a `noindex, nofollow` meta tag. See `docs/08-web-app.md` for the full
-spec and `docs/09-mock-integrations.md` for the adapter pattern.
-
-## Assumptions
-
-The brief lists seven and invites us to answer or ask. Each answer here has a position and a
-reason — hedging does not score.
-
-### 1. How do you define "domain relevance"?
-
-Three independent signals — title-derived role family, skills evidence, and industry/employer
-proximity — with **2-of-3 agreement** required to admit to the pool. The conference topic sets
-the expectation; the person's own profile decides. Conference attendance is never evidence of
-fit, only of opportunity. An IT manager at a DevOps conference has a title in the `not_talent`
-bucket, skills that don't belong to any engineering family (`ITIL`, `Network`, `Healthcare
-IT`), and an industry with no proximity to ours — zero of three signals, rejected with a
-reason.
-
-### 2. Contacts with no LinkedIn profile match?
-
-**Keep them, never drop them.** Score on what exists (title, company, conference domain,
-recruiter notes), cap `fit_score` at the confidence ceiling (60), set `data_confidence = low`
-and `suggested_action = needs_enrichment`. Dropping them makes the pipeline's coverage
-invisible: a recruiter should see *"12 contacts we couldn't verify"* rather than never learning
-they existed. The shipped dataset joins cleanly for all 75 rows; the path is exercisable via
-`python run.py --simulate-missing-linkedin 0.15`.
-
-### 3. Is 1 mutual connection the same as 3?
-
-No — but the difference is smaller than a linear count implies, **and it belongs on the warmth
-axis, not the fit axis.** Diminishing returns: 0 → 0.0, 1 → 0.5, 2 → 0.8, 3+ → 1.0. Mutual
-connections predict *reachability*, not *competence*; combining the two collapses signal that
-should stay separate and buries genuinely strong candidates who have no network overlap with
-us. That is why the JOB001 shortlist still surfaces Viktor Novak (Databricks), Ingrid Svensson
-(Klarna), Kim Soo-Jin (Samsung SDS) and Grace Wilson (IDF tech unit warm path) — all zero
-mutuals, all admitted correctly by the gate.
-
-### 4. Should candidates already in Comeet be flagged?
-
-Yes, and differently by status. `active_in_process` → suppress entirely (two recruiters must
-not approach the same person). `previously_rejected` for a different role → show with a flag
-and the previous role + date (a rejection for a different role two years ago is not a
-rejection for this one). `hired` → exclude. `declined_offer` → show as warm intelligence.
-The behaviour is wired through `src/integrations/mock_comeet.py` against
-`data/comeet_status_stub.csv`.
-
-### 5. Refresh cadence?
-
-Three cadences, not one:
-1. **Ingestion** — event-driven, fired by a conference export landing.
-2. **Enrichment refresh** — rolling batch on pool members past their staleness TTL
-   (~6 months). Titles go stale; the pool must not.
-3. **Matching** — on demand, per role opened.
-
-Treating this as a one-time batch is what causes the original problem: contacts go stale
-because nothing runs again.
-
-### 6. Who triggers the pipeline?
-
-**Both, deliberately.** Automated on the ingest side (badge-scan export lands → pipeline runs
-→ recruiter receives a digest of new admissions), manual on the match side (recruiter opens a
-role and asks for a shortlist), plus an automatic trigger when a new job is published in
-Comeet. The recruiter should never have to remember the system exists.
-
-### 7. Privacy / GDPR?
-
-Substantial and worth its own paragraph. **Legal basis:** legitimate interest with a
-documented LIA. **Article 14:** the person is notified within 30 days because the data was not
-collected from them directly (in practice the first outreach carries the notice). **Data
-minimisation:** store *derived features* (role family, skill tags, seniority band) rather than
-full profile copies. **Retention:** 12–24 month TTL with automatic purge. **Article 22:**
-solely-automated decisions with significant effect are avoided by keeping a human in the loop
-by design — the system ranks and explains, a recruiter decides. That last point is why the
-deterministic scoring layer is not just a nicety: an automated decision you cannot explain is
-a compliance problem before it is an engineering one.
-
-## Design document
-
-### Why this approach
-
-The task rewards thinking, not code. Six of the seven evaluation rows are about
-problem-framing, methodology, communication, edge-case handling, assumptions and design; one
-is about code. The architecture reflects that split:
-
-- **Two decisions, not one.** Collapsing pool admission and job match into a single scoring
-  function is the most common failure mode. It bakes network signal into competence, buries
-  strong candidates with no warm path, and forces expensive work to happen per-person × per-job
-  rather than per-person.
-- **Two scores, not one "compatibility rate."** The one number recruiters intuitively want is
-  the one number that hides the trade-off they need to see. `fit_score` and `warmth_score`
-  stay separate so both are steerable.
-- **Deterministic decides, model layer describes.** No LLM in the score, no LLM in the gate.
-  Every model output (why_summary, outreach_draft) is templated deterministically here; in
-  production it's a single Claude call over the same evidence dict. See
-  `src/integrations/mock_narrator.py` — the prompt payload dict is built and logged even in
-  mock mode so the swap surface is visible.
-- **Every weight, threshold, synonym and stoplist in `config/*.yaml`.** A recruiter can retune
-  the model without an engineer. The tuner in the web app is a live demonstration of that
-  claim.
-
-### Real integrations
-
-Every external system in the pipeline is a mock adapter with a documented real counterpart.
-Swapping to production is a one-file change per integration:
-
-| Mock | Real system | Endpoint |
+| Tier | Rule | Meaning |
 |---|---|---|
-| `mock_badge_scan.py` | Cvent / Swapcard / Brella | Post-event export or webhook file-drop |
-| *(the pool itself)* | **HubSpot** custom object or contact-property namespace | `PATCH /crm/v3/objects/contacts/{id}` |
-| `mock_enrichment.py` | **Clay (enrichment orchestrator)** | `POST /clay/v1/enrichment/people`, credited + cached |
-| `mock_comeet.py` | **Comeet** ATS | `GET /company/{uid}/positions`, candidate status webhook |
-| `mock_notifier.py` | Slack (or SendGrid fallback) | `POST /chat.postMessage` |
-| `mock_narrator.py` | Claude API | Single call over the assembled evidence dict |
+| **Call this week** | `fit ≥ 70 AND signal ≥ 20` | Strong fit + warm intro path — phone them |
+| **Direct outreach** | `fit ≥ 70` | Strong fit but network is cold — evidence-based cold email |
+| **Nurture** | `fit ≥ 45` | Below strong-fit line — worth keeping warm for future roles |
 
-LinkedIn is called out explicitly in `docs/06-production-design.md`: **scraping violates ToS
-and Sales Navigator has no bulk export API**. Enrichment goes through a compliant vendor with
-a DPA. Sales Navigator remains the manual research surface a recruiter uses on a shortlisted
-candidate.
+## Worked example — Priya Anand vs JOB001 (Senior ML Engineer)
 
-### At scale — hundreds of conferences, thousands of contacts
+**Given:** Sr Computer Vision Engineer at VidStream, 7y, skills `Python;OpenCV;YOLO;Real-time Processing;AWS;Deep Learning`, past Mobileye + Intel, 2 mutuals, note *"Spoke about real-time tracking."*
 
-Three things change:
+**Fit:**
+- required_skills: Python ✓, Computer Vision ✓ (via opencv), Object Detection ✓ (via yolo), AWS ✓, PyTorch ✗ (Deep Learning is family, not exact for PyTorch) → 4/5 = **0.80**
+- role_family: `ml_cv` = JOB001 target family → **1.00**
+- seniority: Senior title, 7y, target Senior → in-band → **1.00**
+- domain: 4+ lexicon hits (video, computer vision, Mobileye, Intel) → **1.00**
+- nice_to_have: 1/3 → **0.33**
 
-1. **Storage** moves from CSV-in-memory to a warehouse table with incremental transforms; the
-   enrichment cache becomes the expensive asset and is treated as one.
-2. **Matching becomes two-phase**: an embedding index prefilters a few hundred plausible
-   candidates per role, then the transparent scorer ranks those. Explainability preserved
-   where it matters; compute spent where it doesn't.
-3. **Cost control moves to the front**. Enrichment credits are the real budget line. Enrich
-   only pool ADMISSIONS, not every badge scan — which is exactly why the gate runs before
-   enrichment in the pipeline.
+**Weighted fit** = (0.80×35 + 1.00×25 + 1.00×15 + 1.00×15 + 0.33×10) / 100 × 100 = **86.3**
 
-Operational furniture: per-stage metrics (admission rate by conference, enrichment hit rate,
-shortlist → contact conversion, contact → interview conversion), and an audit log of every
-score with the config version that produced it — so "we changed the weights in March" is a
-traceable statement rather than an anecdote.
+**Signal** (with the seeded data, no active vouches yet — culture + notes + recency + mutuals):
+- culture_affinity: 1.0 (video CV, Mobileye) → 12
+- notes_present: 1.0 → 5
+- mutual_connections: 0.8 (2 mutuals) → 2.4
+- recency: ~0.30 (21mo, half-life 12mo) → 2.1
+- rest: 0
+**Total ≈ 21.5**
 
-### What I'd add with more time
+**Tier:** fit 86.3 ≥ 70 AND signal 21.5 ≥ 20 → **Call this week**
 
-- The reverse-referral outreach queue as a working feature, with employee responses feeding
-  the warmth model back (an "I don't really know them" is a labelled example that corrects
-  it).
-- Embedding-based semantic matching as a secondary signal alongside the deterministic score.
-- A feedback loop from recruiter outcomes: which shortlisted candidates actually replied,
-  converted, got hired — used to re-weight the model rather than guessing at the weights.
-- Fairness monitoring on shortlist composition, given how easily network-based signals encode
-  bias.
+## The 7 assumptions we made
 
-## Known limitations
+Full versions in [`docs/05-assumptions.md`](docs/05-assumptions.md) and rendered in the app at
+`/methodology` → Assumptions section.
 
-- **Static dataset.** 75 rows is enough to demonstrate the model's behaviour but the
-  parameters (curves, weights, band widths) would need to be re-tuned against a larger real
-  distribution before shipping.
-- **English titles only.** The role-family patterns are English-language substring matches.
-  Multilingual conferences would need localised patterns or a small classifier.
-- **Employer alias map is hand-curated.** In production the alias graph would come from an
-  entity-resolution service (Clearbit Reveal, Diffbot KG) rather than a YAML block.
-- **Same-department mutual boost is intro-path-only.** The warmth score uses raw counts; the
-  same-dept preference influences only the picked path text, not the number. Rationale in
-  `src/signal.py`.
-- **Recency uses `date.today()`.** Reproducibility across runs would want a frozen reference
-  date piped in from the ingest timestamp.
-- **No live embedding step.** Deferred as the "with more time" item; the deterministic core
-  is the current source of truth.
-- **The web app fetches `pool.json` client-side.** For a large pool this would need
-  server-driven pagination; for 75 rows a static JSON is fine.
+1. **Domain relevance** — 3 independent gate signals, 2-of-3 admits. Attendance is never
+   evidence by itself.
+2. **Missing LinkedIn** — keep the candidate; cap fit at 60; flag `data_confidence=low`. Never
+   drop silently.
+3. **Number of mutuals** — 0→0, 1→0.5, 2→0.8, 3+→1.0 diminishing returns. Lives on the Signal
+   axis, never Fit.
+4. **Already in Comeet** — differentiated by status: active-in-process suppresses,
+   previously-rejected shows with flag, hired excludes, declined-offer shows with flag.
+5. **Refresh cadence** — 3 schedules: event-driven ingest, ~6-month enrichment refresh,
+   on-demand per-role matching.
+6. **Who triggers** — both. Auto on ingest, manual on match, auto on Comeet job publish.
+7. **GDPR** — legitimate interest with LIA, Article 14 notice in first outreach, data
+   minimisation, 12-24mo TTL, EU residency, **Article 22** (no solely-automated decisions
+   with legal effect — recruiter always decides).
 
-## Executive summary — for a non-technical reader
+## Repo layout
 
-> Our recruiters meet hundreds of strong people at conferences every year, and within a week
-> almost all of them are lost — a business card, a note on a phone, nothing in any system.
-> This turns every event into a searchable talent pool: it automatically separates the
-> engineers we'd actually hire from the vendors and IT managers in the same room, enriches
-> what we know about them, and when a role opens it tells the recruiter who to call first and
-> which of our own employees already knows them. Instead of starting a search from zero, we
-> start from people we've already met.
+```
+config/scoring.yaml       weights, thresholds, curves, tier cutoffs, vouch multipliers
+config/taxonomy.yaml      role families, skill synonyms, domain lexicon, employer stoplist
 
----
+src/ingest.py             load + normalise attendee rows, tag source_channel
+src/resolve.py            identity resolution + dedupe
+src/enrich.py             Clay join (mocked); missing profile is a state, not an error
+src/normalize.py          title canonicalisation, skill expansion, seniority parsing
+src/gate.py               Decision A — pool admission (2-of-3 signals + reason string)
+src/score.py              Decision B — fit_score components
+src/signal.py             Decision B — signal_score (renamed from warmpath.py in the refactor)
+src/report.py             CSV writer + standalone HTML view + JSON emitter
+src/integrations/         mock adapters — see docs/09
 
-## Repo map
+run.py                    python run.py --job-id JOB001 [--emit-json]
+tests/                    40 tests: parity, gate, scoring, missing-data
+data/                     4 supplied CSVs + comeet stub + edge-case fixtures
+output/                   committed JOB001-004 shortlists (CSV + HTML) + excluded + pool.csv
+web/                      Next.js app — see docs/08-web-app.md
+docs/                     design docs (highest-scoring part of the submission)
+```
 
-| Path | What |
+## The web app — 10 recruiter-facing routes
+
+The brief called for "a simple HTML or CLI summary" as bonus. We shipped a full app.
+
+| Route | Purpose |
 |---|---|
-| `docs/` | Design docs and the decoded task requirements — the highest-scoring part of the submission |
-| `config/scoring.yaml` | Weights, seniority bands, curves, tier cutoffs |
-| `config/taxonomy.yaml` | Role families, skill synonyms, sports/media lexicon, generic-employer stoplist, company aliases |
-| `src/` | One module per pipeline stage (ingest → resolve → enrich → normalize → gate → score → warmpath → report) |
-| `src/integrations/` | Mock adapters — one per external system, each with a documented real counterpart |
-| `data/` | The four supplied CSVs (unmodified) + the Comeet status stub |
-| `output/` | Committed shortlist CSVs + HTML + excluded lists + talent pool |
-| `web/` | Next.js app (App Router + TypeScript + Tailwind, static export) |
-| `web/public/data/pool.json` | The web app's data contract, emitted by `python run.py --emit-json` |
-| `tests/` | Scoring maths, gate decisions, JSON parity |
+| `/` | Jobs-first landing. Grid of open roles with pipeline stats + top-3 per role. "Required demo · JOB001" highlighted. |
+| `/jobs/[jobId]` | Ranked shortlist for a role. Weight tuner + sort + tier filter + search + Export CSV. "Reconsider rejects" panel surfaces gated-out candidates whose skills match this role. |
+| `/pool` | All 75 contacts. Source/decision filters. Every row clickable → dossier. Plain-English gate reasons. |
+| `/capture` | Conference lead capture. **Badge scan** (upload image OR try example) with mock OCR prefills the form → runs the live enrichment reveal → persists to session pool. |
+| `/referrals` | Employee-referral capture. Vouched-lift applied to Signal on the target role. |
+| `/intros` | Outreach queue. Every "Ask X to intro" from the shortlist lands here; track queued → sent → accepted/declined. |
+| `/analytics` | KPIs, conversion funnel, BigQuery mock activity feed with real SQL. |
+| `/integrations` | 9 systems each documented with **business value first** + technical trace below. |
+| `/taxonomy` | **Claude-assisted rule editor.** Claude analyses the pool + proposes taxonomy changes (title patterns, skill synonyms, stopwords, family evidence). HR approves/edits/rejects. |
+| `/methodology` | Single-scroll editorial doc: TL;DR → mechanism → assumptions → worked examples → technical deep-dive. |
+
+## Session persistence
+
+Session captures (via `/capture` or `/referrals`) persist across page refreshes via
+`localStorage`. Same browser gets the same session state. For real multi-user cross-device
+persistence, swap for Vercel KV or Postgres — the swap surface is one hook in
+`web/lib/data.tsx::addSessionCandidate`.
+
+## Design decisions defended in the app
+
+- **`conference_domain` not used as a gate signal** — attendance is opportunity, not fit.
+- **Filter state doesn't persist in the URL** — session-only. Prioritised elsewhere.
+- **Same-team preference lives in intro-path selection, not the Signal score** — keeps Signal
+  job-agnostic in the JSON contract.
+- **Mock narrator uses templates, not a live LLM** — brief forbids live keys. Prompt-shaped
+  evidence dict is still built and logged, so the swap surface is visible.
+
+## What we'd build next
+
+Full list in `/methodology` §12. Top three:
+
+1. **Shareable filter URLs** — sync active job/filters/tuner into query params
+2. **"Employee replied yes/no" tracking** — closes the labelled-data feedback loop
+3. **Vector-search prefilter at scale** — for hundreds of conferences × thousands of contacts
+
+## Constraints held
+
+- No real personal data · no real API keys · no live LinkedIn/HubSpot/Comeet calls
+- Every external system is a mock adapter with a documented real counterpart
+- Python 3.11+, stdlib `csv` only (no pandas), single third-party dep is `PyYAML`
+- Runs to completion on a fresh clone offline with no env vars
+
+## Definition of done
+
+- [x] `python run.py --job-id JOB001` runs clean, offline, no env vars
+- [x] `output/JOB001_shortlist.csv` + `.html` committed
+- [x] All 7 assumptions answered (docs + app)
+- [x] Design doc section (README + `/methodology`)
+- [x] Executive summary for non-technical HR (above)
+- [x] Tests pass (40 tests, 4 files); edge-case fixture demonstrates missing-data handling
+- [x] No candidate names, no API keys, no live calls
+- [x] `npm run dev` in `web/` serves the app against the emitted JSON
+- [x] Browser-computed default scores match Python to 1dp (asserted in tests)
+- [x] Synthetic-data banner present on every page
+
+Co-Authored-By: Claude Opus 4.7 &lt;noreply@anthropic.com&gt;
