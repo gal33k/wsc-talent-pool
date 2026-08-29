@@ -5,7 +5,57 @@ import { usePool } from "@/lib/data";
 import Avatar from "@/components/Avatar";
 import StatsBar from "@/components/StatsBar";
 import { Icon } from "@/components/Icon";
+import CandidateDetail from "@/components/CandidateDetail";
 import { exportRows } from "@/lib/csv-export";
+
+// Convert the mathematical gate reason string into plain English.
+// Uses the structured signals + role_family + a friendly family name map.
+const FAMILY_LABEL: Record<string, string> = {
+  ml_cv:            "computer-vision ML",
+  ml_general:       "general ML",
+  data_engineering: "data engineering",
+  backend:          "backend engineering",
+  frontend:         "frontend engineering",
+  platform_devops:  "platform / DevOps",
+  video_broadcast:  "video / broadcast",
+  sales_engineering: "sales engineering",
+  product:          "product management",
+  content:          "content / editorial",
+  not_talent:       "not an engineering role we hire for",
+  unknown:          "an unrecognised title",
+  leadership:       "leadership",
+};
+
+function friendlyGateReason(c: { gate: { decision: string; signals: { role_family: boolean; skills_evidence: boolean; proximity: boolean }; reason: string }; role_family: string }): string {
+  const s = c.gate.signals;
+  const familyLabel = FAMILY_LABEL[c.role_family] ?? c.role_family;
+
+  if (c.gate.decision === "ADMIT") {
+    const passed = [
+      s.role_family ? `their title fits ${familyLabel}` : null,
+      s.skills_evidence ? "their skills back that up" : null,
+      s.proximity ? "they work in an adjacent industry" : null,
+    ].filter(Boolean);
+    if (passed.length === 3) return `Admitted — ${passed.join(", ")}.`;
+    const missed = [
+      !s.role_family ? "title didn't clearly fit a role we hire" : null,
+      !s.skills_evidence ? "skills didn't back up the role type" : null,
+      !s.proximity ? "not from an adjacent industry" : null,
+    ].filter(Boolean);
+    return `Admitted (2 of 3) — ${passed.join(" and ")}. Missed: ${missed.join(" and ")}.`;
+  }
+
+  if (c.gate.decision === "HOLD") {
+    const only = s.role_family ? `title fits ${familyLabel}`
+              : s.skills_evidence ? "skills suggest a fit"
+              : s.proximity ? "works in an adjacent industry"
+              : "one weak signal";
+    return `Borderline (1 of 3) — ${only}. Worth a manual look.`;
+  }
+
+  // REJECT
+  return `Not a fit — ${familyLabel}, skills don't confirm a role we hire, no adjacent industry.`;
+}
 
 const DECISION_STYLES: Record<string, string> = {
   ADMIT:  "bg-emerald-50 text-emerald-700 border-emerald-200",
@@ -26,6 +76,7 @@ export default function TalentPoolAudit() {
   const [decision, setDecision] = useState("all");
   const [source, setSource] = useState("all");
   const [q, setQ] = useState("");
+  const [detailId, setDetailId] = useState<string | null>(null);
 
   const rows = useMemo(() => {
     if (!pool) return [];
@@ -202,7 +253,15 @@ export default function TalentPoolAudit() {
             </thead>
             <tbody>
               {rows.map((c) => (
-                <tr key={c.id} className="border-t border-border-faint hover:bg-slate-50/60 transition-colors">
+                <tr
+                  key={c.id}
+                  onClick={() => setDetailId(c.id)}
+                  onKeyDown={e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setDetailId(c.id); } }}
+                  tabIndex={0}
+                  role="button"
+                  aria-label={`Open dossier for ${c.name}`}
+                  className="border-t border-border-faint hover:bg-emerald-50/40 cursor-pointer transition-colors focus:outline-none focus-visible:bg-emerald-50/60"
+                >
                   <td className="px-4 py-2.5">
                     <div className="flex items-center gap-2.5">
                       <Avatar name={c.name} size="sm" />
@@ -237,8 +296,8 @@ export default function TalentPoolAudit() {
                       {c.gate.decision}
                     </span>
                   </td>
-                  <td className="px-4 py-2.5 text-xs text-mute font-mono max-w-md truncate" title={c.gate.reason}>
-                    {c.gate.reason}
+                  <td className="px-4 py-2.5 text-xs text-dim max-w-md" title={c.gate.reason}>
+                    {friendlyGateReason(c)}
                   </td>
                 </tr>
               ))}
@@ -253,6 +312,15 @@ export default function TalentPoolAudit() {
           </table>
         </div>
       </div>
+
+      {detailId && (() => {
+        const c = pool.candidates.find(x => x.id === detailId);
+        if (!c) return null;
+        // Use JOB001 (or first job) as the default dossier context — Talent Pool
+        // is a job-agnostic view, so we just show a defensible per-job dossier.
+        const job = pool.jobs.find(j => j.job_id === "JOB001") ?? pool.jobs[0];
+        return <CandidateDetail candidate={c} job={job} onClose={() => setDetailId(null)} />;
+      })()}
     </main>
   );
 }
