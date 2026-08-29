@@ -296,106 +296,126 @@ function NarrativeStep({
 
 const ASSUMPTIONS: Array<{ q: string; short: string; answer: React.ReactNode }> = [
   {
-    q: "How do you define \"domain relevance\"?",
-    short: "3 independent signals, 2-of-3 admits",
+    q: "How do you tell a real ML engineer apart from an IT manager who happened to attend an ML conference?",
+    short: "Three checks, two have to pass",
     answer: (
       <>
-        Three independent signals evaluated per person at ingest: <strong>title → role family</strong>{" "}
-        (pattern-matched against a taxonomy), <strong>skills evidence</strong> (does their skills list
-        confirm the claimed family), and <strong>sports/media proximity</strong> (industry + employer
-        lexicon hits). <strong>2-of-3 admits.</strong> Conference attendance is never evidence by
-        itself — the room sets the expectation, the person's own profile decides. An IT manager at a
-        DevOps conference scores 0/3 and is rejected with a reason string.
-      </>
-    ),
-  },
-  {
-    q: "What if a contact has no LinkedIn profile match?",
-    short: "Keep them, cap confidence — never drop silently",
-    answer: (
-      <>
-        <strong>Keep them.</strong> Score on what does exist (title, company, conference domain,
-        recruiter notes), cap fit_score at the low-confidence ceiling (~60), set{" "}
-        <code>enrichment_status = none</code>, and flag for later re-enrichment. Dropping them makes
-        the pipeline's coverage invisible — a recruiter should see &ldquo;12 contacts we couldn't
-        verify&rdquo; rather than never learning they existed. Edge cases proven in{" "}
-        <code>tests/test_missing_data.py</code>.
-      </>
-    ),
-  },
-  {
-    q: "Is 1 mutual connection the same as 3?",
-    short: "No — diminishing returns, and it belongs on warmth (not fit)",
-    answer: (
-      <>
-        No, but the difference is smaller than linear implies — and it belongs on the{" "}
-        <strong>warmth axis</strong>, never fit. Curve: 0 → 0.0, 1 → 0.5, 2 → 0.8, 3+ → 1.0. The
-        jump from nobody to somebody is the whole value. Same-department peers weight above
-        cross-department (better placed to say yes to an intro). This lives in the warmth score;
-        mixing it into fit would bury strong candidates whose network we don't happen to intersect.
-      </>
-    ),
-  },
-  {
-    q: "Should candidates already in Comeet be flagged differently?",
-    short: "Yes, and by status — not one-size-fits-all",
-    answer: (
-      <>
-        <ul className="space-y-1 pl-1">
-          <li>· <strong>Active in process</strong> — suppressed entirely (two recruiters must not approach the same person).</li>
-          <li>· <strong>Previously rejected</strong> — shown with reason + date. A rejection for a different role two years ago is not a rejection for this one.</li>
-          <li>· <strong>Hired</strong> — excluded.</li>
-          <li>· <strong>Declined an offer</strong> — shown with a flag. Warm intelligence, not a disqualifier.</li>
-        </ul>
-        Backed by a stub CSV in this build (<code>data/comeet_status_stub.csv</code>) and a real
-        Comeet adapter in <code>src/integrations/mock_comeet.py</code>.
-      </>
-    ),
-  },
-  {
-    q: "What is the intended refresh cadence?",
-    short: "Three cadences — not one",
-    answer: (
-      <>
-        <ol className="space-y-1 pl-1">
-          <li>1. <strong>Ingestion</strong> — event-driven, fires when a conference export lands.</li>
-          <li>2. <strong>Enrichment refresh</strong> — rolling ~6-month batch on pool members (profiles go stale).</li>
-          <li>3. <strong>Matching</strong> — on demand, per role, per recruiter action.</li>
+        We look at three things about each person, independently:
+        <ol className="space-y-1 pl-1 my-2">
+          <li>1. Does their <strong>job title</strong> match a role we hire (like ML Engineer, Data Engineer, Backend)?</li>
+          <li>2. Do their <strong>listed skills</strong> back that up (PyTorch, Kafka, etc.)?</li>
+          <li>3. Do they work in an <strong>adjacent industry</strong> (sports, broadcast, video)?</li>
         </ol>
-        Treating this as a one-time batch is what caused the original problem — contacts went stale
-        because nothing ran again.
+        <strong>Two out of three has to say yes.</strong> That way no single missing detail decides.
+        An IT manager at a DevOps conference passes 0 of 3 → out, with a written reason. A senior
+        data engineer at a bank passes 2 of 3 (title + skills, but wrong industry) → in.
+        <div className="mt-2 text-xs text-mute italic">
+          Just showing up at a sports conference doesn't make someone a fit — the room sets the
+          expectation, the person's own profile decides.
+        </div>
       </>
     ),
   },
   {
-    q: "Who triggers the pipeline — recruiter or automated?",
-    short: "Both, deliberately",
+    q: "What if we can't find someone's LinkedIn profile?",
+    short: "Keep them, but score them cautiously",
     answer: (
       <>
-        <ul className="space-y-1 pl-1">
-          <li>· <strong>Automated on the ingest side</strong> — badge-scan export lands → pipeline runs → recruiter receives a digest of new admissions.</li>
-          <li>· <strong>Manual on the match side</strong> — recruiter opens a role and requests a shortlist.</li>
-          <li>· <strong>Plus</strong> an automatic trigger when a new job is published in Comeet.</li>
-        </ul>
-        The recruiter should never have to remember the system exists.
+        <strong>We keep them.</strong> Silently dropping people would mean losing candidates the
+        recruiter would want to know about — better to see &ldquo;12 people we couldn't verify&rdquo;
+        than never know they existed.
+        <div className="mt-2">
+          We score them on what we DO have (title, company, conference notes) and cap their score
+          at 60 out of 100. They stay visible but can't accidentally rank #1 on a role we know
+          almost nothing about them for.
+        </div>
       </>
     ),
   },
   {
-    q: "GDPR / privacy considerations at scale?",
-    short: "Substantial — Article 14, Article 22, data minimisation, EU residency",
+    q: "Is knowing 1 person at WSC the same as knowing 3?",
+    short: "No — but 1 is closer to 3 than 3 is to 10",
     answer: (
       <>
-        <ul className="space-y-1 pl-1">
-          <li>· <strong>Legal basis</strong>: legitimate interest, with a documented Legitimate Interests Assessment.</li>
-          <li>· <strong>Article 14</strong>: because data isn't collected from the person directly, they must be notified within 30 days — carried in the first outreach message.</li>
-          <li>· <strong>Data minimisation</strong>: store derived features (role family, skill tags, seniority band), not full profile copies.</li>
-          <li>· <strong>Retention</strong>: 12–24 month TTL with automatic purge; re-consent or drop.</li>
-          <li>· <strong>Residency</strong>: EU data region; DPA signed with any enrichment vendor.</li>
-          <li>· <strong>Article 22</strong>: no solely-automated decisions with legal effect — human in the loop by design. The system ranks and explains; a recruiter decides.</li>
+        <strong>The big jump is 0 → 1.</strong> Going from &ldquo;we have no way in&rdquo; to
+        &ldquo;someone can make the intro&rdquo; is the whole point. Going from 1 mutual to 3 is
+        a smaller improvement. Our math reflects that: 0 = no credit, 1 = half credit,
+        2 = 80% credit, 3+ = full credit.
+        <div className="mt-2">
+          This lives in the <em>Signal</em> score (about reachability), never the <em>Fit</em>{" "}
+          score (about competence). Mixing them would bury strong candidates who happen to have
+          zero mutual connections with WSC — of which we have five in this dataset.
+        </div>
+      </>
+    ),
+  },
+  {
+    q: "What if a candidate is already known to us in Comeet (our ATS)?",
+    short: "Depends on why — not one-size-fits-all",
+    answer: (
+      <>
+        Four cases, four different actions:
+        <table className="w-full text-xs my-2 border-collapse">
+          <tbody>
+            <tr className="border-b border-border-faint"><td className="py-1.5 pr-3 font-semibold text-text">Currently interviewing for another role</td><td className="py-1.5 text-mute">Hide them completely. Two recruiters must never chase the same person.</td></tr>
+            <tr className="border-b border-border-faint"><td className="py-1.5 pr-3 font-semibold text-text">Rejected for a different role in the past</td><td className="py-1.5 text-mute">Show them, flagged with the reason. A no for one role isn't a no for another.</td></tr>
+            <tr className="border-b border-border-faint"><td className="py-1.5 pr-3 font-semibold text-text">Already hired</td><td className="py-1.5 text-mute">Exclude — they work for us.</td></tr>
+            <tr><td className="py-1.5 pr-3 font-semibold text-text">Declined an offer before</td><td className="py-1.5 text-mute">Show them, flagged. Useful context to soften the outreach, not a dealbreaker.</td></tr>
+          </tbody>
+        </table>
+      </>
+    ),
+  },
+  {
+    q: "How often does the pipeline actually run?",
+    short: "Three different schedules for three different jobs",
+    answer: (
+      <>
+        <ol className="space-y-1.5 pl-1 my-2">
+          <li><strong>1. When new data arrives</strong> — a conference export drops → the pipeline runs immediately, recruiter gets a digest of new admissions.</li>
+          <li><strong>2. Every ~6 months</strong> — we refresh LinkedIn data for pool members because job titles and companies change.</li>
+          <li><strong>3. On demand</strong> — when a recruiter opens a role, the pool gets scored against it right away.</li>
+        </ol>
+        <div className="mt-2 text-xs text-mute italic">
+          Treating this as a one-time batch job is what caused the original problem — contacts went
+          stale because nothing ever ran again.
+        </div>
+      </>
+    ),
+  },
+  {
+    q: "Who kicks off the pipeline — a person, or automation?",
+    short: "Both — and the recruiter shouldn't have to remember",
+    answer: (
+      <>
+        <ul className="space-y-1.5 pl-1 my-2">
+          <li>· <strong>Automation on the way in</strong>: a badge-scan export lands → pipeline runs on its own → recruiter gets an email with new pool members.</li>
+          <li>· <strong>Recruiter on the way out</strong>: they open a role, the shortlist is generated live.</li>
+          <li>· <strong>Comeet integration</strong>: a new job posted in Comeet auto-triggers a fresh shortlist against the pool.</li>
         </ul>
-        That last point is why the deterministic scoring layer exists: an automated decision you
-        can't explain is a compliance problem, not just an engineering one.
+        The recruiter never has to remember the system exists. It runs quietly, surfaces the
+        right people when they need them.
+      </>
+    ),
+  },
+  {
+    q: "What about GDPR and privacy? Can we legally do this?",
+    short: "Yes — with the right guardrails baked in",
+    answer: (
+      <>
+        Six things we do to stay compliant at scale:
+        <ol className="space-y-1.5 pl-1 my-2">
+          <li><strong>1. Legal basis</strong>: we use &ldquo;legitimate interest&rdquo; (the standard for B2B recruiting), backed by a written assessment.</li>
+          <li><strong>2. Tell them we have their data</strong>: GDPR Article 14 requires a notice within 30 days when we didn't collect the data from them directly. We put this notice in the first outreach message.</li>
+          <li><strong>3. Store the minimum</strong>: we save derived tags (role family, seniority band) instead of full LinkedIn profile copies. Less to breach, less to explain.</li>
+          <li><strong>4. Auto-delete</strong>: 12–24 month retention limit. After that, we ask again or drop the record.</li>
+          <li><strong>5. Keep data in the EU</strong>: EU data region + a Data Processing Agreement with any vendor (Clay, HubSpot).</li>
+          <li><strong>6. Never fully automate a hiring decision</strong>: GDPR Article 22 says a person has to be in the loop for anything with legal effect. Our system ranks and explains; a recruiter decides.</li>
+        </ol>
+        <div className="mt-2 text-xs text-mute italic">
+          That last point is why the whole scoring layer is deterministic instead of an LLM — an
+          automated decision you can't explain is a compliance problem, not just an engineering one.
+        </div>
       </>
     ),
   },
@@ -928,13 +948,25 @@ function FlowDiagramLarge() {
           );
         })}
       </div>
-      <div className="mt-6 pt-5 border-t border-border-faint text-xs text-dim leading-relaxed flex items-start gap-3">
-        <span className="inline-block w-2 h-2 rounded-full bg-emerald-500 mt-1.5 flex-shrink-0" />
-        <div>
-          The <strong className="text-text">Source</strong> box is the only variable — three doors
-          (conference badge scans · employee referrals · inbound CVs) hitting the same shared pipeline.
-          Enrichment, gate, and scoring are identical across channels. That's the point of a
-          channel-tuned but shared core: add a new channel = add an adapter, not a scoring model.
+      <div className="mt-6 pt-5 border-t border-border-faint space-y-3 text-xs text-dim leading-relaxed">
+        <div className="flex items-start gap-3">
+          <span className="inline-block w-2 h-2 rounded-full bg-emerald-500 mt-1.5 flex-shrink-0" />
+          <div>
+            The <strong className="text-text">Source</strong> box is the only variable — three doors
+            (conference badge scans · employee referrals · inbound CVs) hitting the same shared pipeline.
+            Enrichment, gate, and scoring are identical across channels. That's the point of a
+            channel-tuned but shared core: add a new channel = add an adapter, not a scoring model.
+          </div>
+        </div>
+        <div className="flex items-start gap-3">
+          <span className="inline-block w-2 h-2 rounded-full bg-stone-400 mt-1.5 flex-shrink-0" />
+          <div>
+            <strong className="text-text">At production scale, Enrich and Gate can swap.</strong>{" "}
+            The current build enriches everyone then gates (75 rows, cheap either way). At{" "}
+            thousands of contacts per year, gating first on cheap deterministic signals — then only
+            paying Clay's per-record enrichment credits for admitted candidates — is the real cost win.
+            One-line config change, same outputs.
+          </div>
         </div>
       </div>
     </div>
