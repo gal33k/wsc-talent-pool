@@ -145,7 +145,28 @@ export function PoolProvider({ children }: { children: ReactNode }) {
   const [notes, setNotes] = useState<NoteEntry[]>([]);
   const [bqActivity, setBqActivity] = useState<BqActivity[]>([]);
   const [introRequests, setIntroRequests] = useState<IntroRequest[]>([]);
+
+  // Session candidates persist in localStorage so captures + referrals survive
+  // a page refresh. Namespaced per-origin — the browser owns it, no server
+  // needed. On a fresh clone with a real backend, swap for Vercel KV / Postgres.
+  const LS_KEY = "wsc.talent_pool.sessionCandidates.v1";
   const [sessionCandidates, setSessionCandidates] = useState<SessionCandidate[]>([]);
+
+  useEffect(() => {
+    // Hydrate from localStorage on mount (client-only guard).
+    if (typeof window === "undefined") return;
+    try {
+      const raw = window.localStorage.getItem(LS_KEY);
+      if (raw) setSessionCandidates(JSON.parse(raw));
+    } catch { /* corrupted or unavailable — start clean */ }
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    try {
+      window.localStorage.setItem(LS_KEY, JSON.stringify(sessionCandidates));
+    } catch { /* quota exceeded or storage disabled — silently no-op */ }
+  }, [sessionCandidates]);
 
   const addSessionCandidate = useCallback((c: SessionCandidate) => {
     setSessionCandidates(prev => {

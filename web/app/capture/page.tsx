@@ -144,9 +144,10 @@ export default function CaptureLead() {
     };
     setPlayback(pb);
 
-    // Persist to the session pool so this candidate shows up on /jobs/[id]
-    // shortlists and /pool for the rest of the session.
-    if (gateDecision === "ADMIT") {
+    // Persist to the session pool so this candidate shows up on /pool + on
+    // /jobs/[id] shortlists (only if ADMIT — HOLD/REJECT stay in the audit
+    // view but not on ranked shortlists, which mirrors the real pipeline).
+    {
       const sessionId = `session-${Date.now().toString(36)}`;
       const jobsMap: Record<string, import("@/lib/types").FitForJob> = {};
       pool.jobs.forEach(j => {
@@ -202,7 +203,7 @@ export default function CaptureLead() {
         enrichment_status: "partial",
         domain_relevance_score: 100 * Object.values(gateSignals).filter(Boolean).length / 3,
         gate: {
-          decision: "ADMIT",
+          decision: gateDecision,
           signals: gateSignals,
           reason: gateReason,
         },
