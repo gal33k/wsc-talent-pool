@@ -44,9 +44,25 @@ export default function CandidateCard({
   if (fit.seniority_flag === "below_band") flags.push(<Chip key="bb" variant="flag">below band</Chip>);
   if (candidate.data_confidence === "low") flags.push(<Chip key="lc" variant="flag">low confidence</Chip>);
   if (candidate.comeet_status?.status === "previously_rejected")
-    flags.push(<Chip key="pr" variant="info">rejected · {candidate.comeet_status.role}</Chip>);
+    flags.push(
+      <span
+        key="pr"
+        title={`Rejected for ${candidate.comeet_status.role} in Comeet — a different role. A rejection for another role isn't a rejection for this one; shown here so you know the history.`}
+        className="inline-flex items-center gap-1 text-[11px] font-medium px-2 py-0.5 rounded-md bg-sky-50 text-sky-700 border border-sky-100 cursor-help"
+      >
+        prev. rejected · {candidate.comeet_status.role}
+      </span>
+    );
   if (candidate.comeet_status?.status === "declined_offer")
-    flags.push(<Chip key="do" variant="info">declined offer</Chip>);
+    flags.push(
+      <span
+        key="do"
+        title="Declined our previous offer. Warm intelligence — not disqualifying, but factor into outreach language."
+        className="inline-flex items-center gap-1 text-[11px] font-medium px-2 py-0.5 rounded-md bg-sky-50 text-sky-700 border border-sky-100 cursor-help"
+      >
+        declined offer
+      </span>
+    );
 
   return (
     <article
@@ -55,7 +71,7 @@ export default function CandidateCard({
       role="button"
       tabIndex={0}
       aria-label={`Open dossier for ${candidate.name}`}
-      className="card card-interactive p-5 fade-up"
+      className="card card-interactive p-5 fade-up group"
     >
       <div className="flex items-start gap-4">
         <div className="relative">
@@ -73,11 +89,16 @@ export default function CandidateCard({
                 {candidate.title} <span className="text-faint">·</span> {candidate.company}
               </div>
             </div>
-            {tierStyle && (
-              <span className={`inline-flex items-center rounded-full font-medium border text-[10px] px-2 py-0.5 flex-shrink-0 ${tierStyle.cls}`}>
-                {tierStyle.label}
+            <div className="flex items-center gap-2 flex-shrink-0">
+              {tierStyle && (
+                <span className={`inline-flex items-center rounded-full font-medium border text-[10px] px-2 py-0.5 ${tierStyle.cls}`}>
+                  {tierStyle.label}
+                </span>
+              )}
+              <span className="hidden group-hover:inline-flex items-center gap-1 text-[10px] font-medium text-amber-700 whitespace-nowrap">
+                View dossier <Icon name="arrow-right" className="w-3 h-3" strokeWidth={2.5} />
               </span>
-            )}
+            </div>
           </div>
 
           <div className="flex items-center gap-2 flex-wrap text-xs text-mute mt-1.5">

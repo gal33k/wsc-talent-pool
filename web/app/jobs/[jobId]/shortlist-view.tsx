@@ -7,9 +7,11 @@ import { computeFit, computeWarmth, assignTier, TIER_ORDER } from "@/lib/scoring
 import CandidateCard from "@/components/CandidateCard";
 import CandidateDetail from "@/components/CandidateDetail";
 import WeightTuner from "@/components/WeightTuner";
-import StatsBar from "@/components/StatsBar";
 import { Icon } from "@/components/Icon";
 import { exportRows } from "@/lib/csv-export";
+
+type SortKey = "fit" | "warmth" | "recency";
+type TierFilter = "all" | "call_this_week" | "direct_outreach" | "nurture";
 
 export default function ShortlistView({ jobId }: { jobId: string }) {
   const {
@@ -18,6 +20,8 @@ export default function ShortlistView({ jobId }: { jobId: string }) {
     isBlacklisted, isOverridden,
   } = usePool();
   const [detailId, setDetailId] = useState<string | null>(null);
+  const [sortBy, setSortBy] = useState<SortKey>("fit");
+  const [tierFilter, setTierFilter] = useState<TierFilter>("all");
 
   // Keep the shared selectedJobId in sync so /intros/, /referrals/ pick this job by default.
   useEffect(() => { setSelectedJobId(jobId); }, [jobId, setSelectedJobId]);
@@ -41,10 +45,26 @@ export default function ShortlistView({ jobId }: { jobId: string }) {
       })
       .filter(r => r.tier !== null)
       .sort((a, b) => {
+        if (sortBy === "warmth") {
+          if (b.warmthScore !== a.warmthScore) return b.warmthScore - a.warmthScore;
+          return b.fitScore - a.fitScore;
+        }
+        if (sortBy === "recency") {
+          const ad = a.candidate.conference?.days_since ?? 9999;
+          const bd = b.candidate.conference?.days_since ?? 9999;
+          if (ad !== bd) return ad - bd;
+          return b.fitScore - a.fitScore;
+        }
+        // default: fit
         if (b.fitScore !== a.fitScore) return b.fitScore - a.fitScore;
         return b.warmthScore - a.warmthScore;
       });
-  }, [pool, job, fitWeights, warmthWeights, tiers, isBlacklisted, isOverridden]);
+  }, [pool, job, fitWeights, warmthWeights, tiers, isBlacklisted, isOverridden, sortBy]);
+
+  const rankedFiltered = useMemo(
+    () => tierFilter === "all" ? ranked : ranked.filter(r => r.tier === tierFilter),
+    [ranked, tierFilter]
+  );
 
   const grouped = useMemo(() => {
     const g: Record<string, typeof ranked> = { call_this_week: [], direct_outreach: [], nurture: [] };
@@ -131,25 +151,130 @@ export default function ShortlistView({ jobId }: { jobId: string }) {
         </div>
       </header>
 
-      <StatsBar stats={[
-        { label: "Talent pool",     value: admitted, sub: `${pool.candidates.length - admitted} filtered out`, iconName: "users" },
-        { label: "Shortlisted",     value: ranked.length, sub: `for ${job.job_id}`, iconName: "list", accent: true },
-        { label: "Call this week",  value: grouped.call_this_week.length, sub: "warm intro + strong fit", iconName: "trending-up" },
-        { label: "Top connector",   value: topWarmthEmployee.name, sub: `${topWarmthEmployee.count} intro paths`, iconName: "link" },
-      ]} />
+      {/* Clickable KPI row — each card filters or navigates */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6 stagger">
+        <Link href="/pool/" className="card card-interactive p-4 group" title="Open the full talent pool audit">
+          <div className="flex items-center justify-between mb-2">
+            <div className="text-[11px] uppercase tracking-wider text-mute font-medium">Talent pool</div>
+            <Icon name="users" className="w-3.5 h-3.5 text-stone-400" strokeWidth={2} />
+          </div>
+          <div className="text-2xl font-semibold tabular text-text">{admitted}</div>
+          <div className="text-[11px] text-mute mt-1">{pool.candidates.length - admitted} filtered out · open →</div>
+        </Link>
+
+        <button
+          onClick={() => setTierFilter("all")}
+          className={`card card-interactive p-4 text-left transition-colors ${
+            tierFilter === "all" ? "ring-2 ring-amber-400 border-amber-400" : ""
+          }`}
+          title="Show every shortlisted candidate"
+        >
+          <div className="flex items-center justify-between mb-2">
+            <div className="text-[11px] uppercase tracking-wider text-mute font-medium">Shortlisted</div>
+            <Icon name="list" className="w-3.5 h-3.5 text-amber-600" strokeWidth={2} />
+          </div>
+          <div className="text-2xl font-semibold tabular text-amber-700">{ranked.length}</div>
+          <div className="text-[11px] text-mute mt-1">click to reset filter</div>
+        </button>
+
+        <button
+          onClick={() => setTierFilter(tierFilter === "call_this_week" ? "all" : "call_this_week")}
+          className={`card card-interactive p-4 text-left transition-colors ${
+            tierFilter === "call_this_week" ? "ring-2 ring-emerald-500 border-emerald-500" : ""
+          }`}
+          title="Filter list to only 'Call this week' candidates"
+        >
+          <div className="flex items-center justify-between mb-2">
+            <div className="text-[11px] uppercase tracking-wider text-mute font-medium">Call this week</div>
+            <Icon name="trending-up" className="w-3.5 h-3.5 text-emerald-600" strokeWidth={2} />
+          </div>
+          <div className="text-2xl font-semibold tabular text-emerald-700">{grouped.call_this_week.length}</div>
+          <div className="text-[11px] text-mute mt-1">warm intro + strong fit · click to filter</div>
+        </button>
+
+        <Link href="/intros/" className="card card-interactive p-4 group" title="Open the outreach queue">
+          <div className="flex items-center justify-between mb-2">
+            <div className="text-[11px] uppercase tracking-wider text-mute font-medium">Top connector</div>
+            <Icon name="link" className="w-3.5 h-3.5 text-stone-400" strokeWidth={2} />
+          </div>
+          <div className="text-lg font-semibold text-text">{topWarmthEmployee.name}</div>
+          <div className="text-[11px] text-mute mt-1">{topWarmthEmployee.count} intro paths · outreach →</div>
+        </Link>
+      </div>
+
+      {/* Tier explainer — makes "call vs outreach vs nurture" concrete */}
+      <div className="mb-5 rounded-lg border border-border bg-white p-4">
+        <div className="text-[10px] uppercase tracking-wider text-mute font-semibold mb-2.5">What these tiers mean</div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+          <TierExplainer
+            dot="bg-emerald-500"
+            label="Call this week"
+            rule={`Fit ≥ ${tiers.call_this_week.min_fit}  AND  Warmth ≥ ${tiers.call_this_week.min_warmth}`}
+            hint="Strong fit AND you have a warm intro path. Phone call territory — highest response rate."
+          />
+          <TierExplainer
+            dot="bg-amber-500"
+            label="Direct outreach"
+            rule={`Fit ≥ ${tiers.direct_outreach.min_fit}  (network is cold)`}
+            hint="Same strong fit, but nobody at WSC knows them yet. Cold email with an evidence-based hook."
+          />
+          <TierExplainer
+            dot="bg-stone-400"
+            label="Nurture"
+            rule={`Fit ≥ ${tiers.nurture.min_fit}  (below strong-fit line)`}
+            hint="Not this week's priority — worth keeping warm for future roles or as talent stays in-market."
+          />
+        </div>
+      </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-6">
         <div className="min-w-0">
           <div className="flex items-baseline justify-between mb-3 gap-3 flex-wrap">
-            <div className="flex items-center gap-3">
-              <h2 className="text-sm font-semibold text-text">Ranked by fit</h2>
-              <span className="text-xs text-mute">competence-first · tier is a label, not a sort key</span>
+            <div className="flex items-center gap-3 flex-wrap">
+              <h2 className="text-sm font-semibold text-text">Ranked list</h2>
+              <div className="flex items-center gap-1.5 text-xs">
+                <label htmlFor="sort-by" className="text-mute">Sort by</label>
+                <select
+                  id="sort-by"
+                  value={sortBy}
+                  onChange={e => setSortBy(e.target.value as SortKey)}
+                  className="text-xs font-medium border border-border rounded-md px-2 py-1 bg-white cursor-pointer hover:border-accent"
+                  aria-label="Sort candidates by"
+                >
+                  <option value="fit">Fit (competence)</option>
+                  <option value="warmth">Warmth (reachability)</option>
+                  <option value="recency">Recency (most recent contact)</option>
+                </select>
+              </div>
+              <span className="text-[11px] text-mute">
+                {rankedFiltered.length} of {ranked.length}
+                {tierFilter !== "all" && <> · filtered by tier</>}
+              </span>
             </div>
             <div className="flex items-center gap-3 flex-wrap">
-              <div className="flex items-center gap-3 text-[11px] text-mute">
-                <span className="inline-flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-emerald-500"/>{grouped.call_this_week.length} call</span>
-                <span className="inline-flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-indigo-500"/>{grouped.direct_outreach.length} outreach</span>
-                <span className="inline-flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-slate-400"/>{grouped.nurture.length} nurture</span>
+              <div className="flex items-center gap-1">
+                <span className="text-[10px] uppercase tracking-wider text-mute font-semibold mr-1">Filter</span>
+                {(["all", "call_this_week", "direct_outreach", "nurture"] as const).map(t => {
+                  const label = t === "all" ? "All" : t === "call_this_week" ? "Call" : t === "direct_outreach" ? "Outreach" : "Nurture";
+                  const count = t === "all" ? ranked.length : grouped[t]?.length ?? 0;
+                  const active = tierFilter === t;
+                  const dot = t === "call_this_week" ? "bg-emerald-500" : t === "direct_outreach" ? "bg-amber-500" : t === "nurture" ? "bg-stone-400" : "";
+                  return (
+                    <button
+                      key={t}
+                      onClick={() => setTierFilter(t)}
+                      className={`inline-flex items-center gap-1.5 text-[11px] font-medium px-2.5 py-1 rounded-md border transition-colors ${
+                        active
+                          ? "bg-stone-900 text-white border-stone-900"
+                          : "bg-white text-mute border-border hover:text-text hover:border-stone-300"
+                      }`}
+                      title={t === "all" ? "Show every tier" : `Show only ${label} candidates`}
+                    >
+                      {dot && <span className={`w-1.5 h-1.5 rounded-full ${dot}`} />}
+                      {label} · {count}
+                    </button>
+                  );
+                })}
               </div>
               <button
                 onClick={() => {
@@ -183,7 +308,7 @@ export default function ShortlistView({ jobId }: { jobId: string }) {
             </div>
           </div>
           <div className="space-y-3">
-            {ranked.map(r => (
+            {rankedFiltered.map(r => (
               <CandidateCard
                 key={r.candidate.id}
                 candidate={r.candidate}
@@ -196,10 +321,18 @@ export default function ShortlistView({ jobId }: { jobId: string }) {
               />
             ))}
           </div>
-          {ranked.length === 0 && (
+          {rankedFiltered.length === 0 && (
             <div className="card p-12 text-center border-dashed">
-              <div className="text-sm font-medium text-text">No candidates meet the current thresholds</div>
-              <div className="text-xs text-mute mt-1">Try dragging the Nurture threshold down in the tuner.</div>
+              <div className="text-sm font-medium text-text">
+                {ranked.length === 0
+                  ? "No candidates meet the current thresholds"
+                  : `No candidates in the "${tierFilter.replace(/_/g, " ")}" tier`}
+              </div>
+              <div className="text-xs text-mute mt-1">
+                {ranked.length === 0
+                  ? "Try dragging the Nurture threshold down in the tuner."
+                  : <>Try <button onClick={() => setTierFilter("all")} className="underline text-amber-700">clearing the filter</button> or a different tier.</>}
+              </div>
             </div>
           )}
         </div>
@@ -210,6 +343,23 @@ export default function ShortlistView({ jobId }: { jobId: string }) {
 
       {detail && job && <CandidateDetail candidate={detail} job={job} onClose={() => setDetailId(null)} />}
     </main>
+  );
+}
+
+function TierExplainer({
+  dot, label, rule, hint,
+}: { dot: string; label: string; rule: string; hint: string }) {
+  return (
+    <div className="flex items-start gap-2.5">
+      <span className={`w-2 h-2 rounded-full ${dot} flex-shrink-0 mt-1.5`} />
+      <div className="min-w-0">
+        <div className="flex items-baseline gap-2 flex-wrap">
+          <div className="text-sm font-semibold text-text">{label}</div>
+          <code className="text-[10px] font-mono text-mute bg-stone-50 border border-border-faint px-1.5 py-0.5 rounded whitespace-nowrap">{rule}</code>
+        </div>
+        <div className="text-xs text-mute mt-1 leading-relaxed">{hint}</div>
+      </div>
+    </div>
   );
 }
 
