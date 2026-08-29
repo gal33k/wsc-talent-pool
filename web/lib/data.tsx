@@ -61,6 +61,20 @@ export type IntroStatus = "queued" | "sent" | "accepted" | "declined";
 // alongside seeded rows. Marked with sessionOnly for a visible chip.
 export type SessionCandidate = import("./types").Candidate & { sessionOnly: true };
 
+// Session-only new position — recruiter opens a role via the "New position"
+// modal on /pool. Persisted to localStorage so it survives a refresh, but
+// never touches pool.json. In production this would POST to Comeet + trigger
+// a full pipeline re-score; here it re-queries state you already have.
+export type SessionJob = {
+  job_id: string;              // auto: "JOBs-<epoch>" so it can't collide with pipeline JOBnnn
+  title: string;
+  role_family: string;         // must be one of the families in the taxonomy
+  required_skills: string[];
+  nice_to_have: string[];
+  addedAt: string;
+  sessionOnly: true;
+};
+
 export type IntroRequest = {
   id: string;
   candidateId: string;
@@ -118,6 +132,11 @@ type Ctx = {
   sessionCandidates: SessionCandidate[];
   addSessionCandidate: (c: SessionCandidate) => void;
 
+  // Session-only new positions — see SessionJob docstring.
+  sessionJobs: SessionJob[];
+  addSessionJob: (j: Omit<SessionJob, "job_id" | "addedAt" | "sessionOnly">) => SessionJob;
+  removeSessionJob: (jobId: string) => void;
+
   // Outreach queue — intro requests the recruiter has fired
   introRequests: IntroRequest[];
   getIntroRequest: (candidateId: string, jobId: string) => IntroRequest | undefined;
@@ -166,7 +185,9 @@ export function PoolProvider({ children }: { children: ReactNode }) {
   // a page refresh. Namespaced per-origin — the browser owns it, no server
   // needed. On a fresh clone with a real backend, swap for Vercel KV / Postgres.
   const LS_KEY = "wsc.talent_pool.sessionCandidates.v1";
+  const LS_JOBS_KEY = "wsc.talent_pool.sessionJobs.v1";
   const [sessionCandidates, setSessionCandidates] = useState<SessionCandidate[]>([]);
+  const [sessionJobs, setSessionJobs] = useState<SessionJob[]>([]);
 
   useEffect(() => {
     // Hydrate from localStorage on mount (client-only guard).
@@ -175,6 +196,10 @@ export function PoolProvider({ children }: { children: ReactNode }) {
       const raw = window.localStorage.getItem(LS_KEY);
       if (raw) setSessionCandidates(JSON.parse(raw));
     } catch { /* corrupted or unavailable — start clean */ }
+    try {
+      const rawJ = window.localStorage.getItem(LS_JOBS_KEY);
+      if (rawJ) setSessionJobs(JSON.parse(rawJ));
+    } catch { /* start clean */ }
   }, []);
 
   useEffect(() => {
@@ -183,6 +208,31 @@ export function PoolProvider({ children }: { children: ReactNode }) {
       window.localStorage.setItem(LS_KEY, JSON.stringify(sessionCandidates));
     } catch { /* quota exceeded or storage disabled — silently no-op */ }
   }, [sessionCandidates]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    try {
+      window.localStorage.setItem(LS_JOBS_KEY, JSON.stringify(sessionJobs));
+    } catch { /* silently no-op */ }
+  }, [sessionJobs]);
+
+  const addSessionJob = useCallback(
+    (j: Omit<SessionJob, "job_id" | "addedAt" | "sessionOnly">): SessionJob => {
+      const entry: SessionJob = {
+        ...j,
+        job_id: `JOBs-${Date.now().toString(36)}`,
+        addedAt: new Date().toISOString(),
+        sessionOnly: true,
+      };
+      setSessionJobs(prev => [entry, ...prev]);
+      return entry;
+    },
+    []
+  );
+
+  const removeSessionJob = useCallback((jobId: string) => {
+    setSessionJobs(prev => prev.filter(j => j.job_id !== jobId));
+  }, []);
 
   const addSessionCandidate = useCallback((c: SessionCandidate) => {
     setSessionCandidates(prev => {
@@ -438,6 +488,7 @@ export function PoolProvider({ children }: { children: ReactNode }) {
       bqActivity, logBq,
       introRequests, getIntroRequest, requestIntro, updateIntroStatus, cancelIntroRequest,
       sessionCandidates, addSessionCandidate,
+      sessionJobs, addSessionJob, removeSessionJob,
     }}>
       {children}
     </PoolContext.Provider>
