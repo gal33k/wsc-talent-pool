@@ -12,6 +12,7 @@ export default function CandidateActions({
     overrideCandidate, removeOverride,
     blacklistCandidate, unblacklistCandidate,
     saveNote,
+    logBq,
   } = usePool();
 
   const currentOverride = isOverridden(candidateId, jobId);
@@ -21,6 +22,28 @@ export default function CandidateActions({
   const [mode, setMode] = useState<null | "override" | "blacklist" | "note">(null);
   const [reason, setReason] = useState("");
   const [noteText, setNoteText] = useState(currentNote?.text ?? "");
+  const [pushedHubspot, setPushedHubspot] = useState(false);
+  const [pushedComeet,  setPushedComeet]  = useState(false);
+
+  const promoteToHubSpot = () => {
+    setPushedHubspot(true);
+    logBq({
+      op: "UPDATE",
+      table: "wsc.talent_pool.contacts",
+      sql: `PATCH /crm/v3/objects/contacts/${candidateId}\n  properties: {\n    talent_pool_status: 'active_lead',\n    top_role_id: '${jobId}',\n    top_role_title: ${JSON.stringify(jobTitle)},\n    promoted_at: CURRENT_TIMESTAMP()\n  }`,
+      rows: 1,
+    });
+  };
+
+  const promoteToComeet = () => {
+    setPushedComeet(true);
+    logBq({
+      op: "INSERT",
+      table: "wsc.outreach.comeet_pushes",
+      sql: `POST /positions/${jobId}/candidates\n  { contact_id: '${candidateId}', source: 'sourced', pushed_by: 'recruiter@wsc' }`,
+      rows: 1,
+    });
+  };
 
   const openMode = (m: NonNullable<typeof mode>) => {
     setReason("");
@@ -101,36 +124,79 @@ export default function CandidateActions({
       )}
 
       {mode === null && (
-        <div className="flex gap-2 flex-wrap">
-          {!currentOverride && (
-            <button
-              onClick={() => openMode("override")}
-              className="text-xs px-3 py-1.5 rounded-md border border-border bg-white hover:border-amber-400 text-amber-900 font-medium flex items-center gap-1.5"
-            >
-              <Icon name="filter" className="w-3.5 h-3.5" strokeWidth={2} />
-              Not a fit for {jobId}
-            </button>
-          )}
-          {!currentBlacklist && (
-            <button
-              onClick={() => openMode("blacklist")}
-              className="text-xs px-3 py-1.5 rounded-md border border-border bg-white hover:border-rose-400 text-rose-900 font-medium flex items-center gap-1.5"
-            >
-              <Icon name="close" className="w-3.5 h-3.5" strokeWidth={2.5} />
-              Blacklist globally
-            </button>
-          )}
-          {!currentNote && (
-            <button
-              onClick={() => { setNoteText(""); openMode("note"); }}
-              className="text-xs px-3 py-1.5 rounded-md border border-border bg-white hover:border-indigo-400 text-indigo-900 font-medium flex items-center gap-1.5"
-            >
-              <Icon name="message" className="w-3.5 h-3.5" strokeWidth={2} />
-              Add note
-            </button>
-          )}
-          <div className="w-full text-[11px] text-amber-800/70 mt-1">
-            Overrides win over the model. Both actions log a mock HubSpot property write-back &amp; a BigQuery insert.
+        <div className="space-y-3">
+          {/* Positive path — push the candidate forward */}
+          <div>
+            <div className="text-[10px] uppercase tracking-wider text-emerald-800 font-semibold mb-1.5">Advance in the pipeline</div>
+            <div className="flex gap-2 flex-wrap">
+              <button
+                onClick={promoteToHubSpot}
+                disabled={pushedHubspot}
+                className={`text-xs px-3 py-1.5 rounded-md font-medium flex items-center gap-1.5 border transition-colors ${
+                  pushedHubspot
+                    ? "bg-emerald-100 text-emerald-800 border-emerald-200 cursor-default"
+                    : "bg-emerald-700 text-white border-emerald-700 hover:bg-emerald-800"
+                }`}
+                title="Write talent-pool properties on the HubSpot contact + queue a sourced-lead task"
+              >
+                <Icon name={pushedHubspot ? "check" : "arrow-right"} className="w-3.5 h-3.5" strokeWidth={2.5} />
+                {pushedHubspot ? "Pushed to HubSpot" : "Push to HubSpot as pool lead"}
+              </button>
+              <button
+                onClick={promoteToComeet}
+                disabled={pushedComeet}
+                className={`text-xs px-3 py-1.5 rounded-md font-medium flex items-center gap-1.5 border transition-colors ${
+                  pushedComeet
+                    ? "bg-emerald-100 text-emerald-800 border-emerald-200 cursor-default"
+                    : "bg-white text-emerald-800 border-emerald-300 hover:bg-emerald-50 hover:border-emerald-500"
+                }`}
+                title={`POST this candidate to Comeet as a sourced candidate for ${jobId}`}
+              >
+                <Icon name={pushedComeet ? "check" : "briefcase"} className="w-3.5 h-3.5" strokeWidth={2.5} />
+                {pushedComeet ? `Pushed to Comeet · ${jobId}` : `Push to Comeet as sourced (${jobId})`}
+              </button>
+            </div>
+            <div className="text-[10px] text-emerald-800/70 mt-1.5 italic">
+              HubSpot push flags the contact as an active pool lead. Comeet push creates a
+              &ldquo;sourced&rdquo; candidate row for this specific role — starts the ATS workflow.
+            </div>
+          </div>
+
+          {/* Negative path — filter / blacklist / annotate */}
+          <div className="pt-3 border-t border-amber-200/70">
+            <div className="text-[10px] uppercase tracking-wider text-amber-800 font-semibold mb-1.5">Recruiter overrides</div>
+            <div className="flex gap-2 flex-wrap">
+              {!currentOverride && (
+                <button
+                  onClick={() => openMode("override")}
+                  className="text-xs px-3 py-1.5 rounded-md border border-border bg-white hover:border-amber-400 text-amber-900 font-medium flex items-center gap-1.5"
+                >
+                  <Icon name="filter" className="w-3.5 h-3.5" strokeWidth={2} />
+                  Not a fit for {jobId}
+                </button>
+              )}
+              {!currentBlacklist && (
+                <button
+                  onClick={() => openMode("blacklist")}
+                  className="text-xs px-3 py-1.5 rounded-md border border-border bg-white hover:border-rose-400 text-rose-900 font-medium flex items-center gap-1.5"
+                >
+                  <Icon name="close" className="w-3.5 h-3.5" strokeWidth={2.5} />
+                  Blacklist globally
+                </button>
+              )}
+              {!currentNote && (
+                <button
+                  onClick={() => { setNoteText(""); openMode("note"); }}
+                  className="text-xs px-3 py-1.5 rounded-md border border-border bg-white hover:border-emerald-500 text-emerald-900 font-medium flex items-center gap-1.5"
+                >
+                  <Icon name="message" className="w-3.5 h-3.5" strokeWidth={2} />
+                  Add note
+                </button>
+              )}
+            </div>
+            <div className="text-[10px] text-amber-800/70 mt-1.5 italic">
+              Overrides win over the model — the recruiter is the final call. Every action logs a mock BigQuery insert.
+            </div>
           </div>
         </div>
       )}

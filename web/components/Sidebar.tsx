@@ -26,12 +26,12 @@ export default function Sidebar() {
       {/* Brand */}
       <Link href="/" className="block px-5 pt-5 pb-6 group" aria-label="WSC Talent Intelligence · Home">
         <div className="flex items-center gap-2.5">
-          <div className="relative w-9 h-9 rounded-md bg-gradient-to-br from-red-600 via-red-700 to-red-900 flex items-center justify-center text-white text-[11px] font-bold tracking-tight shadow-md ring-1 ring-red-900/60">
+          <div className="relative w-9 h-9 rounded-md bg-gradient-to-br from-emerald-700 via-emerald-800 to-emerald-900 flex items-center justify-center text-white text-[11px] font-bold tracking-tight shadow-md ring-1 ring-emerald-900/60">
             <span className="relative z-10">WSC</span>
             <div className="absolute inset-0 rounded-md bg-gradient-to-tr from-white/0 via-white/10 to-white/25 pointer-events-none" />
           </div>
           <div className="min-w-0">
-            <div className="text-[15px] font-serif italic sidebar-ink leading-tight truncate group-hover:text-red-400 transition-colors">
+            <div className="text-[15px] font-serif italic sidebar-ink leading-tight truncate group-hover:text-emerald-300 transition-colors">
               Talent Intelligence
             </div>
             <div className="text-[10px] sidebar-faint uppercase tracking-wider font-medium mt-0.5">
@@ -84,7 +84,7 @@ function NavGroup({ label, links, norm }: {
               href={l.href}
               className={`flex items-center gap-2.5 px-3 py-2 rounded-md text-[13.5px] transition-colors ${
                 active
-                  ? "bg-[var(--sidebar-active)] text-red-300 font-medium border-l-2 border-red-500 -ml-[2px] pl-[calc(0.75rem+2px)]"
+                  ? "bg-[var(--sidebar-active)] text-emerald-300 font-medium border-l-2 border-emerald-600 -ml-[2px] pl-[calc(0.75rem+2px)]"
                   : "sidebar-dim sidebar-hover"
               }`}
             >

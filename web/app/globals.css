@@ -23,12 +23,12 @@
   --text-mute:       #6b665e;
   --text-faint:      #9c968a;
 
-  --accent:          #c1272d;   /* broadcast crimson — jersey red, distinctive */
-  --accent-hi:       #dc2626;
-  --accent-dim:      #7a1a1e;
-  --accent-soft:     #fee7e0;
+  --accent:          #15803d;   /* pitch green — sports adjacent, editorial */
+  --accent-hi:       #166534;   /* deeper on hover */
+  --accent-dim:      #052e16;
+  --accent-soft:     #dcfce7;
 
-  --good:            #146b3a;   /* deep forest green — pops on paper */
+  --good:            #15803d;   /* same green — good and accent unify */
   --good-soft:       #dcfce7;
   --bad:             #991b1b;
   --bad-soft:        #fee2e2;
@@ -37,17 +37,16 @@
   --info:            #1e40af;
   --info-soft:       #dbeafe;
 
-  --tier-call:       #146b3a;
-  --tier-direct:     #c1272d;
+  --tier-call:       #15803d;
+  --tier-direct:     #1e293b;   /* deep slate for direct outreach */
   --tier-nurture:    #6b665e;
 
-  /* Sidebar — DARK INK (opposite temperature from content). Breaks the
-     "everything white" problem in one move. */
-  --sidebar-bg:      #17140f;   /* warm near-black */
+  /* Sidebar — DARK INK (opposite temperature from content). */
+  --sidebar-bg:      #17140f;
   --sidebar-border:  #2a251d;
   --sidebar-hover:   #201c15;
-  --sidebar-active:  rgba(193, 39, 45, 0.18);   /* crimson glow */
-  --sidebar-text:    #f4efe4;   /* paper on ink */
+  --sidebar-active:  rgba(21, 128, 61, 0.18);   /* emerald glow */
+  --sidebar-text:    #f4efe4;
   --sidebar-dim:     #a89f8a;
   --sidebar-faint:   #6b665e;
 

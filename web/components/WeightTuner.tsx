@@ -53,7 +53,7 @@ function Slider({
     <div className="mb-3.5">
       <div className="flex justify-between items-baseline mb-1.5">
         <label className="text-xs text-text font-medium">{label}</label>
-        <span className="text-xs text-red-800 font-semibold tabular bg-red-50 px-1.5 py-0.5 rounded">
+        <span className="text-xs text-emerald-800 font-semibold tabular bg-emerald-50 px-1.5 py-0.5 rounded">
           {value}
         </span>
       </div>
@@ -72,7 +72,7 @@ export default function WeightTuner() {
     <aside className="card overflow-hidden sticky top-4 max-h-[calc(100vh-2rem)] flex flex-col">
       <div className="px-4 py-3.5 border-b border-border flex items-center justify-between">
         <div className="flex items-center gap-2.5">
-          <div className="w-7 h-7 rounded-md bg-red-100 text-red-700 flex items-center justify-center">
+          <div className="w-7 h-7 rounded-md bg-emerald-100 text-emerald-700 flex items-center justify-center">
             <Icon name="sliders" className="w-3.5 h-3.5" strokeWidth={2} />
           </div>
           <div>
@@ -82,14 +82,14 @@ export default function WeightTuner() {
         </div>
         <button
           onClick={resetWeights}
-          className="text-xs text-red-700 hover:text-amber-900 font-medium"
+          className="text-xs text-emerald-700 hover:text-amber-900 font-medium"
         >
           Reset
         </button>
       </div>
 
       <div className="overflow-y-auto flex-1 p-4">
-        <Group label="Fit — competence (does this person match the job?)" dot="bg-red-500">
+        <Group label="Fit — competence (does this person match the job?)" dot="bg-emerald-600">
           {(Object.keys(FIT_LABELS) as Array<keyof FitWeights>).map(k => {
             const [label, tip] = FIT_LABELS[k];
             return (
@@ -111,7 +111,7 @@ export default function WeightTuner() {
           })}
         </Group>
 
-        <Group label="Tier thresholds — decides who lands where" dot="bg-red-500">
+        <Group label="Tier thresholds — decides who lands where" dot="bg-emerald-600">
           <Slider label="Call this week — min fit"
                   tip="Fit score needed to earn 'Call this week' tier. Higher = fewer candidates get the top-priority label."
                   value={tiers.call_this_week.min_fit} max={100}

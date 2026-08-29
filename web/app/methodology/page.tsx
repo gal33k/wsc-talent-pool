@@ -1,60 +1,98 @@
 "use client";
 
-import { useState } from "react";
 import { Icon } from "@/components/Icon";
 import { Chip } from "@/components/Chip";
 import { usePool } from "@/lib/data";
 
-const TABS = [
-  { id: "tldr",        label: "TL;DR",           hint: "the 30-second version" },
-  { id: "how",         label: "How it works",    hint: "the pipeline in 5 boxes" },
-  { id: "assumptions", label: "Assumptions",     hint: "the 7 brief-mandated answers" },
-  { id: "examples",    label: "Worked examples", hint: "candidates through the pipeline" },
-  { id: "design",      label: "Design doc",      hint: "the technical deep-dive" },
-] as const;
+const TOC = [
+  { id: "tldr",        label: "TL;DR" },
+  { id: "mechanism",   label: "The mechanism" },
+  { id: "assumptions", label: "7 assumptions" },
+  { id: "examples",    label: "Worked examples" },
+  { id: "deepdive",    label: "Technical deep-dive" },
+];
 
-type TabId = typeof TABS[number]["id"];
-
+// Documentation as ONE editorial scroll — no tabs. The reader progresses top-down:
+// elevator pitch → mechanism → examples → assumptions → technical deep-dive.
 export default function Methodology() {
   const { pool } = usePool();
-  const [tab, setTab] = useState<TabId>("tldr");
 
   return (
     <main className="max-w-[1200px] mx-auto px-8 py-8">
-      <header className="mb-6">
-        <div className="text-xs font-medium text-mute mb-1">Complete documentation</div>
-        <h1 className="text-3xl font-semibold text-text tracking-tight">How it works</h1>
-        <p className="text-sm text-mute mt-2 max-w-2xl">
-          Four views of the same system — from the one-paragraph elevator pitch to the technical
-          deep-dive. Start with TL;DR; go deeper as needed.
+      <header className="mb-10 pb-8 border-b border-border">
+        <div className="text-[11px] uppercase tracking-[0.18em] font-semibold text-emerald-800 mb-3">Complete documentation</div>
+        <h1 className="text-4xl md:text-5xl font-semibold text-text tracking-tight display-tight leading-[1.05] mb-4">
+          How the WSC talent pool works
+        </h1>
+        <p className="text-lg text-dim max-w-2xl font-serif italic leading-snug">
+          One long-form document — top to bottom, elevator pitch to technical deep-dive.
+          Everything an interviewer would want to check, in the order they'd want to check it.
         </p>
       </header>
 
-      <div role="tablist" aria-label="Documentation views" className="flex items-baseline gap-1 border-b border-border mb-8 overflow-x-auto">
-        {TABS.map(t => (
-          <button
-            key={t.id}
-            role="tab"
-            aria-selected={tab === t.id}
-            onClick={() => setTab(t.id)}
-            className={`px-4 py-2.5 text-sm font-medium -mb-px border-b-2 transition-colors whitespace-nowrap ${
-              tab === t.id
-                ? "border-red-600 text-red-700"
-                : "border-transparent text-mute hover:text-text"
-            }`}
-          >
-            {t.label}
-            <span className="hidden sm:inline text-xs text-faint font-normal ml-2">· {t.hint}</span>
-          </button>
-        ))}
-      </div>
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_220px] gap-10">
+        <article className="min-w-0 space-y-20">
+          <section id="tldr" className="scroll-mt-6">
+            <TLDR pool={pool} />
+          </section>
 
-      {tab === "tldr"        && <TLDR pool={pool} onDeeper={() => setTab("how")} />}
-      {tab === "how"         && <HowItWorks onDeeper={() => setTab("design")} />}
-      {tab === "assumptions" && <Assumptions />}
-      {tab === "examples"    && <WorkedExamples />}
-      {tab === "design"      && <DesignDoc pool={pool} />}
+          <SectionDivider n="01" label="The mechanism" />
+          <section id="mechanism" className="scroll-mt-6">
+            <HowItWorks />
+          </section>
+
+          <SectionDivider n="02" label="Assumptions we made" />
+          <section id="assumptions" className="scroll-mt-6">
+            <Assumptions />
+          </section>
+
+          <SectionDivider n="03" label="Worked examples" />
+          <section id="examples" className="scroll-mt-6">
+            <WorkedExamples />
+          </section>
+
+          <SectionDivider n="04" label="Technical deep-dive" />
+          <section id="deepdive" className="scroll-mt-6">
+            <DesignDoc pool={pool} />
+          </section>
+        </article>
+
+        <aside className="hidden lg:block">
+          <div className="sticky top-4 card p-4">
+            <div className="text-[10px] uppercase tracking-wider text-mute font-semibold mb-3">On this page</div>
+            <nav className="space-y-1">
+              {TOC.map((t, i) => (
+                <a
+                  key={t.id}
+                  href={"#" + t.id}
+                  className="flex items-baseline gap-2 py-1 text-[13px] text-dim hover:text-emerald-700 transition-colors rounded px-2 hover:bg-emerald-50/60"
+                >
+                  <span className="font-mono text-[10px] text-faint w-4 tabular">{String(i).padStart(2, "0")}</span>
+                  <span>{t.label}</span>
+                </a>
+              ))}
+            </nav>
+            {pool && (
+              <div className="mt-5 pt-4 border-t border-border text-[11px] text-mute space-y-1">
+                <div>Config <code className="text-dim">{pool.config_version}</code></div>
+                <div>{pool.candidates.length} contacts · {pool.jobs.length} jobs · {pool.employees.length} employees</div>
+              </div>
+            )}
+          </div>
+        </aside>
+      </div>
     </main>
+  );
+}
+
+/* Big editorial divider between the 5 top-level sections. Serif numeral + wide rule. */
+function SectionDivider({ n, label }: { n: string; label: string }) {
+  return (
+    <div className="flex items-baseline gap-6 pt-10 pb-2">
+      <div className="font-serif italic text-4xl text-emerald-700 leading-none tabular">{n}</div>
+      <div className="text-[11px] uppercase tracking-[0.18em] font-semibold text-mute">{label}</div>
+      <div className="flex-1 h-px bg-border" />
+    </div>
   );
 }
 
@@ -64,7 +102,7 @@ export default function Methodology() {
  * the design defensible.
  * ============================================================================ */
 
-function TLDR({ pool, onDeeper }: { pool: ReturnType<typeof usePool>["pool"]; onDeeper: () => void }) {
+function TLDR({ pool }: { pool: ReturnType<typeof usePool>["pool"] }) {
   return (
     <section className="space-y-8">
       <div className="rounded-2xl bg-gradient-to-br from-indigo-50 via-white to-violet-50 border border-indigo-100 p-8">
@@ -112,18 +150,6 @@ function TLDR({ pool, onDeeper }: { pool: ReturnType<typeof usePool>["pool"]; on
         </div>
       </div>
 
-      <div className="rounded-lg border border-indigo-100 bg-indigo-50/40 p-5 flex items-start gap-4">
-        <Icon name="arrow-right" className="w-5 h-5 text-indigo-600 flex-shrink-0 mt-0.5" strokeWidth={2.25} />
-        <div className="text-sm text-indigo-900 flex-1">
-          <strong className="font-semibold">Want to know how each box works?</strong>{" "}
-          The <em>How it works</em> tab walks through the 5 boxes in plain English.{" "}
-          <em>Worked examples</em> shows real candidates flowing through it. The <em>Design doc</em> is
-          the technical deep-dive for an auditor.
-          <button onClick={onDeeper} className="ml-2 underline hover:no-underline font-medium">
-            Show me →
-          </button>
-        </div>
-      </div>
     </section>
   );
 }
@@ -133,15 +159,15 @@ function TLDR({ pool, onDeeper }: { pool: ReturnType<typeof usePool>["pool"]; on
  * The visual pipeline explanation. 5 boxes + arrows + plain-English captions.
  * ============================================================================ */
 
-function HowItWorks({ onDeeper }: { onDeeper: () => void }) {
+function HowItWorks() {
   return (
     <section className="max-w-3xl">
       {/* The flow diagram — one visual, not one visual + five cards saying the same thing */}
       <FlowDiagramLarge />
 
       {/* Pull quote — the design's central claim */}
-      <blockquote className="my-10 pl-6 border-l-2 border-red-500 relative">
-        <span className="font-serif text-6xl text-red-500 leading-none absolute -left-1 -top-3 opacity-30">&ldquo;</span>
+      <blockquote className="my-10 pl-6 border-l-2 border-emerald-600 relative">
+        <span className="font-serif text-6xl text-emerald-500 leading-none absolute -left-1 -top-3 opacity-30">&ldquo;</span>
         <p className="font-serif text-2xl leading-tight text-text mb-3 italic">
           Two decisions, never one scoring function. Two scores, never one compatibility rate.
         </p>
@@ -241,16 +267,6 @@ function HowItWorks({ onDeeper }: { onDeeper: () => void }) {
         </NarrativeStep>
       </div>
 
-      {/* Depth link — inline, not a callout card */}
-      <div className="mt-16 pt-8 border-t border-border flex items-baseline justify-between gap-4 flex-wrap">
-        <div className="text-sm text-mute max-w-md">
-          Weights, adjacency tables, the exact formulas, and every trade-off we defended —
-          it's all in the design doc.
-        </div>
-        <button onClick={onDeeper} className="inline-flex items-center gap-1.5 text-sm font-semibold text-red-700 hover:text-red-900">
-          Design doc <Icon name="arrow-right" className="w-4 h-4" strokeWidth={2.25} />
-        </button>
-      </div>
     </section>
   );
 }
@@ -270,7 +286,7 @@ function NarrativeStep({
   return (
     <div className="grid grid-cols-[auto_1fr] gap-6 md:gap-8">
       <div className="text-right">
-        <div className="font-serif italic text-5xl md:text-6xl leading-none text-red-500 tabular">
+        <div className="font-serif italic text-5xl md:text-6xl leading-none text-emerald-500 tabular">
           {String(num).padStart(2, "0")}
         </div>
       </div>
@@ -281,7 +297,7 @@ function NarrativeStep({
           {children}
         </div>
         {seeIt && seeLabel && (
-          <a href={seeIt} className="inline-flex items-center gap-1.5 mt-3 text-sm font-medium text-red-700 hover:text-red-900">
+          <a href={seeIt} className="inline-flex items-center gap-1.5 mt-3 text-sm font-medium text-emerald-700 hover:text-emerald-900">
             {seeLabel}
             <Icon name="arrow-right" className="w-3.5 h-3.5" strokeWidth={2.25} />
           </a>
@@ -553,9 +569,9 @@ function WorkedExamples() {
  * The technical deep-dive. Everything an auditor might want to check.
  * ============================================================================ */
 
-function DesignDoc({ pool }: { pool: ReturnType<typeof usePool>["pool"] }) {
+function DesignDoc({ pool: _pool }: { pool: ReturnType<typeof usePool>["pool"] }) {
   return (
-    <section className="grid grid-cols-1 lg:grid-cols-[1fr_220px] gap-10">
+    <section>
       <article className="min-w-0 space-y-10 max-w-[780px]">
 
         <Section id="architecture" num={1} title="Two decisions, not one">
@@ -842,41 +858,6 @@ function DesignDoc({ pool }: { pool: ReturnType<typeof usePool>["pool"] }) {
         </Section>
 
       </article>
-
-      <aside className="hidden lg:block">
-        <div className="sticky top-4 card p-4">
-          <div className="text-xs uppercase tracking-wider text-mute font-medium mb-3">On this page</div>
-          <nav className="space-y-0.5">
-            {[
-              ["architecture", "Two decisions"],
-              ["gate",         "Decision A · gate"],
-              ["scoring",      "Decision B · scoring"],
-              ["taxonomy",     "Taxonomy"],
-              ["reveal",       "Reveal · honest scope"],
-              ["ai",           "Where AI belongs"],
-              ["storage",      "Queryable pool"],
-              ["hitl",         "Human in the loop"],
-              ["shipped",      "What we shipped"],
-              ["tests",        "What we tested"],
-              ["tradeoffs",    "Trade-offs"],
-              ["next",         "What's next"],
-            ].map(([id, label], i) => (
-              <a key={id} href={"#" + id}
-                 className="flex items-baseline gap-2 py-1 text-[13px] text-dim hover:text-accent transition-colors rounded px-2 hover:bg-indigo-50">
-                <span className="font-mono text-[10px] text-faint w-4 tabular">{String(i + 1).padStart(2, "0")}</span>
-                <span>{label}</span>
-              </a>
-            ))}
-          </nav>
-          {pool && (
-            <div className="mt-5 pt-4 border-t border-border text-[11px] text-mute space-y-1">
-              <div>Config <code className="text-dim">{pool.config_version}</code></div>
-              <div>Generated {pool.generated_at.split("T")[0]}</div>
-              <div>{pool.candidates.length} contacts · {pool.jobs.length} jobs · {pool.employees.length} employees</div>
-            </div>
-          )}
-        </div>
-      </aside>
     </section>
   );
 }

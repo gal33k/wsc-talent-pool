@@ -110,7 +110,7 @@ export default function ShortlistView({ jobId }: { jobId: string }) {
           <span className="text-faint">/</span>
           <span className="font-mono">{job.job_id}</span>
           {!parityOk && (
-            <span className="ml-2 text-[11px] text-red-600 bg-red-50 border border-red-200 px-2 py-0.5 rounded-md font-medium">
+            <span className="ml-2 text-[11px] text-emerald-600 bg-emerald-50 border border-red-200 px-2 py-0.5 rounded-md font-medium">
               parity mismatch
             </span>
           )}
@@ -124,13 +124,13 @@ export default function ShortlistView({ jobId }: { jobId: string }) {
             <div className="flex flex-wrap gap-1.5 mt-3">
               {job.required_skills.map(s => (
                 <span key={s} className="text-[11px] px-2 py-0.5 rounded-md bg-indigo-50 text-indigo-700 border border-indigo-100 font-medium">
-                  {s.replace(/\*$/, "")}{s.endsWith("*") && <span className="text-red-600 ml-0.5">*</span>}
+                  {s.replace(/\*$/, "")}{s.endsWith("*") && <span className="text-emerald-600 ml-0.5">*</span>}
                 </span>
               ))}
             </div>
             {job.required_skills.some(s => s.endsWith("*")) && (
               <div className="text-[11px] text-mute mt-1.5">
-                <span className="text-red-600">*</span> critical — missing caps required-skills score at 40%
+                <span className="text-emerald-600">*</span> critical — missing caps required-skills score at 40%
               </div>
             )}
           </div>
@@ -165,15 +165,15 @@ export default function ShortlistView({ jobId }: { jobId: string }) {
         <button
           onClick={() => setTierFilter("all")}
           className={`card card-interactive p-4 text-left transition-colors ${
-            tierFilter === "all" ? "ring-2 ring-red-500 border-red-500" : ""
+            tierFilter === "all" ? "ring-2 ring-emerald-600 border-emerald-600" : ""
           }`}
           title="Show every shortlisted candidate"
         >
           <div className="flex items-center justify-between mb-2">
             <div className="text-[11px] uppercase tracking-wider text-mute font-medium">Shortlisted</div>
-            <Icon name="list" className="w-3.5 h-3.5 text-red-600" strokeWidth={2} />
+            <Icon name="list" className="w-3.5 h-3.5 text-emerald-600" strokeWidth={2} />
           </div>
-          <div className="text-2xl font-semibold tabular text-red-700">{ranked.length}</div>
+          <div className="text-2xl font-semibold tabular text-emerald-700">{ranked.length}</div>
           <div className="text-[11px] text-mute mt-1">click to reset filter</div>
         </button>
 
@@ -258,7 +258,7 @@ export default function ShortlistView({ jobId }: { jobId: string }) {
                   const label = t === "all" ? "All" : t === "call_this_week" ? "Call" : t === "direct_outreach" ? "Outreach" : "Nurture";
                   const count = t === "all" ? ranked.length : grouped[t]?.length ?? 0;
                   const active = tierFilter === t;
-                  const dot = t === "call_this_week" ? "bg-emerald-500" : t === "direct_outreach" ? "bg-red-500" : t === "nurture" ? "bg-stone-400" : "";
+                  const dot = t === "call_this_week" ? "bg-emerald-500" : t === "direct_outreach" ? "bg-emerald-600" : t === "nurture" ? "bg-stone-400" : "";
                   return (
                     <button
                       key={t}
@@ -331,7 +331,7 @@ export default function ShortlistView({ jobId }: { jobId: string }) {
               <div className="text-xs text-mute mt-1">
                 {ranked.length === 0
                   ? "Try dragging the Nurture threshold down in the tuner."
-                  : <>Try <button onClick={() => setTierFilter("all")} className="underline text-red-700">clearing the filter</button> or a different tier.</>}
+                  : <>Try <button onClick={() => setTierFilter("all")} className="underline text-emerald-700">clearing the filter</button> or a different tier.</>}
               </div>
             </div>
           )}
