@@ -18,7 +18,7 @@ export default function Methodology() {
   const { pool } = usePool();
 
   return (
-    <main className="max-w-[1200px] mx-auto px-8 py-8">
+    <main className="max-w-[1200px] mx-auto px-4 py-5 md:px-8 md:py-8">
       <header className="mb-10 pb-8 border-b border-border">
         <div className="text-[11px] uppercase tracking-[0.18em] font-semibold text-emerald-800 mb-3">Complete documentation</div>
         <h1 className="text-4xl md:text-5xl font-semibold text-text tracking-tight display-tight leading-[1.05] mb-4">
@@ -105,7 +105,7 @@ function SectionDivider({ n, label }: { n: string; label: string }) {
 function TLDR({ pool }: { pool: ReturnType<typeof usePool>["pool"] }) {
   return (
     <section className="space-y-8">
-      <div className="rounded-2xl bg-gradient-to-br from-indigo-50 via-white to-violet-50 border border-indigo-100 p-8">
+      <div className="rounded-2xl bg-gradient-to-br from-indigo-50 via-white to-violet-50 border border-indigo-100 p-5 md:p-8">
         <div className="text-xs uppercase tracking-wider text-indigo-700 font-semibold mb-4">TL;DR</div>
         <p className="text-2xl text-text leading-snug font-medium mb-4">
           We turn <em>badge scans, employee referrals, and inbound CVs</em> into a queryable talent
@@ -265,9 +265,9 @@ function NarrativeStep({
   children: React.ReactNode;
 }) {
   return (
-    <div className="grid grid-cols-[auto_1fr] gap-6 md:gap-8">
+    <div className="grid grid-cols-[auto_1fr] gap-3 sm:gap-6 md:gap-8">
       <div className="text-right">
-        <div className="font-serif italic text-5xl md:text-6xl leading-none text-emerald-500 tabular">
+        <div className="font-serif italic text-3xl sm:text-5xl md:text-6xl leading-none text-emerald-500 tabular">
           {String(num).padStart(2, "0")}
         </div>
       </div>

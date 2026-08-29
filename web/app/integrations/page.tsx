@@ -115,9 +115,9 @@ export default function IntegrationsLog() {
       : pool.call_log.filter(c => c.system === systemFilter);
   }, [pool, systemFilter]);
 
-  if (loading) return <main className="p-8 text-mute text-sm">Loading…</main>;
-  if (error) return <main className="p-8 text-red-600 text-sm">Error: {error}</main>;
-  if (!pool) return <main className="p-8">No data.</main>;
+  if (loading) return <main className="p-6 md:p-8 text-mute text-sm">Loading…</main>;
+  if (error) return <main className="p-6 md:p-8 text-red-600 text-sm">Error: {error}</main>;
+  if (!pool) return <main className="p-6 md:p-8">No data.</main>;
 
   const systems = Array.from(new Set(pool.call_log.map(c => c.system)));
   const bySys = systems.reduce((acc, s) => {
@@ -130,7 +130,7 @@ export default function IntegrationsLog() {
   const totalCredits = enrichmentCalls.filter(c => c.result.includes("credits")).length;
 
   return (
-    <main className="max-w-[1400px] mx-auto px-8 py-8">
+    <main className="max-w-[1400px] mx-auto px-4 py-5 md:px-8 md:py-8">
       <header className="mb-6">
         <div className="text-xs font-medium text-mute mb-1">Integrations · what each system does for the recruiter</div>
         <h1 className="text-2xl font-semibold text-text tracking-tight">Integrations</h1>

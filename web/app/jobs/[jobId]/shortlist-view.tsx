@@ -89,8 +89,8 @@ export default function ShortlistView({ jobId }: { jobId: string }) {
   const detail = detailId ? pool?.candidates.find(c => c.id === detailId) : null;
 
   if (loading) return <main className="p-8"><Skeleton /></main>;
-  if (error) return <main className="p-8 text-red-600 text-sm">Error: {error}</main>;
-  if (!pool) return <main className="p-8">No data.</main>;
+  if (error) return <main className="p-6 md:p-8 text-red-600 text-sm">Error: {error}</main>;
+  if (!pool) return <main className="p-6 md:p-8">No data.</main>;
   if (!job) {
     return (
       <main className="p-8">
@@ -117,7 +117,7 @@ export default function ShortlistView({ jobId }: { jobId: string }) {
   })();
 
   return (
-    <main className="max-w-[1400px] mx-auto px-8 py-8">
+    <main className="max-w-[1400px] mx-auto px-4 py-5 md:px-8 md:py-8">
       <header className="mb-6">
         <nav className="text-xs mb-2 flex items-center gap-2 text-mute" aria-label="Breadcrumb">
           <Link href="/" className="hover:text-text transition-colors">All jobs</Link>

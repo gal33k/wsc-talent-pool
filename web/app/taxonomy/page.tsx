@@ -106,12 +106,12 @@ export default function TaxonomyEditor() {
     setApplied(prev => prev.filter((_, idx) => idx !== i));
   };
 
-  if (loading) return <main className="p-8 text-mute text-sm">Loading…</main>;
-  if (error) return <main className="p-8 text-red-600 text-sm">Error: {error}</main>;
-  if (!pool) return <main className="p-8">No data.</main>;
+  if (loading) return <main className="p-6 md:p-8 text-mute text-sm">Loading…</main>;
+  if (error) return <main className="p-6 md:p-8 text-red-600 text-sm">Error: {error}</main>;
+  if (!pool) return <main className="p-6 md:p-8">No data.</main>;
 
   return (
-    <main className="max-w-[1200px] mx-auto px-8 py-8">
+    <main className="max-w-[1200px] mx-auto px-4 py-5 md:px-8 md:py-8">
       {/* Editorial header */}
       <header className="mb-8 pb-6 border-b border-border">
         <div className="text-[11px] uppercase tracking-[0.18em] font-semibold text-emerald-800 mb-3">

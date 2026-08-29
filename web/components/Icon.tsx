@@ -6,7 +6,7 @@ type Name =
   | "search" | "filter" | "copy" | "close" | "chevron-right" | "chevron-down"
   | "check" | "alert" | "sliders" | "trending-up" | "info"
   | "sparkles" | "arrow-right" | "external" | "message" | "database"
-  | "shield" | "gauge" | "grid" | "plus" | "minus" | "briefcase" | "download" | "play";
+  | "shield" | "gauge" | "grid" | "plus" | "minus" | "briefcase" | "download" | "play" | "menu";
 
 const PATHS: Record<Name, React.ReactNode> = {
   home:       <><path d="M3 12l9-9 9 9"/><path d="M5 10v10a1 1 0 001 1h4v-6h4v6h4a1 1 0 001-1V10"/></>,
@@ -39,6 +39,7 @@ const PATHS: Record<Name, React.ReactNode> = {
   briefcase:  <><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></>,
   download:   <><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></>,
   play:       <polygon points="6 4 20 12 6 20 6 4"/>,
+  menu:       <><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></>,
 };
 
 export function Icon({

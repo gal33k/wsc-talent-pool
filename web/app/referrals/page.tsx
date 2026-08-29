@@ -29,9 +29,9 @@ export default function Referrals() {
   const [playback, setPlayback] = useState<EnrichmentPlayback | null>(null);
   const [validationError, setValidationError] = useState<string | null>(null);
 
-  if (loading) return <main className="p-8 text-mute text-sm">Loading…</main>;
-  if (error) return <main className="p-8 text-red-600 text-sm">Error: {error}</main>;
-  if (!pool) return <main className="p-8">No data.</main>;
+  if (loading) return <main className="p-6 md:p-8 text-mute text-sm">Loading…</main>;
+  if (error) return <main className="p-6 md:p-8 text-red-600 text-sm">Error: {error}</main>;
+  if (!pool) return <main className="p-6 md:p-8">No data.</main>;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -135,7 +135,7 @@ export default function Referrals() {
   const targetJob = pool.jobs.find(j => j.job_id === jobId);
 
   return (
-    <main className="max-w-[1400px] mx-auto px-8 py-8">
+    <main className="max-w-[1400px] mx-auto px-4 py-5 md:px-8 md:py-8">
       <header className="mb-6 flex items-start justify-between gap-4 flex-wrap">
         <div>
           <div className="text-xs font-medium text-mute mb-1">Referral capture · employee → candidate</div>

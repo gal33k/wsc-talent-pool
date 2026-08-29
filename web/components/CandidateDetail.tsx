@@ -46,9 +46,9 @@ export default function CandidateDetail({
         className="bg-white w-full max-w-[680px] h-full overflow-y-auto overscroll-contain shadow-2xl fade-up"
       >
         {/* Sticky header */}
-        <div className="sticky top-0 bg-white border-b border-border z-10 px-6 py-4">
-          <div className="flex items-start justify-between gap-4">
-            <div className="flex items-start gap-4 min-w-0">
+        <div className="sticky top-0 bg-white border-b border-border z-10 px-4 md:px-6 py-4">
+          <div className="flex items-start justify-between gap-3 md:gap-4">
+            <div className="flex items-start gap-3 md:gap-4 min-w-0">
               <Avatar name={candidate.name} size="xl" />
               <div className="min-w-0">
                 <h2 id="dossier-name" className="text-lg font-semibold text-text leading-tight">
@@ -105,7 +105,7 @@ export default function CandidateDetail({
           </div>
         </div>
 
-        <div className="px-6 py-6 space-y-7">
+        <div className="px-4 md:px-6 py-5 md:py-6 space-y-6 md:space-y-7">
           <CandidateActions
             candidateId={candidate.id}
             jobId={job.job_id}

@@ -50,16 +50,16 @@ export default function JobsIndex() {
     });
   }, [pool, fitWeights, warmthWeights, tiers, isBlacklisted, isOverridden]);
 
-  if (loading) return <main className="p-8 text-mute text-sm">Loading pipeline…</main>;
-  if (error) return <main className="p-8 text-red-600 text-sm">Error: {error}</main>;
-  if (!pool) return <main className="p-8">No data.</main>;
+  if (loading) return <main className="p-6 md:p-8 text-mute text-sm">Loading pipeline…</main>;
+  if (error) return <main className="p-6 md:p-8 text-red-600 text-sm">Error: {error}</main>;
+  if (!pool) return <main className="p-6 md:p-8">No data.</main>;
 
   const admitted = pool.candidates.filter(c => c.gate.decision === "ADMIT").length;
   const totalShortlisted = jobSummaries.reduce((s, j) => s + j.total, 0);
   const totalCall = jobSummaries.reduce((s, j) => s + j.counts.call, 0);
 
   return (
-    <main className="max-w-[1400px] mx-auto px-8 py-8">
+    <main className="max-w-[1400px] mx-auto px-4 py-5 md:px-8 md:py-8">
       <section className="mb-8 rounded-2xl bg-gradient-to-br from-stone-900 via-stone-900 to-emerald-950 text-stone-100 p-8 md:p-10 overflow-hidden relative shadow-lg">
         {/* Warm ambient glow — top-right amber wash simulating studio light */}
         <div className="absolute -top-24 -right-24 w-96 h-96 rounded-full opacity-30 pointer-events-none blur-3xl" style={{

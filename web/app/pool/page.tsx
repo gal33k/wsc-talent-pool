@@ -95,9 +95,9 @@ export default function TalentPoolAudit() {
       .filter(c => !ql || c.name.toLowerCase().includes(ql) || c.company.toLowerCase().includes(ql) || (c.title || "").toLowerCase().includes(ql));
   }, [pool, sessionCandidates, conf, decision, source, q, getGateOverride]);
 
-  if (loading) return <main className="p-8 text-mute text-sm">Loading pool…</main>;
-  if (error) return <main className="p-8 text-red-600 text-sm">Error: {error}</main>;
-  if (!pool) return <main className="p-8">No data.</main>;
+  if (loading) return <main className="p-6 md:p-8 text-mute text-sm">Loading pool…</main>;
+  if (error) return <main className="p-6 md:p-8 text-red-600 text-sm">Error: {error}</main>;
+  if (!pool) return <main className="p-6 md:p-8">No data.</main>;
 
   const conferences = Array.from(new Set(pool.candidates.map(c => c.conference.name)));
   const counts = pool.candidates.reduce((acc, c) => {
@@ -107,7 +107,7 @@ export default function TalentPoolAudit() {
   }, {} as Record<string, number>);
 
   return (
-    <main className="max-w-[1400px] mx-auto px-8 py-8">
+    <main className="max-w-[1400px] mx-auto px-4 py-5 md:px-8 md:py-8">
       <header className="mb-6">
         <div className="text-xs font-medium text-mute mb-1">Decision A · pool admission audit</div>
         <h1 className="text-2xl font-semibold text-text tracking-tight">Talent pool</h1>
