@@ -210,7 +210,11 @@ low_confidence_fit_ceiling: 60
 # Priority tiers — the recruiter's action list
 # -----------------------------------------------------------------------------
 tiers:
-  call_this_week:  {min_fit: 70, min_warmth: 50}   # ask for a warm intro
+  # Recalibrated for the new Signal weights (peer_vouch got weight 35 but the
+  # seeded pool has no active vouches yet — a real production run would).
+  # min_warmth = 20 is achievable through culture_affinity + notes + mutual +
+  # recency alone; a peer vouch pushes it well above that.
+  call_this_week:  {min_fit: 70, min_warmth: 20}   # ask for a warm intro
   direct_outreach: {min_fit: 70}                    # cold, personalise from evidence
   nurture:         {min_fit: 45}                    # adjacent, re-score next role
   # anything below min_fit=45 is not in the default view but is retrievable
