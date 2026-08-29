@@ -108,13 +108,13 @@ function TLDR({ pool }: { pool: ReturnType<typeof usePool>["pool"] }) {
       <div className="rounded-2xl bg-gradient-to-br from-indigo-50 via-white to-violet-50 border border-indigo-100 p-5 md:p-8">
         <div className="text-xs uppercase tracking-wider text-indigo-700 font-semibold mb-4">TL;DR</div>
         <p className="text-2xl text-text leading-snug font-medium mb-4">
-          We turn <em>badge scans, employee referrals, and inbound CVs</em> into a queryable talent
-          pool — then, for each open role, we rank the pool on <em>how well someone fits</em> and{" "}
+          We turn <em>badge scans, referrals, and inbound CVs</em> into a searchable talent pool.
+          When a role opens, we rank the pool on <em>how well someone fits</em> and{" "}
           <em>how easy they are to reach</em>.
         </p>
         <p className="text-base text-dim leading-relaxed">
-          Every score has an evidence trail a recruiter can defend. Nothing is a black box. A recruiter
-          can always override the model, and their override sticks — no LLM decides who gets hired.
+          Every score can be traced back to the evidence behind it. No black boxes. Recruiters can
+          override any decision and their call sticks — no AI decides who gets hired.
         </p>
       </div>
 
@@ -141,11 +141,11 @@ function TLDR({ pool }: { pool: ReturnType<typeof usePool>["pool"] }) {
           <PersonaCard title="Recruiter"    hint="picks up the phone this week" href="/">
             Open positions grid → shortlist per role. Tier chip tells them who to call today.
           </PersonaCard>
-          <PersonaCard title="Head of HR"   hint="tracks channel & role KPIs"   href="/analytics/">
-            Admission rate by conference, funnel conversion, override quality — with the actual BigQuery SQL.
+          <PersonaCard title="Head of HR"   hint="tracks the numbers"           href="/analytics/">
+            How each conference is performing, how many contacts convert to shortlists, how often recruiters override.
           </PersonaCard>
-          <PersonaCard title="WSC engineer" hint="refers & introduces"          href="/referrals/">
-            Referral form + Intros view (the reverse-referral: system → employee it's asking to intro).
+          <PersonaCard title="WSC engineer" hint="refers &amp; introduces"       href="/referrals/">
+            Submit a referral, or accept a request to introduce someone the system found through you.
           </PersonaCard>
         </div>
       </div>
@@ -181,14 +181,15 @@ function HowItWorks() {
         <NarrativeStep
           num={1}
           title="Source"
-          lead="Where every contact comes in."
+          lead="Where every new person comes in."
           seeIt="/capture/"
           seeLabel="Capture a lead"
         >
           <p>
-            Three doors — <strong>conference badge scans</strong>, <strong>employee referrals</strong>,
-            <strong> inbound CVs</strong>. Same downstream pipeline; only the <em>source_channel</em>
-            tag differs, and referrals earn a vouched-lift on the signal axis.
+            Three doors: <strong>badge scans</strong> from conferences,{" "}
+            <strong>referrals</strong> from WSC employees, and <strong>inbound CVs</strong>. All
+            three feed the same pipeline. Referrals also carry a small trust boost, since a
+            colleague is vouching.
           </p>
         </NarrativeStep>
 
@@ -200,51 +201,54 @@ function HowItWorks() {
           seeLabel="Watch enrichment run"
         >
           <p>
-            Clay pulls the LinkedIn profile via its provider waterfall (Apollo → PDL → Sales-Nav-backed):
-            past employers, recent posts, publications, and connections. The one that pays off:
-            cross-check the candidate's connections against the WSC employee directory.{" "}
-            <em>Who do we already know that knows them?</em>
+            We look the person up on LinkedIn and pull their past employers, recent posts, and
+            connections. The most useful thing we do here: check their connections against the
+            WSC employee list. <em>Who do we already know that knows them?</em>
           </p>
         </NarrativeStep>
 
         <NarrativeStep
           num={3}
-          title="Gate — decision A"
-          lead="Is this person talent we hire? Three independent signals, 2-of-3 admits."
+          title="Gate — is this person talent we hire?"
+          lead="Three simple checks. Two out of three must pass."
         >
           <p>
-            <strong>Role family from title</strong>, <strong>skills evidence</strong>, and{" "}
-            <strong>sports/media proximity</strong>. No single signal decides. Every excluded person
-            carries a reason string a recruiter can read to them.
+            (1) Their <strong>job title</strong> matches a role we hire.{" "}
+            (2) Their <strong>listed skills</strong> back that up.{" "}
+            (3) They come from an <strong>adjacent industry</strong> (sports, broadcast, video).
+            No single check decides. Anyone we reject gets a written reason a recruiter could
+            read out loud.
           </p>
         </NarrativeStep>
 
         <NarrativeStep
           num={4}
-          title="Score — decision B"
-          lead="Two scores per role. Never combined."
+          title="Score — per open role"
+          lead="Two scores per person, per role. Never mashed into one."
           seeIt="/jobs/JOB001/"
           seeLabel="Open the shortlist"
         >
           <p>
-            <strong>Fit</strong> — competence only (skills, family, seniority, domain).{" "}
-            <strong>Signal</strong> — endorsements + team overlap + culture + reachability (peer vouches, shared employers, recency, notes, mutuals).
-            A single &ldquo;compatibility rate&rdquo; would bury strong candidates with no mutual
-            connections.
+            <strong>Fit</strong> is about competence — can they do the job? (skills, seniority,
+            domain). <strong>Signal</strong> is about reach — can we get to them? (who vouches,
+            who overlaps, how recent the touch). We keep them separate on purpose: mashing them
+            together buries strong people with no network and floats well-connected mismatches
+            to the top.
           </p>
         </NarrativeStep>
 
         <NarrativeStep
           num={5}
           title="Shortlist"
-          lead="Ranked list per role, with the person best placed to make the intro."
+          lead="A ranked list per role, and who inside WSC is best placed to make the intro."
           seeIt="/pool/"
           seeLabel="Audit the pool"
         >
           <p>
-            Sorted by fit, tier as a label. Each card has a one-click <em>Ask X to introduce</em>{" "}
-            that lands in the outreach queue. Recruiter overrides win — the model can't put a
-            &ldquo;not-a-fit&rdquo; candidate back on the list. Exportable to CSV.
+            Sorted by fit, tagged by tier (<em>Call this week</em>, <em>Direct outreach</em>,{" "}
+            <em>Nurture</em>). Each card has a one-click <em>&ldquo;Ask X to introduce&rdquo;</em>{" "}
+            button. If a recruiter marks someone as not-a-fit, they stay off future shortlists —
+            the recruiter always wins over the model.
           </p>
         </NarrativeStep>
       </div>
@@ -579,43 +583,43 @@ function DesignDoc({ pool: _pool }: { pool: ReturnType<typeof usePool>["pool"] }
 
         <Section id="architecture" num={1} title="Two decisions, not one">
           <p>
-            The single most common failure mode is one big scoring function. Instead the pipeline
-            splits into <strong>two separate decisions</strong>, run at different times, with
-            different inputs and different owners.
+            The most common way this kind of tool fails: one big scoring function that mashes
+            everything together. We split it into <strong>two separate decisions</strong>, run at
+            different times, with different inputs.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-5">
-            <DecisionCard letter="A" tint="indigo" title="Pool admission" subtitle="Job-agnostic · at ingest"
+            <DecisionCard letter="A" tint="indigo" title="Pool admission" subtitle="Doesn't care about open roles · runs at ingest"
               bullets={[
-                "Is this person talent in a domain we hire in?",
-                "Runs once per person when a conference export lands",
-                "Output: role_family + gate decision + reason",
-                "Production: writes back to HubSpot as contact properties",
+                "Is this person talent we'd hire — for anything?",
+                "Runs once per person, the moment new data lands",
+                "Answer: yes / borderline / no, plus a reason",
+                "In production: writes back to HubSpot",
               ]} />
-            <DecisionCard letter="B" tint="emerald" title="Job match" subtitle="Per job_id · on demand"
+            <DecisionCard letter="B" tint="emerald" title="Job match" subtitle="One role at a time · runs on demand"
               bullets={[
-                "Given JOB001, who does the recruiter call this week?",
-                "Runs against the clean pool — cheap re-pass, no re-enrichment",
-                "Output: fit_score, signal_score, best_intro_path",
-                "Production: writes shortlisted rows into Comeet",
+                "For this specific role, who should we call?",
+                "Re-scores the already-admitted pool — no re-enrichment",
+                "Answer: fit + signal + who's best placed to intro",
+                "In production: pushes the shortlist into Comeet",
               ]} />
           </div>
           <Callout tint="indigo">
-            Expensive work — enrichment, taxonomy classification, embeddings if we add them —
-            happens once <em>per person</em>, not once per <em>person × job</em>. That is the whole
-            answer to the &ldquo;at scale&rdquo; question in the brief.
+            The expensive work — LinkedIn pulls, classification, any future AI — happens once{" "}
+            <em>per person</em>, not once <em>per person × per role</em>. When you have 5,000
+            people and 40 open roles, that's the difference between 5,000 pulls and 200,000.
           </Callout>
         </Section>
 
         <Section id="gate" num={2} title="Decision A — the gate">
           <p>
-            Three <em>independent</em> signals evaluated per candidate at ingest. Requiring 2-of-3
-            to agree means no single noisy field decides. Every decision carries a reason string, so
-            a recruiter can audit <em>why</em> someone was kept out.
+            Three simple checks about the person, done independently. Two out of three must
+            pass. Every rejection comes with a written reason, so a recruiter can see exactly
+            why someone was kept out — no black box.
           </p>
           <div className="space-y-3 my-5">
-            <SignalRow num={1} name="Role family from title" detail="Pattern list in taxonomy.yaml. Order-sensitive first-match-wins. Ten families including a dedicated not_talent bucket." example={`"Senior Data Engineer" → data_engineering`} />
-            <SignalRow num={2} name="Skills evidence" detail="Does the candidate's top_skills list contain at least one skill that confirms the claimed family?" example="ml_cv: computer vision · pytorch · yolo · deep learning" />
-            <SignalRow num={3} name="Sports / media proximity" detail="Lexicon hits across industry, current + past companies, and skills. Compound tokens only for 'media' (no 'Social Media' false positives)." example={`"Broadcasting" industry → hit on "broadcast" keyword`} />
+            <SignalRow num={1} name="Job title fits a role we hire" detail="We match the candidate's title against a list of patterns for the ten families we hire in (ML, backend, product, data eng, etc.). Anything unrecognised falls into a 'not_talent' bucket." example={`"Senior Data Engineer" → data engineering`} />
+            <SignalRow num={2} name="Their skills back that up" detail="At least one of the skills they list should confirm the job family. So an 'ML Engineer' title needs at least one ML skill (PyTorch, TensorFlow, computer vision, etc.) on their profile." example="ML computer-vision needs: computer vision · pytorch · yolo · deep learning" />
+            <SignalRow num={3} name="Adjacent industry" detail="Do they come from sports, broadcast, streaming, or a media-adjacent world? We check their industry, current + past companies, and skills against a lexicon of relevant terms and known companies." example={`"Broadcasting" industry → adjacent`} />
           </div>
           <div className="grid grid-cols-3 gap-3 my-5">
             <GateResult n="2 of 3" label="Admit"   tone="emerald" />
@@ -624,18 +628,17 @@ function DesignDoc({ pool: _pool }: { pool: ReturnType<typeof usePool>["pool"] }
           </div>
 
           <h4 className="text-sm font-semibold text-text mt-8 mb-2">
-            The gate stays job-agnostic — but the pool view can filter by &ldquo;currently hiring&rdquo;
+            The gate ignores open roles on purpose — but the pool page can still filter by them
           </h4>
           <p>
-            The gate answers &ldquo;is this person talent&rdquo; without looking at which roles are
-            open today. That separation is what makes the pool useful <em>next</em> quarter, when
-            today&rsquo;s roles are filled and new ones open. A hold doesn&rsquo;t suddenly become
-            an admit because we opened a matching job — that would couple the gate to hiring state
-            and make its output non-reproducible over time.
+            The gate just asks &ldquo;is this talent?&rdquo; without looking at what roles are
+            open today. That&rsquo;s deliberate — it keeps the pool useful <em>next</em> quarter
+            when today&rsquo;s roles are filled and new ones open. Someone borderline today
+            doesn&rsquo;t magically pass just because we opened a matching role.
           </p>
           <p>
-            For the recruiter on Monday morning, two practical questions surface — both answered
-            without a pipeline re-run:
+            But on any given Monday, a recruiter wants two things from this design — and they
+            get both without a full pipeline re-run:
           </p>
           <ol className="space-y-2 my-3 pl-5 list-decimal">
             <li>
@@ -688,10 +691,10 @@ function DesignDoc({ pool: _pool }: { pool: ReturnType<typeof usePool>["pool"] }
 
         <Section id="scoring" num={3} title="Decision B — two scores, never one">
           <p>
-            Collapsing competence and reachability into a single &ldquo;compatibility rate&rdquo; is
-            exactly how strong candidates with no network get buried and well-connected mismatches
-            float to the top. Fit and Signal stay separate — the tier assignment reads them
-            independently.
+            Mashing competence and reachability into one &ldquo;compatibility rate&rdquo; is exactly
+            how strong candidates with no network get buried, and how well-connected mismatches
+            float to the top. So we keep them separate — one score for skills, one for reach — and
+            the tier label is computed by reading them independently.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-5">
             <ScoreTable title="Fit" subtitle="Competence only" tone="indigo" rows={[
@@ -720,9 +723,9 @@ function DesignDoc({ pool: _pool }: { pool: ReturnType<typeof usePool>["pool"] }
 
         <Section id="taxonomy" num={4} title="The taxonomy">
           <p>
-            Every classification rule lives in one YAML file. A recruiter can add a synonym, teach
-            the system a new role family, or exclude a generic-employer token — without touching
-            code.
+            Every rule the system uses to classify people lives in one file. A recruiter can add a
+            skill synonym, teach the system a new role family, or block a too-generic employer
+            (like &ldquo;startup&rdquo;) — no engineer required.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 my-5">
             {TAX_BLOCKS.map(b => (
@@ -742,72 +745,68 @@ function DesignDoc({ pool: _pool }: { pool: ReturnType<typeof usePool>["pool"] }
           </Callout>
         </Section>
 
-        <Section id="reveal" num={5} title="Honest scope of the enrichment reveal">
+        <Section id="reveal" num={5} title="What the enrichment animation actually shows">
           <p>
-            The live enrichment animation on <em>/capture</em> and <em>/referrals</em> shows five
-            categories of extracted signal: <strong>past employers (with a notable-tier flag)</strong>,{" "}
-            <strong>recent posts</strong>, <strong>publications, talks &amp; repos</strong>,{" "}
-            <strong>warm-intro paths against the WSC directory</strong>, and the final <strong>gate + fit
-            scoring</strong>.
+            When you submit a lead on <em>/capture</em> or <em>/referrals</em>, an animation plays
+            showing what LinkedIn tells us about the person: past employers, recent posts,
+            publications, connections against the WSC directory, and the final score.
           </p>
           <p>
-            Of these, <strong>only skills, mutual connections, shared employers, and the gate + fit
-            scoring are computed by the shipped Python pipeline</strong> from the CSVs. The other
-            reveal cards — posts, publications, employer-tier flag — illustrate what a production
-            enrichment adapter <em>would</em> return (Clay + GitHub API + a Featured-section
-            parse), rendered from a clearly-labeled example payload so the recruiter can see the
-            shape of the data. They are not scored today; the UI marks each such reveal &ldquo;example
-            enrichment output.&rdquo;
+            Being honest about what&rsquo;s real: <strong>skills, connections, shared employers,
+            and the score</strong> come from the actual data. The <em>posts, publications, and
+            employer-tier flag</em> are shown as examples of what a production enrichment tool
+            would return — clearly labelled &ldquo;example output&rdquo; so nobody thinks they&rsquo;re
+            scoring real posts today.
           </p>
           <p>
-            Why keep them visible instead of dropping them: enrichment is the invisible half of a
-            talent-pool pipeline. Showing the shape recruiters would see makes the credit spend,
-            latency, and privacy trade-offs concrete — and marks the exact swap surface where a real
-            Clay + Claude-normalisation call plugs in.
+            Why include the example cards at all? Because enrichment is the invisible half of
+            this kind of tool. Showing what the recruiter would see in production makes the
+            trade-offs (cost, speed, privacy) concrete, and marks exactly where a real Clay
+            call would plug in.
           </p>
         </Section>
 
         <Section id="ai" num={6} title="Where AI belongs">
           <p>
-            This is an <strong>AI Solution Manager</strong> take-home. The judgement being assessed
-            is not &ldquo;did you use an LLM&rdquo; — it's &ldquo;did you know where to put one.&rdquo;
+            This role is <strong>AI Solutions Manager</strong>. The judgement isn&rsquo;t
+            &ldquo;did you use an LLM&rdquo; — it&rsquo;s &ldquo;did you know where to put one,
+            and where not to.&rdquo;
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-5">
             <div className="rounded-lg border border-emerald-200 bg-emerald-50/50 p-4">
               <div className="text-xs font-semibold text-emerald-800 mb-2 flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-600" /> Model describes
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-600" /> AI helps here
               </div>
               <ul className="text-xs text-emerald-900/80 space-y-1.5">
-                <li>Title canonicalisation → role family (offline batch)</li>
-                <li>Skill synonym expansion (generated, reviewed, committed)</li>
-                <li>Parsing free-text notes into structured tags</li>
-                <li>why_summary + outreach_draft prose from evidence dict</li>
+                <li>Cleaning up messy titles (offline, batched)</li>
+                <li>Suggesting new skill synonyms (a human reviews and approves)</li>
+                <li>Turning free-text notes into structured tags</li>
+                <li>Drafting the outreach email — a human still sends it</li>
               </ul>
             </div>
             <div className="rounded-lg border border-rose-200 bg-rose-50/50 p-4">
               <div className="text-xs font-semibold text-rose-800 mb-2 flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-rose-600" /> Deterministic decides
+                <span className="w-1.5 h-1.5 rounded-full bg-rose-600" /> AI does NOT decide
               </div>
               <ul className="text-xs text-rose-900/80 space-y-1.5">
-                <li>The gate — an excluded person deserves a reason a human wrote</li>
-                <li>The final score — non-reproducible ranking is a compliance problem</li>
-                <li>Tier assignment</li>
-                <li>Any decision with legal or hiring effect (GDPR Art. 22)</li>
+                <li>Who&rsquo;s admitted to the pool — deterministic rules only</li>
+                <li>The final ranking — if you can&rsquo;t reproduce it, it&rsquo;s a compliance issue</li>
+                <li>The tier label (Call / Direct outreach / Nurture)</li>
+                <li>Anything with hiring or legal effect — GDPR Article 22</li>
               </ul>
             </div>
           </div>
         </Section>
 
-        <Section id="storage" num={7} title="Queryable pool — mocked BigQuery">
+        <Section id="storage" num={7} title="Where the pool lives — mocked BigQuery">
           <p>
-            The pool needs to be queryable. Not a CSV, not a JSON blob — a real analytical store that
-            recruiters can slice by conference, department, family, tier, or timestamp.
+            The pool needs to be searchable — not a static CSV or JSON file, but a proper database
+            that recruiters can slice by conference, department, family, tier, or date.
           </p>
           <p>
-            This build uses <strong>BigQuery mocked as an adapter</strong>
-            {" "}(<code>src/integrations/mock_bigquery.py</code>). Every meaningful event writes a row.
-            The exact SQL is shown on <em>/analytics · Activity</em>. Swapping to real BigQuery is a
-            one-file change.
+            This build uses <strong>BigQuery, mocked as an adapter</strong>. Every meaningful
+            event writes a row; the exact SQL is visible on <em>/analytics · Activity</em>. To
+            swap in the real BigQuery, change one file.
           </p>
           <div className="my-5 rounded-lg border border-border bg-slate-50 p-4">
             <div className="text-xs font-semibold text-text mb-2">Tables</div>
@@ -824,9 +823,10 @@ function DesignDoc({ pool: _pool }: { pool: ReturnType<typeof usePool>["pool"] }
           </div>
         </Section>
 
-        <Section id="hitl" num={8} title="Human in the loop — recruiter overrides AI">
+        <Section id="hitl" num={8} title="The recruiter always wins over the model">
           <p>
-            An AI ranking without a human override is a compliance problem waiting to happen.
+            An AI ranking without a human override button is a compliance problem waiting to
+            happen. Two override actions cover the common cases:
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-5">
             <div className="rounded-lg border border-amber-200 bg-amber-50/40 p-4">

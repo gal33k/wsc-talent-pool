@@ -129,14 +129,45 @@ export default function CandidateCard({
               contribution to the final fit. Height = raw component × weight. */}
           <FitBreakdownMiniBars components={fit.components} total={fit.score_default} />
 
-          <div className="flex flex-wrap gap-1.5 mt-3">
-            {fit.matched_required.map(s => <Chip key={"m" + s} variant="success">{s}</Chip>)}
-            {fit.matched_required_family.map(s => <Chip key={"f" + s} variant="family">{s} · family</Chip>)}
-            {fit.missing_required.map(s => (
-              <Chip key={"x" + s} variant={missingCritical.includes(s) ? "flag" : "outlined"}>
-                {missingCritical.includes(s) ? "✗ " : ""}{s}
-              </Chip>
-            ))}
+          <div className="mt-3">
+            <div className="flex items-center gap-3 mb-1.5 text-[10px] uppercase tracking-wider text-mute font-semibold">
+              <span>Required skills for this role</span>
+              <span className="text-mute/60 font-normal normal-case tracking-normal">
+                {fit.matched_required.length + fit.matched_required_family.length} of {fit.matched_required.length + fit.matched_required_family.length + fit.missing_required.length} covered
+              </span>
+            </div>
+            <div className="flex flex-wrap gap-1.5">
+              {fit.matched_required.map(s => (
+                <span key={"m" + s} className="inline-flex items-center gap-1 rounded-md bg-emerald-600 text-white text-[11px] font-medium px-2 py-0.5" title={`Has ${s} — required skill matched exactly`}>
+                  <svg className="w-2.5 h-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={3.5} strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                  {s}
+                </span>
+              ))}
+              {fit.matched_required_family.map(s => (
+                <span key={"f" + s} className="inline-flex items-center gap-1 rounded-md bg-amber-50 border border-amber-300 text-amber-900 text-[11px] font-medium px-2 py-0.5" title={`Has an adjacent skill in the ${s} family — partial credit`}>
+                  <span className="text-amber-700 font-bold">~</span>
+                  {s}
+                  <span className="text-[9px] text-amber-700 font-normal uppercase tracking-wider">family</span>
+                </span>
+              ))}
+              {fit.missing_required.map(s => {
+                const critical = missingCritical.includes(s);
+                return (
+                  <span
+                    key={"x" + s}
+                    className={`inline-flex items-center gap-1 rounded-md text-[11px] font-medium px-2 py-0.5 ${
+                      critical
+                        ? "bg-rose-50 border border-rose-300 text-rose-800"
+                        : "bg-slate-50 border border-slate-200 text-slate-500 line-through decoration-slate-400/60"
+                    }`}
+                    title={critical ? `Missing ${s} — flagged critical for this role` : `Missing ${s} — no evidence on the candidate's profile`}
+                  >
+                    <svg className={`w-2.5 h-2.5 no-underline ${critical ? "text-rose-700" : "text-slate-400"}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={3.5} strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    <span>{s}</span>
+                  </span>
+                );
+              })}
+            </div>
           </div>
 
           {introSource ? (

@@ -152,9 +152,25 @@ export default function CandidateDetail({
           {hasFit ? (
             <Section title="Required skills">
               <div className="flex flex-wrap gap-1.5">
-                {fit!.matched_required.map(s => <Chip key={s} variant="success">✓ {s}</Chip>)}
-                {fit!.matched_required_family.map(s => <Chip key={s + "f"} variant="family">~ {s} (family)</Chip>)}
-                {fit!.missing_required.map(s => <Chip key={s + "x"} variant="outlined">✗ {s}</Chip>)}
+                {fit!.matched_required.map(s => (
+                  <span key={s} className="inline-flex items-center gap-1 rounded-md bg-emerald-600 text-white text-[11px] font-medium px-2 py-0.5" title={`Has ${s} — required skill matched exactly`}>
+                    <svg className="w-2.5 h-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={3.5} strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    {s}
+                  </span>
+                ))}
+                {fit!.matched_required_family.map(s => (
+                  <span key={s + "f"} className="inline-flex items-center gap-1 rounded-md bg-amber-50 border border-amber-300 text-amber-900 text-[11px] font-medium px-2 py-0.5" title={`Has an adjacent skill in the ${s} family — partial credit`}>
+                    <span className="text-amber-700 font-bold">~</span>
+                    {s}
+                    <span className="text-[9px] text-amber-700 font-normal uppercase tracking-wider">family</span>
+                  </span>
+                ))}
+                {fit!.missing_required.map(s => (
+                  <span key={s + "x"} className="inline-flex items-center gap-1 rounded-md bg-slate-50 border border-slate-200 text-slate-500 text-[11px] font-medium px-2 py-0.5 line-through decoration-slate-400/60" title={`Missing ${s} — no evidence on the candidate's profile`}>
+                    <svg className="w-2.5 h-2.5 text-slate-400 no-underline" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={3.5} strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    <span>{s}</span>
+                  </span>
+                ))}
               </div>
               {fit!.matched_nice_to_have.length > 0 && (
                 <div className="mt-3">
