@@ -13,6 +13,7 @@ const LINKS = [
   { href: "/intros/",       label: "Introductions",  icon: "link" as const,      section: "recruit" },
   { href: "/analytics/",    label: "Analytics",      icon: "gauge" as const,     section: "system" },
   { href: "/integrations/", label: "Integrations",   icon: "terminal" as const,  section: "system" },
+  { href: "/taxonomy/",     label: "Taxonomy",       icon: "sliders" as const,   section: "system" },
   { href: "/methodology/",  label: "How it works",   icon: "book" as const,      section: "system" },
 ];
 
