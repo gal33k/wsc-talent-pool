@@ -107,7 +107,17 @@ export default function EnrichmentReveal({
           </div>
           <div className="text-lg font-semibold text-text">{playback.candidateName}</div>
           <div className="text-xs text-mute font-mono truncate max-w-md">
-            {playback.linkedinUrl || "(no LinkedIn URL — capping evidence signal at low confidence)"}
+            {playback.linkedinUrl ? (
+              <a
+                href={playback.linkedinUrl.startsWith("http") ? playback.linkedinUrl : `https://${playback.linkedinUrl}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-emerald-700 hover:underline"
+                title="Open on LinkedIn"
+              >
+                {playback.linkedinUrl}
+              </a>
+            ) : "(no LinkedIn URL — capping evidence signal at low confidence)"}
           </div>
           {playback.channel === "referral" && playback.referrer && (
             <div className="text-xs text-mute mt-1">

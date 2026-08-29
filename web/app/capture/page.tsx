@@ -17,12 +17,20 @@ const CONFERENCES = [
 // Example badge-scan payloads — a mock OCR would return one of these from
 // a real badge photo. Clearly labelled as examples in the UI; nothing here
 // persists into the pool without the recruiter hitting "Enrich & score".
+//
+// The linkedinUrl points at a LinkedIn search URL (not a fake profile) so
+// clicking it lands on a real, working page — the recruiter's actual next
+// action for an unknown person from a badge is "search LinkedIn for them".
+function _searchUrl(name: string, company: string): string {
+  const q = encodeURIComponent(`${name} ${company}`);
+  return `https://www.linkedin.com/search/results/people/?keywords=${q}`;
+}
 const BADGE_EXAMPLES = [
-  { name: "Alex Chen",     title: "Senior ML Engineer",       company: "DAZN",         linkedinUrl: "linkedin.com/in/alex-chen-example",       note: "Video ML at broadcast latency; came by asking about real-time pose estimation." },
-  { name: "Priya Sharma",  title: "Backend Engineer",         company: "Netflix",      linkedinUrl: "linkedin.com/in/priya-sharma-example",    note: "Owns streaming-service backend; interested in our Kafka footprint." },
-  { name: "Marco Rossi",   title: "Video AI Engineer",        company: "Sky Sports",   linkedinUrl: "linkedin.com/in/marco-rossi-example",     note: "Sports broadcast production; wants to compare our object-detection stack." },
-  { name: "Sofia Nakamura", title: "Sports Data Analyst",     company: "Opta / Stats Perform", linkedinUrl: "linkedin.com/in/sofia-nakamura-example", note: "Sports analytics; asked about our data pipeline architecture." },
-];
+  { name: "Alex Chen",      title: "Senior ML Engineer",       company: "DAZN",                 note: "Video ML at broadcast latency; came by asking about real-time pose estimation." },
+  { name: "Priya Sharma",   title: "Backend Engineer",         company: "Netflix",              note: "Owns streaming-service backend; interested in our Kafka footprint." },
+  { name: "Marco Rossi",    title: "Video AI Engineer",        company: "Sky Sports",           note: "Sports broadcast production; wants to compare our object-detection stack." },
+  { name: "Sofia Nakamura", title: "Sports Data Analyst",      company: "Opta / Stats Perform", note: "Sports analytics; asked about our data pipeline architecture." },
+].map(e => ({ ...e, linkedinUrl: _searchUrl(e.name, e.company) }));
 
 export default function CaptureLead() {
   const { pool, loading, error, fitWeights, logBq } = usePool();
