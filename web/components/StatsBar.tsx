@@ -20,12 +20,12 @@ export default function StatsBar({ stats }: { stats: Stat[] }) {
           <div className="flex items-center justify-between mb-2">
             <div className="text-[11px] uppercase tracking-wider text-mute font-medium">{s.label}</div>
             {s.iconName && (
-              <div className={`w-6 h-6 rounded-md flex items-center justify-center ${s.accent ? "bg-indigo-50 text-indigo-600" : "bg-slate-50 text-slate-500"}`}>
+              <div className={`w-6 h-6 rounded-md flex items-center justify-center ${s.accent ? "bg-amber-50 text-amber-700" : "bg-stone-50 text-stone-500"}`}>
                 <Icon name={s.iconName} className="w-3.5 h-3.5" strokeWidth={2} />
               </div>
             )}
           </div>
-          <div className={`text-2xl font-semibold tabular leading-tight ${s.accent ? "text-indigo-700" : "text-text"} ${
+          <div className={`text-2xl font-semibold tabular leading-tight ${s.accent ? "text-amber-700" : "text-text"} ${
             typeof s.value === "string" && s.value.length > 12 ? "text-lg" : ""
           }`}>
             {s.value}

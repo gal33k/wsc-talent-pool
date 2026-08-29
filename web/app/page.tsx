@@ -60,32 +60,36 @@ export default function JobsIndex() {
 
   return (
     <main className="max-w-[1400px] mx-auto px-8 py-8">
-      <section className="mb-8 rounded-2xl bg-gradient-to-br from-indigo-600 via-indigo-700 to-violet-800 text-white p-8 md:p-10 overflow-hidden relative">
-        <div className="absolute inset-0 opacity-[0.08] pointer-events-none" style={{
+      <section className="mb-8 rounded-2xl bg-gradient-to-br from-stone-900 via-stone-900 to-amber-950 text-stone-100 p-8 md:p-10 overflow-hidden relative shadow-lg">
+        {/* Warm ambient glow — top-right amber wash simulating studio light */}
+        <div className="absolute -top-24 -right-24 w-96 h-96 rounded-full opacity-30 pointer-events-none blur-3xl" style={{
+          background: "radial-gradient(circle, rgba(217,119,6,0.6) 0%, transparent 70%)",
+        }} />
+        <div className="absolute inset-0 opacity-[0.04] pointer-events-none" style={{
           backgroundImage: "radial-gradient(circle at 20% 20%, white 1px, transparent 1px), radial-gradient(circle at 80% 60%, white 1px, transparent 1px)",
           backgroundSize: "50px 50px, 70px 70px",
         }} />
         <div className="relative flex flex-col md:flex-row md:items-end md:justify-between gap-6">
           <div>
-            <div className="text-[11px] uppercase tracking-[0.18em] font-semibold text-indigo-200/80 mb-3">
+            <div className="text-[11px] uppercase tracking-[0.18em] font-semibold text-amber-500/90 mb-3">
               WSC Talent Intelligence · Take-home 2026
             </div>
-            <h1 className="text-3xl md:text-[42px] font-semibold display-tight leading-[1.05] mb-3">
-              Turn your best channels into <span className="font-serif italic text-indigo-100">the shortlist</span> for every open role.
+            <h1 className="text-3xl md:text-[42px] font-semibold display-tight leading-[1.05] mb-3 text-white">
+              Turn your best channels into <span className="font-serif italic text-amber-300">the shortlist</span> for every open role.
             </h1>
-            <p className="text-sm md:text-[15px] text-indigo-100/80 leading-relaxed max-w-2xl mb-4">
+            <p className="text-sm md:text-[15px] text-stone-300 leading-relaxed max-w-2xl mb-5">
               One pipeline, three channels — conferences, employee referrals, and inbound CVs.
-              For each role you open, we rank the pool on <em className="text-white/90 not-italic font-medium">fit</em> and{" "}
-              <em className="text-white/90 not-italic font-medium">warmth</em> — and name the WSC
+              For each role you open, we rank the pool on <em className="text-white not-italic font-medium">fit</em> and{" "}
+              <em className="text-white not-italic font-medium">warmth</em> — and name the WSC
               employee best placed to make the intro.
             </p>
             <Link
               href="/jobs/JOB001/"
-              className="inline-flex items-center gap-2 bg-white/95 text-indigo-800 hover:bg-white text-sm font-semibold px-4 py-2 rounded-lg shadow-sm transition-colors"
+              className="inline-flex items-center gap-2 bg-amber-500 text-stone-900 hover:bg-amber-400 text-sm font-semibold px-4 py-2.5 rounded-lg shadow-md transition-colors"
             >
-              <Icon name="play" className="w-4 h-4" strokeWidth={2.25} />
+              <Icon name="play" className="w-4 h-4" strokeWidth={2.5} />
               Open the demo shortlist — JOB001 · Senior ML Engineer
-              <Icon name="arrow-right" className="w-4 h-4" strokeWidth={2.25} />
+              <Icon name="arrow-right" className="w-4 h-4" strokeWidth={2.5} />
             </Link>
           </div>
           <div className="flex items-center gap-5 md:gap-8 flex-shrink-0 stagger">
@@ -123,28 +127,28 @@ export default function JobsIndex() {
           <Link
             key={job.job_id}
             href={`/jobs/${job.job_id}/`}
-            className={`card p-6 hover:shadow-md transition-all group relative ${
+            className={`card card-interactive p-6 group relative ${
               isDemo
-                ? "border-2 border-indigo-300 bg-gradient-to-br from-indigo-50/40 to-white ring-1 ring-indigo-100 hover:border-indigo-400"
-                : "hover:border-accent"
+                ? "border-2 border-amber-400 bg-gradient-to-br from-amber-50/60 to-white ring-1 ring-amber-100 hover:border-amber-500"
+                : ""
             }`}
           >
             {isDemo && (
-              <span className="absolute -top-2 left-5 inline-flex items-center gap-1 bg-indigo-600 text-white text-[10px] font-semibold uppercase tracking-wider rounded-full px-2 py-0.5 shadow-sm">
-                <Icon name="sparkles" className="w-3 h-3" strokeWidth={2.5} />
+              <span className="absolute -top-2 left-5 inline-flex items-center gap-1 bg-amber-500 text-stone-900 text-[10px] font-semibold uppercase tracking-wider rounded-full px-2.5 py-0.5 shadow-sm ring-1 ring-amber-600/30">
+                <Icon name="sparkles" className="w-3 h-3" strokeWidth={2.75} />
                 Required demo
               </span>
             )}
             <div className="flex items-start justify-between gap-3 mb-3">
               <div>
                 <div className="flex items-center gap-2 mb-1">
-                  <span className={`text-[11px] font-mono ${isDemo ? "text-indigo-700 font-semibold" : "text-mute"}`}>{job.job_id}</span>
+                  <span className={`text-[11px] font-mono ${isDemo ? "text-amber-700 font-semibold" : "text-mute"}`}>{job.job_id}</span>
                   <span className="text-[11px] text-mute">·</span>
                   <span className="text-[11px] text-mute">{job.department}</span>
                   <span className="text-[11px] text-mute">·</span>
                   <span className="text-[11px] text-mute">{job.seniority}</span>
                 </div>
-                <h3 className={`text-lg font-semibold group-hover:text-indigo-700 transition-colors ${isDemo ? "text-indigo-900" : "text-text"}`}>
+                <h3 className={`text-lg font-semibold transition-colors ${isDemo ? "text-stone-900 group-hover:text-amber-800" : "text-text group-hover:text-amber-700"}`}>
                   {job.title}
                 </h3>
               </div>
@@ -165,9 +169,9 @@ export default function JobsIndex() {
             </div>
 
             <div className="flex items-center gap-4 mb-4 pb-4 border-b border-border-faint">
-              <TierPill label="Call" count={counts.call} colour="bg-emerald-500" />
-              <TierPill label="Outreach" count={counts.direct} colour="bg-indigo-500" />
-              <TierPill label="Nurture" count={counts.nurture} colour="bg-slate-400" />
+              <TierPill label="Call" count={counts.call} colour="bg-emerald-600" />
+              <TierPill label="Outreach" count={counts.direct} colour="bg-amber-500" />
+              <TierPill label="Nurture" count={counts.nurture} colour="bg-stone-400" />
               <div className="ml-auto text-right">
                 <div className="text-lg font-semibold text-text tabular">{total}</div>
                 <div className="text-[10px] text-mute uppercase tracking-wider">shortlisted</div>
@@ -225,11 +229,11 @@ function HeroMetric({ n, label, accent }: { n: number; label: string; accent?: b
   return (
     <div className="text-right">
       <div className={`text-3xl md:text-4xl font-semibold tabular font-mono leading-none ${
-        accent ? "text-white" : "text-indigo-100"
+        accent ? "text-amber-400" : "text-white"
       }`}>
         {n}
       </div>
-      <div className="text-[10px] uppercase tracking-wider text-indigo-200/70 mt-1.5 font-medium">
+      <div className="text-[10px] uppercase tracking-wider text-stone-400 mt-1.5 font-medium">
         {label}
       </div>
     </div>
@@ -254,12 +258,12 @@ function ShortcutCard({
   title: string; description: string; href: string; icon: React.ComponentProps<typeof Icon>["name"];
 }) {
   return (
-    <Link href={href} className="card p-4 hover:border-accent transition-colors group flex items-start gap-3">
-      <div className="w-9 h-9 rounded-md bg-indigo-50 text-indigo-600 flex items-center justify-center flex-shrink-0 group-hover:bg-indigo-100">
+    <Link href={href} className="card card-interactive p-4 group flex items-start gap-3">
+      <div className="w-9 h-9 rounded-md bg-amber-50 text-amber-700 flex items-center justify-center flex-shrink-0 group-hover:bg-amber-100">
         <Icon name={icon} className="w-4 h-4" strokeWidth={2} />
       </div>
       <div className="min-w-0">
-        <div className="text-sm font-semibold text-text group-hover:text-indigo-700 transition-colors">{title}</div>
+        <div className="text-sm font-semibold text-text group-hover:text-amber-700 transition-colors">{title}</div>
         <div className="text-xs text-mute mt-0.5">{description}</div>
       </div>
     </Link>

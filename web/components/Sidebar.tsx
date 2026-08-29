@@ -26,12 +26,12 @@ export default function Sidebar() {
       {/* Brand */}
       <Link href="/" className="block px-5 pt-5 pb-6 group" aria-label="WSC Talent Intelligence · Home">
         <div className="flex items-center gap-2.5">
-          <div className="relative w-9 h-9 rounded-lg bg-gradient-to-br from-indigo-500 via-indigo-600 to-violet-700 flex items-center justify-center text-white text-[11px] font-bold tracking-tight shadow-sm ring-1 ring-white/10">
+          <div className="relative w-9 h-9 rounded-lg bg-gradient-to-br from-amber-500 via-amber-600 to-amber-800 flex items-center justify-center text-white text-[11px] font-bold tracking-tight shadow-sm ring-1 ring-stone-900/10">
             <span className="relative z-10">WSC</span>
             <div className="absolute inset-0 rounded-lg bg-gradient-to-tr from-white/0 via-white/10 to-white/25 pointer-events-none" />
           </div>
           <div className="min-w-0">
-            <div className="text-sm font-semibold sidebar-ink leading-tight truncate group-hover:text-indigo-700 transition-colors">
+            <div className="text-sm font-semibold sidebar-ink leading-tight truncate group-hover:text-amber-700 transition-colors">
               Talent Intelligence
             </div>
             <div className="text-[10px] sidebar-faint uppercase tracking-wider font-medium mt-0.5">
