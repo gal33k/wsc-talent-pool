@@ -634,13 +634,27 @@ function DesignDoc({ pool: _pool }: { pool: ReturnType<typeof usePool>["pool"] }
             and make its output non-reproducible over time.
           </p>
           <p>
-            For the recruiter on Monday morning, the practical question is: <em>&ldquo;of the
-            admits, which are for a role I&rsquo;m actually hiring for right now?&rdquo;</em> The
-            answer lives as a filter chip on <a href="/pool/" className="underline hover:no-underline">/pool</a>{" "}
-            — &ldquo;Only match open roles&rdquo;. Off by default, the pool shows everyone. Toggle
-            it on and the table filters to admits whose <code>role_family</code> is one of the
-            currently-open roles&rsquo; families.
+            For the recruiter on Monday morning, two practical questions surface — both answered
+            without a pipeline re-run:
           </p>
+          <ol className="space-y-2 my-3 pl-5 list-decimal">
+            <li>
+              <em>&ldquo;Of the admits, which are for a role I&rsquo;m actually hiring for right
+              now?&rdquo;</em> — filter chip on{" "}
+              <a href="/pool/" className="underline hover:no-underline">/pool</a>: &ldquo;Only
+              match open roles&rdquo;. Off by default; toggle on → table filters to admits whose
+              family matches any currently-open role.
+            </li>
+            <li>
+              <em>&ldquo;We&rsquo;re about to open a new role — who&rsquo;s already ready?&rdquo;</em>{" "}
+              — &ldquo;Open a new position&rdquo; button on{" "}
+              <a href="/" className="underline hover:no-underline">/</a> (Open positions). Fill
+              in title + role family + required skills, and the modal previews top matches from
+              the pool live as you type. Submit → the new role is added (session-only,
+              browser-persisted), a banner shows the top matches, and the &ldquo;Only match open
+              roles&rdquo; filter now includes the new role too.
+            </li>
+          </ol>
           <div className="rounded-lg border border-emerald-200 bg-emerald-50/40 p-4 my-4">
             <div className="text-xs font-semibold text-emerald-900 uppercase tracking-wider mb-2">How the family match works — in one paragraph</div>
             <div className="text-sm text-emerald-950/90 leading-relaxed">

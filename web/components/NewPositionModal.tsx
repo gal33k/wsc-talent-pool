@@ -104,12 +104,17 @@ export default function NewPositionModal({
       .sort();
   }, [pool]);
 
-  // Skill autocomplete pool — every distinct string from every candidate's
-  // top_skills, sorted by frequency descending so common ones surface first.
+  // Skill autocomplete pool — filtered to candidates whose role_family
+  // matches the selected family, so pulling up "product" shows Product-
+  // Management / User-Research rather than the whole-pool dominators
+  // (Python / PyTorch etc). Falls back to the full pool if the selected
+  // family has too few candidates to populate a useful list.
   const skillCatalog = useMemo(() => {
     if (!pool) return [] as { name: string; count: number }[];
+    const inFamily = pool.candidates.filter(c => c.role_family === family);
+    const source = inFamily.length >= 3 ? inFamily : pool.candidates;
     const counts = new Map<string, number>();
-    for (const c of pool.candidates) {
+    for (const c of source) {
       for (const s of c.skills) {
         counts.set(s, (counts.get(s) ?? 0) + 1);
       }
@@ -117,7 +122,14 @@ export default function NewPositionModal({
     return [...counts.entries()]
       .map(([name, count]) => ({ name, count }))
       .sort((a, b) => b.count - a.count);
-  }, [pool]);
+  }, [pool, family]);
+  const skillCatalogSource = useMemo(() => {
+    if (!pool) return null;
+    const inFamily = pool.candidates.filter(c => c.role_family === family);
+    return inFamily.length >= 3
+      ? { label: `${inFamily.length} ${family} people in the pool`, scope: "family" as const }
+      : { label: `whole pool — only ${inFamily.length} ${family} people to draw from`, scope: "pool" as const };
+  }, [pool, family]);
 
   const suggestions = useMemo(() => {
     const q = skillInput.trim().toLowerCase();
@@ -279,7 +291,9 @@ export default function NewPositionModal({
             {suggestions.length > 0 && (
               <div className="mt-2">
                 <div className="text-[10px] uppercase tracking-wider text-mute font-semibold mb-1">
-                  {skillInput.trim() ? "Matches from your pool" : "Common in your pool"}
+                  {skillInput.trim()
+                    ? "Matches from your pool"
+                    : `Common skills among ${skillCatalogSource?.label ?? "your pool"}`}
                 </div>
                 <div className="flex flex-wrap gap-1.5">
                   {suggestions.map(s => (

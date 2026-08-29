@@ -1,20 +1,26 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo } from "react";
-import { usePool } from "@/lib/data";
+import { useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
+import { usePool, type SessionJob } from "@/lib/data";
 import { computeFit, computeWarmth, assignTier, TIER_ORDER } from "@/lib/scoring";
 import { Icon } from "@/components/Icon";
 import Avatar from "@/components/Avatar";
 import StatsBar from "@/components/StatsBar";
 import ScoreBadge from "@/components/ScoreBadge";
+import NewPositionModal, { type PoolMatch } from "@/components/NewPositionModal";
 
 export default function JobsIndex() {
   const {
     pool, loading, error,
     fitWeights, warmthWeights, tiers,
     isBlacklisted, isOverridden, blacklist, overrides,
+    sessionJobs, removeSessionJob,
   } = usePool();
+  const router = useRouter();
+  const [modalOpen, setModalOpen] = useState(false);
+  const [justOpened, setJustOpened] = useState<{ job: SessionJob; matches: PoolMatch[] } | null>(null);
 
   const jobSummaries = useMemo(() => {
     if (!pool) return [];
@@ -120,6 +126,122 @@ export default function JobsIndex() {
         </div>
       )}
 
+      {justOpened && (
+        <div className="mb-6 rounded-lg border border-emerald-300 bg-emerald-50 p-4 flex items-start gap-3 fade-up">
+          <div className="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center flex-shrink-0">
+            <Icon name="check" className="w-4 h-4" strokeWidth={2.75} />
+          </div>
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="text-[10px] uppercase tracking-wider font-bold text-emerald-800">New role opened</span>
+              <span className="text-[9px] uppercase tracking-wider font-bold rounded px-1.5 py-0.5 bg-emerald-700 text-white">session</span>
+              <button
+                onClick={() => { removeSessionJob(justOpened.job.job_id); setJustOpened(null); }}
+                className="ml-auto text-[11px] text-emerald-800/70 hover:text-emerald-900 underline"
+              >
+                Undo
+              </button>
+            </div>
+            <div className="text-base font-semibold text-emerald-950 mt-1">
+              {justOpened.job.title}
+              <span className="text-xs font-normal text-emerald-800/70 ml-2">
+                · {justOpened.job.role_family} · {justOpened.job.required_skills.length} required skills
+              </span>
+            </div>
+            {(() => {
+              const strong = justOpened.matches.filter(m => m.score >= 0.8).length;
+              const partial = justOpened.matches.filter(m => m.score >= 0.5 && m.score < 0.8).length;
+              const weak = justOpened.matches.filter(m => m.score > 0 && m.score < 0.5).length;
+              return (
+                <div className="text-sm text-emerald-900 mt-1.5">
+                  <span className="tabular font-semibold">{strong}</span> people match all required skills ·{" "}
+                  <span className="tabular font-semibold">{partial}</span> match most ·{" "}
+                  <span className="tabular font-semibold">{weak}</span> partial.
+                </div>
+              );
+            })()}
+            {justOpened.matches.length > 0 && (
+              <div className="mt-3 space-y-1 border-t border-emerald-200 pt-3">
+                <div className="text-[10px] uppercase tracking-wider text-emerald-800 font-semibold mb-1">Top 5 in your pool</div>
+                {justOpened.matches.slice(0, 5).map(m => (
+                  <div key={m.candidate.id} className="w-full flex items-center gap-3 text-sm py-1">
+                    <span className={`w-10 text-right tabular font-semibold text-xs ${
+                      m.score >= 0.8 ? "text-emerald-800" : m.score >= 0.5 ? "text-amber-700" : "text-slate-600"
+                    }`}>
+                      {Math.round(m.score * 100)}%
+                    </span>
+                    <span className="text-emerald-950 font-medium min-w-0 truncate flex-1">{m.candidate.name}</span>
+                    <span className="text-[11px] text-emerald-800/70 truncate max-w-[180px]">{m.candidate.title}</span>
+                    {m.familyMatch && <span className="text-[10px] font-semibold text-emerald-700 flex-shrink-0">family ✓</span>}
+                    <span className="text-[11px] text-emerald-800/70 tabular flex-shrink-0 w-16 text-right">
+                      {m.matchedRequired.length}/{justOpened.job.required_skills.length} skills
+                    </span>
+                  </div>
+                ))}
+              </div>
+            )}
+            <div className="mt-3 flex items-center gap-3 flex-wrap">
+              <button
+                onClick={() => router.push("/pool/")}
+                className="text-xs bg-emerald-700 text-white px-3 py-1.5 rounded-md hover:bg-emerald-800 font-medium inline-flex items-center gap-1"
+              >
+                See all matches in the pool <Icon name="arrow-right" className="w-3 h-3" strokeWidth={2.25} />
+              </button>
+              <button
+                onClick={() => setJustOpened(null)}
+                className="text-xs text-emerald-800/70 hover:text-emerald-900"
+              >
+                Dismiss
+              </button>
+              <span className="text-[11px] text-emerald-800/70 italic ml-auto">
+                Full fit scores for this role will appear on the next pipeline run.
+              </span>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <div className="flex items-center justify-between mb-4 gap-3 flex-wrap">
+        <div>
+          <h2 className="text-sm font-semibold text-text uppercase tracking-wider">Open positions</h2>
+          <p className="text-xs text-mute mt-0.5">
+            {pool.jobs.length} pipeline roles
+            {sessionJobs.length > 0 && <> · <span className="text-emerald-700 font-medium">{sessionJobs.length} session role{sessionJobs.length === 1 ? "" : "s"}</span></>}
+          </p>
+        </div>
+        <button
+          onClick={() => setModalOpen(true)}
+          className="inline-flex items-center gap-1.5 rounded-md bg-emerald-700 text-white text-sm font-semibold px-3.5 py-2 hover:bg-emerald-800 transition-colors shadow-sm"
+          title="Open a new role and see who in the pool matches — no pipeline re-run"
+        >
+          <Icon name="plus" className="w-4 h-4" strokeWidth={2.5} />
+          Open a new position
+        </button>
+      </div>
+
+      {sessionJobs.length > 0 && (
+        <div className="mb-4 rounded-md border border-emerald-200 bg-emerald-50/60 px-3 py-2 flex items-center gap-2 text-xs text-emerald-900 flex-wrap">
+          <Icon name="briefcase" className="w-3.5 h-3.5 text-emerald-700 flex-shrink-0" strokeWidth={2.25} />
+          <span className="font-medium">Session-added:</span>
+          {sessionJobs.map(j => (
+            <span key={j.job_id} className="inline-flex items-center gap-1 rounded-full bg-white border border-emerald-300 px-2 py-0.5 text-[11px]">
+              {j.title}
+              <span className="text-emerald-800/60">· {j.role_family}</span>
+              <button
+                onClick={() => removeSessionJob(j.job_id)}
+                className="w-3.5 h-3.5 rounded-full hover:bg-emerald-100 flex items-center justify-center text-emerald-700"
+                aria-label={`Remove ${j.title}`}
+              >
+                <Icon name="close" className="w-2 h-2" strokeWidth={2.5} />
+              </button>
+            </span>
+          ))}
+          <span className="text-emerald-800/60 italic ml-auto text-[11px]">
+            Browser-only until the pipeline re-runs
+          </span>
+        </div>
+      )}
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 stagger">
         {jobSummaries.map(({ job, top3, counts, total }) => {
           const isDemo = job.job_id === "JOB001";
@@ -221,6 +343,17 @@ export default function JobsIndex() {
           icon="link"
         />
       </section>
+
+      {modalOpen && (
+        <NewPositionModal
+          onClose={() => setModalOpen(false)}
+          onOpened={(job, matches) => {
+            setModalOpen(false);
+            setJustOpened({ job, matches });
+            if (typeof window !== "undefined") window.scrollTo({ top: 0, behavior: "smooth" });
+          }}
+        />
+      )}
     </main>
   );
 }

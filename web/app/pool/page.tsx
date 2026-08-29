@@ -1,12 +1,11 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { usePool, type SessionJob } from "@/lib/data";
+import { usePool } from "@/lib/data";
 import Avatar from "@/components/Avatar";
 import StatsBar from "@/components/StatsBar";
 import { Icon } from "@/components/Icon";
 import CandidateDetail from "@/components/CandidateDetail";
-import NewPositionModal, { matchPool, type PoolMatch } from "@/components/NewPositionModal";
 import { exportRows } from "@/lib/csv-export";
 import { computeFit } from "@/lib/scoring";
 
@@ -84,10 +83,6 @@ export default function TalentPoolAudit() {
   // open or close because it re-reads pool.jobs on every render.
   const [hiringOnly, setHiringOnly] = useState(false);
   const [detailId, setDetailId] = useState<string | null>(null);
-  const [modalOpen, setModalOpen] = useState(false);
-  // The most recently opened session job — drives the emerald "just opened"
-  // banner at the top of the table. Cleared when the user dismisses.
-  const [justOpened, setJustOpened] = useState<{ job: SessionJob; matches: PoolMatch[] } | null>(null);
 
   // Effective gate = recruiter override wins over pipeline decision.
   const effectiveGate = (c: { id: string; gate: { decision: string } }) =>
@@ -164,104 +159,15 @@ export default function TalentPoolAudit() {
 
   return (
     <main className="max-w-[1400px] mx-auto px-4 py-5 md:px-8 md:py-8">
-      <header className="mb-6 flex items-start justify-between gap-4 flex-wrap">
-        <div className="min-w-0">
-          <div className="text-xs font-medium text-mute mb-1">Decision A · pool admission audit</div>
-          <h1 className="text-2xl font-semibold text-text tracking-tight">Talent pool</h1>
-          <p className="text-sm text-mute mt-1 max-w-2xl">
-            Every one of the {pool.candidates.length} contacts, with the three signals that decided admission and the reason string.
-          </p>
-        </div>
-        <button
-          onClick={() => setModalOpen(true)}
-          className="inline-flex items-center gap-1.5 rounded-md bg-emerald-700 text-white text-sm font-semibold px-3.5 py-2 hover:bg-emerald-800 transition-colors shadow-sm flex-shrink-0"
-          title="Open a new role and see who in the pool matches — no pipeline re-run"
-        >
-          <Icon name="plus" className="w-4 h-4" strokeWidth={2.5} />
-          Open a new position
-        </button>
+      <header className="mb-6">
+        <div className="text-xs font-medium text-mute mb-1">Decision A · pool admission audit</div>
+        <h1 className="text-2xl font-semibold text-text tracking-tight">Talent pool</h1>
+        <p className="text-sm text-mute mt-1 max-w-2xl">
+          Every one of the {pool.candidates.length} contacts, with the three signals that decided admission and the reason string.
+        </p>
       </header>
 
-      {justOpened && (
-        <div className="mb-5 rounded-lg border border-emerald-300 bg-emerald-50 p-4 flex items-start gap-3 fade-up">
-          <div className="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center flex-shrink-0">
-            <Icon name="check" className="w-4 h-4" strokeWidth={2.75} />
-          </div>
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2 flex-wrap">
-              <span className="text-[10px] uppercase tracking-wider font-bold text-emerald-800">New role opened</span>
-              <span className="text-[9px] uppercase tracking-wider font-bold rounded px-1.5 py-0.5 bg-emerald-700 text-white">session</span>
-              <button
-                onClick={() => { removeSessionJob(justOpened.job.job_id); setJustOpened(null); if (hiringOnly) setHiringOnly(false); }}
-                className="ml-auto text-[11px] text-emerald-800/70 hover:text-emerald-900 underline"
-              >
-                Undo
-              </button>
-            </div>
-            <div className="text-base font-semibold text-emerald-950 mt-1">
-              {justOpened.job.title}
-              <span className="text-xs font-normal text-emerald-800/70 ml-2">
-                · {justOpened.job.role_family} · {justOpened.job.required_skills.length} required skills
-              </span>
-            </div>
-            {(() => {
-              const strong = justOpened.matches.filter(m => m.score >= 0.8).length;
-              const partial = justOpened.matches.filter(m => m.score >= 0.5 && m.score < 0.8).length;
-              const weak = justOpened.matches.filter(m => m.score > 0 && m.score < 0.5).length;
-              return (
-                <div className="text-sm text-emerald-900 mt-1.5">
-                  <span className="tabular font-semibold">{strong}</span> people match all required skills ·{" "}
-                  <span className="tabular font-semibold">{partial}</span> match most ·{" "}
-                  <span className="tabular font-semibold">{weak}</span> partial.
-                </div>
-              );
-            })()}
-            {justOpened.matches.length > 0 && (
-              <div className="mt-3 space-y-1 border-t border-emerald-200 pt-3">
-                <div className="text-[10px] uppercase tracking-wider text-emerald-800 font-semibold mb-1">Top 5 in your pool</div>
-                {justOpened.matches.slice(0, 5).map(m => (
-                  <button
-                    key={m.candidate.id}
-                    onClick={() => setDetailId(m.candidate.id)}
-                    className="w-full flex items-center gap-3 text-sm hover:bg-white/60 rounded px-1.5 py-1 -mx-1.5 transition-colors text-left"
-                  >
-                    <span className={`w-10 text-right tabular font-semibold text-xs ${
-                      m.score >= 0.8 ? "text-emerald-800" : m.score >= 0.5 ? "text-amber-700" : "text-slate-600"
-                    }`}>
-                      {Math.round(m.score * 100)}%
-                    </span>
-                    <span className="text-emerald-950 font-medium min-w-0 truncate flex-1">{m.candidate.name}</span>
-                    <span className="text-[11px] text-emerald-800/70 truncate max-w-[180px]">{m.candidate.title}</span>
-                    {m.familyMatch && <span className="text-[10px] font-semibold text-emerald-700 flex-shrink-0">family ✓</span>}
-                    <span className="text-[11px] text-emerald-800/70 tabular flex-shrink-0 w-16 text-right">
-                      {m.matchedRequired.length}/{justOpened.job.required_skills.length} skills
-                    </span>
-                  </button>
-                ))}
-              </div>
-            )}
-            <div className="mt-3 flex items-center gap-3 flex-wrap">
-              <button
-                onClick={() => { setHiringOnly(true); setJustOpened(null); }}
-                className="text-xs bg-emerald-700 text-white px-3 py-1.5 rounded-md hover:bg-emerald-800 font-medium"
-              >
-                Show all matches in the table
-              </button>
-              <button
-                onClick={() => setJustOpened(null)}
-                className="text-xs text-emerald-800/70 hover:text-emerald-900"
-              >
-                Dismiss
-              </button>
-              <span className="text-[11px] text-emerald-800/70 italic ml-auto">
-                Full fit scores for this role will appear on the next pipeline run.
-              </span>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {!justOpened && sessionJobs.length > 0 && (
+      {sessionJobs.length > 0 && (
         <div className="mb-5 rounded-md border border-emerald-200 bg-emerald-50/60 px-3 py-2 flex items-center gap-2 text-xs text-emerald-900 flex-wrap">
           <Icon name="briefcase" className="w-3.5 h-3.5 text-emerald-700 flex-shrink-0" strokeWidth={2.25} />
           <span className="font-medium">Session roles open:</span>
@@ -555,17 +461,6 @@ export default function TalentPoolAudit() {
         return <CandidateDetail candidate={c} job={job} onClose={() => setDetailId(null)} />;
       })()}
 
-      {modalOpen && (
-        <NewPositionModal
-          onClose={() => setModalOpen(false)}
-          onOpened={(job, matches) => {
-            setModalOpen(false);
-            setJustOpened({ job, matches });
-            // Scroll to top of the page so the banner is visible.
-            if (typeof window !== "undefined") window.scrollTo({ top: 0, behavior: "smooth" });
-          }}
-        />
-      )}
     </main>
   );
 }
