@@ -847,46 +847,38 @@ function DesignDoc({ pool: _pool }: { pool: ReturnType<typeof usePool>["pool"] }
  * Shared visual components
  * ============================================================================ */
 
-const BOXES = [
-  { id: "source",     label: "Source",     icon: "download" as const, tint: "sky",     hint: "conference · referral · CV" },
-  { id: "enrich",     label: "Enrich",     icon: "search"   as const, tint: "violet",  hint: "LinkedIn: employers · posts · connections" },
-  { id: "gate",       label: "Gate",       icon: "filter"   as const, tint: "amber",   hint: "is this person talent we hire?" },
-  { id: "score",      label: "Score",      icon: "sliders"  as const, tint: "indigo",  hint: "fit + warmth, per role" },
-  { id: "shortlist",  label: "Shortlist",  icon: "list"     as const, tint: "emerald", hint: "ranked list · warm intros" },
+const BOXES: Array<{
+  id: string;
+  label: string;
+  icon: React.ComponentProps<typeof Icon>["name"];
+  hint: string;
+  role: "source" | "shared";
+}> = [
+  { id: "source",    label: "Source",    icon: "download", hint: "conference · referral · CV",  role: "source" },
+  { id: "enrich",    label: "Enrich",    icon: "search",   hint: "LinkedIn · employers · posts",  role: "shared" },
+  { id: "gate",      label: "Gate",      icon: "filter",   hint: "is this person talent we hire?", role: "shared" },
+  { id: "score",     label: "Score",     icon: "sliders",  hint: "fit + warmth, per role",         role: "shared" },
+  { id: "shortlist", label: "Shortlist", icon: "list",     hint: "ranked list · warm intros",      role: "shared" },
 ];
-
-const TINT_BG: Record<string, string> = {
-  sky:     "bg-sky-50 border-sky-200 text-sky-800",
-  violet:  "bg-violet-50 border-violet-200 text-violet-800",
-  amber:   "bg-amber-50 border-amber-200 text-amber-800",
-  indigo:  "bg-indigo-50 border-indigo-200 text-indigo-800",
-  emerald: "bg-emerald-50 border-emerald-200 text-emerald-800",
-};
-
-const TINT_ICON: Record<string, string> = {
-  sky:     "bg-sky-100 text-sky-700",
-  violet:  "bg-violet-100 text-violet-700",
-  amber:   "bg-amber-100 text-amber-700",
-  indigo:  "bg-indigo-100 text-indigo-700",
-  emerald: "bg-emerald-100 text-emerald-700",
-};
 
 function MiniFlowDiagram() {
   return (
     <div className="flex items-stretch gap-2 overflow-x-auto pb-2">
       {BOXES.map((b, i) => (
         <div key={b.id} className="flex items-center gap-2 flex-shrink-0">
-          <div className={`rounded-md border px-3 py-2.5 min-w-[130px] ${TINT_BG[b.tint]}`}>
+          <div className={`rounded-md border px-3 py-2.5 min-w-[130px] bg-white ${
+            b.role === "source" ? "border-emerald-400 ring-1 ring-emerald-100" : "border-border"
+          }`}>
             <div className="flex items-center gap-2">
-              <div className={`w-6 h-6 rounded flex items-center justify-center ${TINT_ICON[b.tint]}`}>
+              <div className="w-6 h-6 rounded flex items-center justify-center bg-stone-100 text-stone-700">
                 <Icon name={b.icon} className="w-3.5 h-3.5" strokeWidth={2} />
               </div>
-              <div className="text-sm font-semibold">{b.label}</div>
+              <div className="text-sm font-semibold text-text">{b.label}</div>
             </div>
-            <div className="text-[10px] mt-1 opacity-80">{b.hint}</div>
+            <div className="text-[10px] mt-1 text-mute">{b.hint}</div>
           </div>
           {i < BOXES.length - 1 && (
-            <Icon name="arrow-right" className="w-4 h-4 text-mute flex-shrink-0" strokeWidth={2} />
+            <Icon name="arrow-right" className="w-4 h-4 text-faint flex-shrink-0" strokeWidth={2} />
           )}
         </div>
       ))}
@@ -896,34 +888,54 @@ function MiniFlowDiagram() {
 
 function FlowDiagramLarge() {
   return (
-    <div className="card p-6 bg-gradient-to-br from-slate-50 to-white">
+    <div className="card p-6 md:p-8 bg-white">
       <div className="grid grid-cols-1 md:grid-cols-5 gap-3 items-stretch">
-        {BOXES.map((b, i) => (
-          <div key={b.id} className="relative">
-            <div className={`rounded-lg border-2 p-4 h-full ${TINT_BG[b.tint]}`}>
-              <div className="flex items-center gap-2 mb-2">
-                <div className={`w-8 h-8 rounded flex items-center justify-center ${TINT_ICON[b.tint]}`}>
-                  <Icon name={b.icon} className="w-4 h-4" strokeWidth={2} />
+        {BOXES.map((b, i) => {
+          const isSource = b.role === "source";
+          return (
+            <div key={b.id} className="relative">
+              <div className={`rounded-lg border p-4 h-full transition-colors ${
+                isSource
+                  ? "bg-white border-emerald-500 border-2 ring-2 ring-emerald-100/60"
+                  : "bg-stone-50/60 border-border hover:border-border-strong"
+              }`}>
+                <div className="flex items-baseline justify-between mb-3">
+                  <span className="font-mono text-[10px] uppercase tracking-wider text-mute font-semibold">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  {isSource && (
+                    <span className="inline-flex items-center gap-1 text-[9px] uppercase tracking-wider font-semibold text-emerald-800 bg-emerald-100 rounded-sm px-1.5 py-0.5">
+                      variable
+                    </span>
+                  )}
                 </div>
-                <div>
-                  <div className="text-[10px] font-mono uppercase tracking-wider opacity-70">Step {i + 1}</div>
-                  <div className="text-base font-bold">{b.label}</div>
+                <div className="flex items-center gap-2 mb-2">
+                  <div className={`w-7 h-7 rounded flex items-center justify-center ${
+                    isSource ? "bg-emerald-100 text-emerald-800" : "bg-white text-text border border-border"
+                  }`}>
+                    <Icon name={b.icon} className="w-4 h-4" strokeWidth={2} />
+                  </div>
+                  <div className="text-base font-semibold text-text">{b.label}</div>
                 </div>
+                <div className="text-xs text-mute leading-snug">{b.hint}</div>
               </div>
-              <div className="text-xs opacity-80 leading-snug">{b.hint}</div>
+              {i < BOXES.length - 1 && (
+                <div className="hidden md:flex absolute top-1/2 -right-3 -translate-y-1/2 z-10 w-6 h-6 rounded-full bg-white border border-border items-center justify-center shadow-sm">
+                  <Icon name="arrow-right" className="w-3.5 h-3.5 text-mute" strokeWidth={2.5} />
+                </div>
+              )}
             </div>
-            {i < BOXES.length - 1 && (
-              <div className="hidden md:flex absolute top-1/2 -right-3 -translate-y-1/2 z-10 w-6 h-6 rounded-full bg-white border border-border items-center justify-center">
-                <Icon name="arrow-right" className="w-3.5 h-3.5 text-mute" strokeWidth={2.5} />
-              </div>
-            )}
-          </div>
-        ))}
+          );
+        })}
       </div>
-      <div className="mt-5 pt-4 border-t border-border-faint text-xs text-mute leading-relaxed">
-        <strong className="text-text">Same shape for every channel.</strong> Only the <em>Source</em> door
-        changes — conference badge scans, employee referrals, and inbound CVs all funnel into the same
-        enrichment + gate + scoring pipeline. That's the point of a channel-tuned but shared core.
+      <div className="mt-6 pt-5 border-t border-border-faint text-xs text-dim leading-relaxed flex items-start gap-3">
+        <span className="inline-block w-2 h-2 rounded-full bg-emerald-500 mt-1.5 flex-shrink-0" />
+        <div>
+          The <strong className="text-text">Source</strong> box is the only variable — three doors
+          (conference badge scans · employee referrals · inbound CVs) hitting the same shared pipeline.
+          Enrichment, gate, and scoring are identical across channels. That's the point of a
+          channel-tuned but shared core: add a new channel = add an adapter, not a scoring model.
+        </div>
       </div>
     </div>
   );
