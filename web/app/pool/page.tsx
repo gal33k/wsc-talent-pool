@@ -77,6 +77,11 @@ export default function TalentPoolAudit() {
   const [decision, setDecision] = useState("all");
   const [source, setSource] = useState("all");
   const [q, setQ] = useState("");
+  // "Only match open roles" — when on, filters the table to admits whose
+  // role_family is one we're currently hiring for. Scales to any number of
+  // open roles (it's still one chip) and updates automatically when jobs
+  // open or close because it re-reads pool.jobs on every render.
+  const [hiringOnly, setHiringOnly] = useState(false);
   const [detailId, setDetailId] = useState<string | null>(null);
 
   // Effective gate = recruiter override wins over pipeline decision.
@@ -113,6 +118,7 @@ export default function TalentPoolAudit() {
   const rows = useMemo(() => {
     if (!pool) return [];
     const ql = q.trim().toLowerCase();
+    const openFamilies = new Set(pool.jobs.map(j => j.role_family));
     // Session captures (from /capture, /referrals) appear at the top so a
     // recruiter can see what they just added.
     const merged = [...sessionCandidates, ...pool.candidates];
@@ -120,8 +126,9 @@ export default function TalentPoolAudit() {
       .filter(c => source === "all" || (source === "conference"))
       .filter(c => conf === "all" || c.conference.name === conf)
       .filter(c => decision === "all" || effectiveGate(c) === decision)
+      .filter(c => !hiringOnly || (effectiveGate(c) === "ADMIT" && openFamilies.has(c.role_family)))
       .filter(c => !ql || c.name.toLowerCase().includes(ql) || c.company.toLowerCase().includes(ql) || (c.title || "").toLowerCase().includes(ql));
-  }, [pool, sessionCandidates, conf, decision, source, q, getGateOverride]);
+  }, [pool, sessionCandidates, conf, decision, source, hiringOnly, q, getGateOverride]);
 
   if (loading) return <main className="p-6 md:p-8 text-mute text-sm">Loading pool…</main>;
   if (error) return <main className="p-6 md:p-8 text-red-600 text-sm">Error: {error}</main>;
@@ -134,8 +141,7 @@ export default function TalentPoolAudit() {
     return acc;
   }, {} as Record<string, number>);
   // Admitted candidates whose role_family matches at least one currently-open
-  // role. The recruiter's Monday-morning number: "how many people in the pool
-  // are for something I'm hiring for right now?"
+  // role. Powers the "Only match open roles" filter chip's count hint.
   const activelyHiringFamilies = new Set(pool.jobs.map(j => j.role_family));
   const activelyHiringCount = pool.candidates.filter(
     c => effectiveGate(c) === "ADMIT" && activelyHiringFamilies.has(c.role_family)
@@ -152,10 +158,10 @@ export default function TalentPoolAudit() {
       </header>
 
       <StatsBar stats={[
-        { label: "Total contacts",   value: pool.candidates.length, sub: "across 4 conferences",           iconName: "users" },
-        { label: "Admitted",         value: counts.ADMIT || 0,      sub: "in the talent pool",             iconName: "check" },
-        { label: "Actively hiring",  value: activelyHiringCount,    sub: `match one of ${pool.jobs.length} open roles`, iconName: "briefcase", accent: true },
-        { label: "Hold / Rejected",  value: (counts.HOLD || 0) + (counts.REJECT || 0), sub: `${counts.HOLD || 0} hold · ${counts.REJECT || 0} rejected`, iconName: "filter" },
+        { label: "Total contacts", value: pool.candidates.length, sub: "across 4 conferences",  iconName: "users" },
+        { label: "Admitted",       value: counts.ADMIT || 0,      sub: "in the talent pool",     iconName: "check", accent: true },
+        { label: "Hold",           value: counts.HOLD || 0,       sub: "for human review",       iconName: "alert" },
+        { label: "Rejected",       value: counts.REJECT || 0,     sub: "with reason recorded",   iconName: "filter" },
       ]} />
 
       {/* Source-channel breakdown + honest note about the seed */}
@@ -247,6 +253,21 @@ export default function TalentPoolAudit() {
               </button>
             ))}
           </div>
+          <button
+            onClick={() => setHiringOnly(v => !v)}
+            title={`Toggle: show only admits whose role family matches one of the ${pool.jobs.length} currently-open roles`}
+            className={`inline-flex items-center gap-1.5 px-2.5 py-1 text-xs rounded-md font-medium border transition-colors ${
+              hiringOnly
+                ? "bg-emerald-700 text-white border-emerald-700"
+                : "bg-white text-emerald-800 border-emerald-300 hover:border-emerald-500"
+            }`}
+          >
+            <span className={`w-1.5 h-1.5 rounded-full ${hiringOnly ? "bg-white" : "bg-emerald-600"}`} />
+            Only match open roles
+            <span className={`text-[10px] tabular ${hiringOnly ? "text-white/80" : "text-emerald-700/70"}`}>
+              ({activelyHiringCount})
+            </span>
+          </button>
           <div className="ml-auto flex items-center gap-3">
             <span className="text-xs text-mute tabular">{rows.length} of {pool.candidates.length}</span>
             <button
@@ -371,28 +392,14 @@ export default function TalentPoolAudit() {
                     {(() => {
                       const eff = effectiveGate(c);
                       const overridden = eff !== c.gate.decision;
-                      const hiring = eff === "ADMIT" ? activelyHiringFor(c) : null;
                       return (
-                        <div className="flex flex-col items-start gap-1">
-                          <span
-                            className={`inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[11px] font-medium ${DECISION_STYLES[eff]}`}
-                            title={overridden ? `Pipeline: ${c.gate.decision} → recruiter override: ${eff}` : undefined}
-                          >
-                            {eff}
-                            {overridden && <span className="text-[9px] opacity-70">·override</span>}
-                          </span>
-                          {hiring && (
-                            <a
-                              href={`/jobs/${hiring.job_id}/`}
-                              onClick={e => e.stopPropagation()}
-                              className="inline-flex items-center gap-1 rounded-full border border-emerald-300 bg-emerald-50 px-2 py-0.5 text-[10px] font-medium text-emerald-800 hover:bg-emerald-100 hover:border-emerald-400 transition-colors max-w-[180px]"
-                              title={`Currently hiring for ${hiring.title} (${hiring.job_id}) — this candidate's role family matches`}
-                            >
-                              <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 flex-shrink-0" />
-                              <span className="truncate">actively hiring · {hiring.job_id}</span>
-                            </a>
-                          )}
-                        </div>
+                        <span
+                          className={`inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[11px] font-medium ${DECISION_STYLES[eff]}`}
+                          title={overridden ? `Pipeline: ${c.gate.decision} → recruiter override: ${eff}` : undefined}
+                        >
+                          {eff}
+                          {overridden && <span className="text-[9px] opacity-70">·override</span>}
+                        </span>
                       );
                     })()}
                   </td>

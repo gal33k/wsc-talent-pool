@@ -624,20 +624,22 @@ function DesignDoc({ pool: _pool }: { pool: ReturnType<typeof usePool>["pool"] }
           </div>
 
           <h4 className="text-sm font-semibold text-text mt-8 mb-2">
-            On top of the gate: are we <em>currently</em> hiring for their role family?
+            The gate stays job-agnostic — but the pool view can filter by &ldquo;currently hiring&rdquo;
           </h4>
           <p>
-            The gate itself is <strong>job-agnostic on purpose</strong> — it answers &ldquo;is
-            this person talent&rdquo; without looking at what roles are open today. That separation
-            is what makes the pool useful next quarter, when today&rsquo;s roles are filled and new
-            ones open.
+            The gate answers &ldquo;is this person talent&rdquo; without looking at which roles are
+            open today. That separation is what makes the pool useful <em>next</em> quarter, when
+            today&rsquo;s roles are filled and new ones open. A hold doesn&rsquo;t suddenly become
+            an admit because we opened a matching job — that would couple the gate to hiring state
+            and make its output non-reproducible over time.
           </p>
           <p>
-            But for the recruiter on Monday morning, the practical question is:{" "}
-            <em>&ldquo;of the {" "}<strong>68 admits</strong>, which are for a role I&rsquo;m
-            actually hiring for right now?&rdquo;</em> So we add a small derived flag on top of
-            the gate: every admit whose <code>role_family</code> matches one of the currently-open
-            roles gets a green <span className="inline-flex items-center gap-1 rounded-full border border-emerald-300 bg-emerald-50 px-1.5 py-0 text-[10px] font-medium text-emerald-800"><span className="w-1 h-1 rounded-full bg-emerald-600" />actively hiring</span> pill next to their gate chip on <a href="/pool/" className="underline hover:no-underline">/pool</a>.
+            For the recruiter on Monday morning, the practical question is: <em>&ldquo;of the
+            admits, which are for a role I&rsquo;m actually hiring for right now?&rdquo;</em> The
+            answer lives as a filter chip on <a href="/pool/" className="underline hover:no-underline">/pool</a>{" "}
+            — &ldquo;Only match open roles&rdquo;. Off by default, the pool shows everyone. Toggle
+            it on and the table filters to admits whose <code>role_family</code> is one of the
+            currently-open roles&rsquo; families.
           </p>
           <div className="rounded-lg border border-emerald-200 bg-emerald-50/40 p-4 my-4">
             <div className="text-xs font-semibold text-emerald-900 uppercase tracking-wider mb-2">How the family match works — in one paragraph</div>
@@ -648,10 +650,10 @@ function DesignDoc({ pool: _pool }: { pool: ReturnType<typeof usePool>["pool"] }
               {" "}(e.g. <em>&ldquo;Senior Data Engineer&rdquo;</em> → <code className="text-[12px]">data_engineering</code>).
               Each open job also has a target family, declared in{" "}
               <code className="text-[12px]">config/taxonomy.yaml → job_family_map</code>
-              {" "}(e.g. <code className="text-[12px]">JOB004 → data_engineering</code>). The
-              &ldquo;actively hiring&rdquo; pill lights up when a candidate&rsquo;s family exactly
-              equals any open job&rsquo;s family. That&rsquo;s it — no ML, no fuzzy match, one
-              string comparison a recruiter can audit in the YAML.
+              {" "}(e.g. <code className="text-[12px]">JOB004 → data_engineering</code>). The filter
+              matches when a candidate&rsquo;s family exactly equals any open job&rsquo;s family.
+              That&rsquo;s it — no ML, no fuzzy match, one string comparison a recruiter can audit
+              in the YAML.
             </div>
             <div className="mt-3 text-xs text-emerald-900/80 border-t border-emerald-200 pt-2.5">
               Today: <strong>JOB001 → ml_cv</strong> · <strong>JOB002 → backend</strong> ·{" "}
@@ -659,14 +661,14 @@ function DesignDoc({ pool: _pool }: { pool: ReturnType<typeof usePool>["pool"] }
               Admits in <code className="text-[12px]">platform_devops</code>,{" "}
               <code className="text-[12px]">ml_general</code>,{" "}
               <code className="text-[12px]">video_broadcast</code> etc. stay in the pool but
-              don&rsquo;t get the pill — no matching open role.
+              don&rsquo;t appear when the filter is on — no matching open role.
             </div>
           </div>
           <p>
-            The gate decision itself doesn&rsquo;t change based on which roles are open — a hold
-            doesn&rsquo;t suddenly become an admit because we opened a matching job. That would
-            couple the gate to hiring state and make its output non-reproducible over time. The
-            pill only surfaces information that&rsquo;s already true.
+            <strong>Why a filter, not a per-row badge?</strong> Badges scale badly — someone
+            matching three of ten open roles gets an unreadable stack of pills. A filter is one
+            control regardless of whether you have four open roles or forty, and it stays correct
+            automatically as roles open and close.
           </p>
         </Section>
 
