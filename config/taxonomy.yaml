@@ -559,6 +559,18 @@ generic_employer_stoplist:
   - university             # bare only; "Basel University", "Oxford Research Lab" survive
   - univ
   - uni
+  # Every IDF variant is stoplisted from PASSIVE shared-employer matching.
+  # 170k+ people cycle through conscription; even a specific unit name in the
+  # data can be inconsistent ("IDF tech unit" vs "IDF Intelligence Unit" vs
+  # bare "IDF" for the same person). We choose not to guess. Active signals
+  # (a WSC employee referring a candidate via /referrals, or recruiter_vouches
+  # in the dossier) still fire — those don't touch this stoplist; they run
+  # through the vouch pipeline in src/signal.py::_vouch_score().
+  - IDF
+  - idf
+  - IDF tech unit
+  - IDF Intelligence Unit
+  - IDF Reserve
 
 # -----------------------------------------------------------------------------
 # Company aliases — clusters of names that are the same organisation
@@ -572,10 +584,9 @@ generic_employer_stoplist:
 # Sky Italia are DIFFERENT subsidiaries and are NOT clustered.
 # -----------------------------------------------------------------------------
 company_aliases:
-  IDF:
-    - IDF
-    - IDF tech unit
-    - IDF Intelligence Unit
+  # NOTE: All IDF variants are stoplisted (see generic_employer_stoplist), so
+  # no alias entry here. IDF as an employer signal is off the passive path;
+  # a WSC employee vouching for an IDF alum is still counted via /referrals.
   "Opta / Stats Perform":
     - Opta
     - Opta Sports

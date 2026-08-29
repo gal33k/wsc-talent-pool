@@ -122,7 +122,7 @@ export default function CandidateCard({
 
           <div className="flex gap-6 mt-4">
             <ScoreBar label="Fit" value={fit.score_default} tone="accent" />
-            <ScoreBar label="Warmth" value={warmthScore} tone="good" />
+            <ScoreBar label="Signal" value={warmthScore} tone="good" />
           </div>
 
           {/* Score visualization — 5 mini component bars showing raw score

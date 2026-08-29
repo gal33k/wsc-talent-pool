@@ -32,12 +32,12 @@ const CONFERENCE_STEPS = [
   { id: "featured",    label: "Pull publications, talks, repos",     detail: "Featured section + GitHub cross-reference" },
   { id: "gate",        label: "Run pool-admission gate",             detail: "3 signals · 2-of-3 admits" },
   { id: "connections", label: "Cross-check with WSC directory",      detail: "1st + 2nd degree · returns warm-intro paths" },
-  { id: "score",       label: "Score against open positions",        detail: "Fit + warmth per role_id" },
+  { id: "score",       label: "Score against open positions",        detail: "Fit + signal per role_id" },
 ] as const;
 
 const REFERRAL_STEPS = [
   ...CONFERENCE_STEPS.slice(0, 6),
-  { id: "score", label: "Score with vouched-by-employee lift", detail: "Fit + warmth + referral trust boost" },
+  { id: "score", label: "Score with vouched-by-employee lift", detail: "Fit + signal + referral trust boost" },
 ] as const;
 
 // Synthetic enrichment output — clearly labeled as an example. Illustrates the
@@ -312,7 +312,7 @@ export default function EnrichmentReveal({
             ))}
           </ul>
           <div className="mt-2 text-[11px] text-mute">
-            → drives <span className="text-indigo-700 font-medium">warmth score</span> + names the person best placed to make the intro.
+            → drives <span className="text-indigo-700 font-medium">signal score</span> + names the person best placed to make the intro.
           </div>
         </Reveal>
       )}
@@ -341,8 +341,8 @@ export default function EnrichmentReveal({
           </ul>
           {playback.channel === "referral" && playback.referrer && (
             <div className="mt-3 rounded-md bg-emerald-50 border border-emerald-200 px-3 py-2 text-xs text-emerald-900">
-              <strong>+ Vouched-by-employee lift</strong> applied to warmth (referrer: {playback.referrer.name}).
-              Adds ~15 warmth points on top of the network base.
+              <strong>+ Vouched-by-employee lift</strong> applied to the signal axis (referrer: {playback.referrer.name}).
+              Adds ~15 signal points on top of the passive network base.
             </div>
           )}
         </Reveal>

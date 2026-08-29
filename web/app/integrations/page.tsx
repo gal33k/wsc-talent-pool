@@ -88,7 +88,7 @@ const SYSTEM_ROLES: Record<string, { role: string; blurb: string; saves: string;
   },
   referral: {
     role: "Employee-submitted referrals",
-    blurb: "Forward-referral capture form. Same scoring pipeline as conferences — only source_channel differs, plus a vouched-by-employee lift on warmth.",
+    blurb: "Forward-referral capture form. Same scoring pipeline as conferences — only source_channel differs, plus a vouched-by-employee lift on the signal axis.",
     saves: "Structured referral capture with the vouched-lift baked in. No more Slack DMs a recruiter has to chase and copy-paste into HubSpot manually.",
     endpoint: "POST /forms/referrals/submissions",
     iconName: "plus",

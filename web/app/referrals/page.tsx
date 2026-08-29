@@ -143,7 +143,7 @@ export default function Referrals() {
           <p className="text-sm text-mute mt-1 max-w-2xl">
             A WSC employee vouches for someone. We enrich their LinkedIn (past employers, posts,
             publications, mutual connections) and score them across every open role — the referrer's
-            vouch lifts warmth for the target job.
+            vouch lifts the signal score for the target job.
           </p>
         </div>
       </header>
@@ -308,7 +308,7 @@ export default function Referrals() {
 
             <div className="mt-5 pt-4 border-t border-border text-xs text-mute space-y-1.5 leading-relaxed">
               <div className="font-medium text-dim">Why referrals score higher</div>
-              <div>· Vouched-by-employee lifts warmth by ~15 points on the target role.</div>
+              <div>· Vouched-by-employee lifts the signal score by ~15 points on the target role.</div>
               <div>· Referrer becomes a first-degree warm-intro path automatically.</div>
               <div>· Enrichment still runs — we don't skip the LinkedIn pull just because someone vouched.</div>
             </div>

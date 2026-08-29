@@ -389,7 +389,7 @@ export default function CaptureLead() {
                   placeholder="e.g. Spoke about real-time player tracking. Currently owns the CV pipeline at their shop."
                 />
                 <div className="text-xs text-mute mt-1.5">
-                  A note is worth 10 points on the warmth axis — a recorded conversation is warmth signal.
+                  A note is worth points on the signal axis — a recorded conversation is real signal.
                 </div>
               </div>
 

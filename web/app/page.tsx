@@ -80,7 +80,7 @@ export default function JobsIndex() {
             <p className="text-sm md:text-[15px] text-stone-300 leading-relaxed max-w-2xl mb-5">
               One pipeline, three channels — conferences, employee referrals, and inbound CVs.
               For each role you open, we rank the pool on <em className="text-white not-italic font-medium">fit</em> and{" "}
-              <em className="text-white not-italic font-medium">warmth</em> — and name the WSC
+              <em className="text-white not-italic font-medium">signal</em> — and name the WSC
               employee best placed to make the intro.
             </p>
             <Link

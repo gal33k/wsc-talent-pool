@@ -271,7 +271,7 @@ export default function Analytics() {
             )}
           </Panel>
 
-          <Panel title="Warmth signal breakdown across the pool">
+          <Panel title="Signal axis breakdown across the pool">
             {(() => {
               const buckets = { zero: 0, one: 0, twoPlus: 0 };
               pool.candidates.forEach(c => {

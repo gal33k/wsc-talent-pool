@@ -188,7 +188,7 @@ function HowItWorks() {
           <p>
             Three doors — <strong>conference badge scans</strong>, <strong>employee referrals</strong>,
             <strong> inbound CVs</strong>. Same downstream pipeline; only the <em>source_channel</em>
-            tag differs, and referrals earn a vouched-lift on warmth.
+            tag differs, and referrals earn a vouched-lift on the signal axis.
           </p>
         </NarrativeStep>
 
@@ -227,7 +227,7 @@ function HowItWorks() {
         >
           <p>
             <strong>Fit</strong> — competence only (skills, family, seniority, domain).{" "}
-            <strong>Warmth</strong> — reachability only (mutuals, shared employers, recency, notes).
+            <strong>Signal</strong> — endorsements + team overlap + culture + reachability (peer vouches, shared employers, recency, notes, mutuals).
             A single &ldquo;compatibility rate&rdquo; would bury strong candidates with no mutual
             connections.
           </p>
@@ -486,7 +486,7 @@ function WorkedExamples() {
           <GateExample
             name="Grace Wilson" role="DevOps Engineer, CyberShield" family="platform_devops"
             s1 s2 s3={false} verdict="admit" verdictLabel="Admit · 2/3"
-            note="Zero mutual connections, but a real IDF-tech-unit shared employer path with Yuval Stern. Invisible to a network-first model, visible to ours."
+            note="Zero mutuals, zero shared employers we'd trust, no sports-industry proximity — admitted purely because her role family and skills line up. This is what &lsquo;fit and signal are independent&rsquo; means in practice: strong candidates without a network still land in the pool."
           />
           <GateExample
             name="Viktor Novak" role="Senior Data Engineer, Databricks" family="data_engineering"
@@ -510,7 +510,7 @@ function WorkedExamples() {
         <div className="text-xs uppercase tracking-wider text-mute font-semibold mb-2">End-to-end walkthroughs</div>
         <p className="text-sm text-mute mb-4 max-w-3xl">
           The same candidate would take a different path through the pipeline depending on how they
-          entered. The scoring core is shared; only the inputs and the warmth lift differ.
+          entered. The scoring core is shared; only the inputs and the signal lift differ.
         </p>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
@@ -521,7 +521,7 @@ function WorkedExamples() {
               { title: "Source",    body: "SportsTech Innovation Summit — 240 badge scans exported from Cvent." },
               { title: "Enrich",    body: "Clay pulls the profile via its provider waterfall (Apollo → PDL → Sales-Nav-backed) profile → past employers (DAZN, Meta), 3 recent posts on real-time inference, CVPR paper, 2.1k-star GitHub." },
               { title: "Gate",      body: "family=ml_cv ✓ · skills evidence ✓ · sports proximity ✓ → ADMIT (3/3)." },
-              { title: "Score",     body: "JOB001 fit 82 (Computer Vision + Object Detection matched), warmth 45 (Maya Levi 2°)." },
+              { title: "Score",     body: "JOB001 fit 82 (Computer Vision + Object Detection matched), signal 45 (Maya Levi 2°)." },
               { title: "Shortlist", body: "Tier: Direct outreach. Warm intro via Maya Levi (2° via shared Meta stint)." },
             ]}
             takeaway="Rich enrichment justifies the credit spend. Two of the 3 gate signals came from LinkedIn, not the badge scan."
@@ -533,10 +533,10 @@ function WorkedExamples() {
               { title: "Source",    body: "Maya Levi (Sr ML Engineer) submits via /referrals form, targets JOB001." },
               { title: "Enrich",    body: "Same LinkedIn pull as conference — plus the referrer becomes an automatic 1° warm-intro path." },
               { title: "Gate",      body: "Referral-admit path — 3/3 signals; Maya's vouch is proximity evidence." },
-              { title: "Score",     body: "JOB001 fit 82 (same), warmth 70 (base 55 + vouched-by-employee lift 15)." },
+              { title: "Score",     body: "JOB001 fit 82 (same), signal 70 (base 55 + vouched-by-employee lift 15)." },
               { title: "Shortlist", body: "Tier: Call this week. Warm intro is the referrer themselves." },
             ]}
-            takeaway="Same candidate, same fit — but warmth is dramatically higher because someone actively vouched. The recruiter picks up the phone faster."
+            takeaway="Same candidate, same fit — but signal is dramatically higher because someone actively vouched. The recruiter picks up the phone faster."
           />
           <ChannelWalkthrough
             channel="CV inbound"
@@ -545,7 +545,7 @@ function WorkedExamples() {
               { title: "Source",    body: "CV lands in Comeet application. Parsed into skills + past employers." },
               { title: "Enrich",    body: "Light enrichment — scan LinkedIn connections against WSC directory to find warm-intro paths. Skip evidence extraction (CV already declared skills)." },
               { title: "Gate",      body: "Deduped against active pool. If already in Comeet as active, suppressed." },
-              { title: "Score",     body: "Stated fit from CV. Warmth from any connection paths found in the WSC directory." },
+              { title: "Score",     body: "Stated fit from CV. Signal from any connection paths found in the WSC directory." },
               { title: "Shortlist", body: "Recruiter sees 'Alex applied and we know Ronit — do you want to ask Ronit about them?'" },
             ]}
             takeaway="CVs come with self-declared data. The high-value question is 'who do we already know that knows them?' — that's what enrichment focuses on for this channel."
@@ -557,7 +557,7 @@ function WorkedExamples() {
         <div className="text-xs uppercase tracking-wider text-mute font-semibold mb-2">Try it yourself</div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
           <TryItCard href="/capture/"   label="Capture a conference lead"        hint="Enrichment reveal runs on submit." />
-          <TryItCard href="/referrals/" label="Submit an employee referral"      hint="Vouched lift applied to warmth on the target role." />
+          <TryItCard href="/referrals/" label="Submit an employee referral"      hint="Vouched lift applied to signal on the target role." />
           <TryItCard href="/jobs/JOB001/" label="Open the JOB001 shortlist"     hint="Ranked pool, tier chips, warm-intro paths." />
         </div>
       </div>
@@ -593,7 +593,7 @@ function DesignDoc({ pool: _pool }: { pool: ReturnType<typeof usePool>["pool"] }
               bullets={[
                 "Given JOB001, who does the recruiter call this week?",
                 "Runs against the clean pool — cheap re-pass, no re-enrichment",
-                "Output: fit_score, warmth_score, best_intro_path",
+                "Output: fit_score, signal_score, best_intro_path",
                 "Production: writes shortlisted rows into Comeet",
               ]} />
           </div>
@@ -626,7 +626,7 @@ function DesignDoc({ pool: _pool }: { pool: ReturnType<typeof usePool>["pool"] }
           <p>
             Collapsing competence and reachability into a single &ldquo;compatibility rate&rdquo; is
             exactly how strong candidates with no network get buried and well-connected mismatches
-            float to the top. Fit and Warmth stay separate — the tier assignment reads them
+            float to the top. Fit and Signal stay separate — the tier assignment reads them
             independently.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-5">
@@ -637,7 +637,7 @@ function DesignDoc({ pool: _pool }: { pool: ReturnType<typeof usePool>["pool"] }
               ["Domain",          15, "Sports/media lexicon"],
               ["Nice-to-have",    10, "Bonus skills"],
             ]} />
-            <ScoreTable title="Warmth" subtitle="Reachability only" tone="emerald" rows={[
+            <ScoreTable title="Signal" subtitle="Endorsements + reachability" tone="emerald" rows={[
               ["Mutual connections", 40, "Diminishing returns"],
               ["Shared employer",    30, "Post-stoplist, aliased"],
               ["Recency",            20, "12-month half-life"],
@@ -645,7 +645,7 @@ function DesignDoc({ pool: _pool }: { pool: ReturnType<typeof usePool>["pool"] }
             ]} />
           </div>
           <Callout tint="indigo">
-            Fit ≥ 70 <em>and</em> warmth ≥ 50 → <em>Call this week</em>. Fit ≥ 70 alone → <em>Direct outreach</em>.
+            Fit ≥ 70 <em>and</em> signal ≥ 20 → <em>Call this week</em>. Fit ≥ 70 alone → <em>Direct outreach</em>.
             Fit ≥ 45 → <em>Nurture</em>. Below that: not shortlisted.
           </Callout>
         </Section>
@@ -666,9 +666,11 @@ function DesignDoc({ pool: _pool }: { pool: ReturnType<typeof usePool>["pool"] }
             ))}
           </div>
           <Callout tint="amber">
-            The stoplist is not optional. Without it, <code>startup</code>, <code>freelance</code>,{" "}
-            <code>university</code>, <code>IDF</code> and similar generate around 40 false warm paths
-            on this dataset.
+            The stoplist is not optional. Without it, generic tokens like <code>startup</code>,{" "}
+            <code>freelance</code>, <code>university</code>, and every <code>IDF</code> variant
+            generate around 40 false warm paths on this dataset. A WSC employee <em>vouching</em>{" "}
+            for an IDF alum through <a href="/referrals/" className="underline hover:no-underline">/referrals</a>{" "}
+            still counts — the stoplist only blocks passive matching, not active endorsements.
           </Callout>
         </Section>
 
@@ -845,9 +847,9 @@ function DesignDoc({ pool: _pool }: { pool: ReturnType<typeof usePool>["pool"] }
               choice="Session only"
               why="When you filter the pool or the shortlist, refreshing the page loses the filter. In production you'd want shareable URLs — send a colleague 'here's the JOB001 Call-this-week list' as a link. Adding this is ~2 hours of work and a small library dependency. We deprioritised it because it's a UX polish item, not a correctness one." />
             <Tradeoff
-              title="'Same team' preference lives in intro-path picking, not the warmth score"
+              title="'Same team' preference lives in intro-path picking, not the signal score"
               choice="Preference-only"
-              why="When we recommend WHO should make an intro, we prefer a same-team person (Maya from AI/ML over Hila from UX for a Senior ML Engineer role). But we don't add points to the candidate's warmth score for being connected to a same-team person. Reason: it would make warmth per-candidate × per-employee × per-job — a 4,500-row explosion. Keeping warmth job-agnostic in the data, and applying preference at the display layer, is cleaner." />
+              why="When we recommend WHO should make an intro, we prefer a same-team person (Maya from AI/ML over Hila from UX for a Senior ML Engineer role). But we don't add points to the candidate's signal score for being connected to a same-team person. Reason: it would make the signal score per-candidate × per-employee × per-job — a 4,500-row explosion. Keeping the signal score job-agnostic in the data, and applying preference at the display layer, is cleaner." />
             <Tradeoff
               title="The AI-written outreach draft is a template, not a real LLM call"
               choice="Deterministic template"
@@ -937,7 +939,7 @@ const BOXES: Array<{
   { id: "source",    label: "Source",    icon: "download", hint: "conference · referral · CV",  role: "source" },
   { id: "enrich",    label: "Enrich",    icon: "search",   hint: "LinkedIn · employers · posts",  role: "shared" },
   { id: "gate",      label: "Gate",      icon: "filter",   hint: "is this person talent we hire?", role: "shared" },
-  { id: "score",     label: "Score",     icon: "sliders",  hint: "fit + warmth, per role",         role: "shared" },
+  { id: "score",     label: "Score",     icon: "sliders",  hint: "fit + signal, per role",         role: "shared" },
   { id: "shortlist", label: "Shortlist", icon: "list",     hint: "ranked list · warm intros",      role: "shared" },
 ];
 
@@ -1319,8 +1321,8 @@ const TAX_BLOCKS = [
   { title: "Family evidence",   description: "Skills that confirm the claimed family. Gate signal 2 needs at least one hit.",       example: "ml_cv: computer vision · pytorch · yolo · deep learning · sports tracking" },
   { title: "Skill synonyms",    description: "Exact + family aliases. Exact match earns 1.0, family match earns 0.6.",              example: "PyTorch → exact: pytorch · family: tensorflow, keras, deep learning" },
   { title: "Domain lexicon",    description: "Keywords + known companies. Compound tokens for 'media' to avoid false positives.",   example: "sports · broadcast · streaming · cdn · Opta · Sportradar · KINEXON · DAZN" },
-  { title: "Employer stoplist", description: "Exact case-insensitive match. Filters ~40 false warm paths on this dataset.",         example: "freelance · startup · university · public sector · hospital group · IDF (bare)" },
-  { title: "Company aliases",   description: "Cluster different names for the same organisation. Enables real overlaps to surface.", example: "Opta ~ Opta Sports ~ Stats Perform · IDF ~ IDF tech unit ~ IDF Intelligence Unit" },
+  { title: "Employer stoplist", description: "Exact case-insensitive match on employer strings. Filters ~40 false passive warm paths. Active vouches through /referrals are unaffected.", example: "freelance · startup · university · public sector · hospital group · IDF · IDF tech unit · IDF Intelligence Unit" },
+  { title: "Company aliases",   description: "Cluster different names for the same organisation. Enables real overlaps to surface. IDF variants are deliberately NOT clustered — they're stoplisted instead.", example: "Opta ~ Opta Sports ~ Stats Perform · Akamai ~ Akamai Technologies ~ Akamai Media" },
 ];
 
 const SHIPPED: Array<[string, "Done" | "Exceeded" | "Partial" | "Not shipped", string]> = [
@@ -1341,7 +1343,7 @@ const SHIPPED: Array<[string, "Done" | "Exceeded" | "Partial" | "Not shipped", s
   ["Mock integration adapters",                  "Done",     "src/integrations/ · 7 systems"],
   ["Multi-channel architecture",                 "Done",     "source_channel first-class on every row"],
   ["Conference channel end-to-end",              "Done",     "/capture · live enrichment reveal"],
-  ["Referral channel with vouched lift",         "Done",     "/referrals · +15 warmth on target role"],
+  ["Referral channel with vouched lift",         "Done",     "/referrals · +15 signal on target role"],
   ["Reverse-referral (system → employee)",       "Done",     "/intros"],
   ["Recruiter-first UI · jobs as landing",       "Done",     "/ → open positions grid"],
   ["Human-in-the-loop overrides",                "Done",     "per-role override + global blacklist + notes"],

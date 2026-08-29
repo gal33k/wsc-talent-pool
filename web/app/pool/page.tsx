@@ -7,6 +7,7 @@ import StatsBar from "@/components/StatsBar";
 import { Icon } from "@/components/Icon";
 import CandidateDetail from "@/components/CandidateDetail";
 import { exportRows } from "@/lib/csv-export";
+import { computeFit } from "@/lib/scoring";
 
 // Convert the mathematical gate reason string into plain English.
 // Uses the structured signals + role_family + a friendly family name map.
@@ -71,7 +72,7 @@ const SOURCE_STYLES: Record<string, string> = {
 };
 
 export default function TalentPoolAudit() {
-  const { pool, loading, error, sessionCandidates, getGateOverride } = usePool();
+  const { pool, loading, error, sessionCandidates, getGateOverride, fitWeights } = usePool();
   const [conf, setConf] = useState("all");
   const [decision, setDecision] = useState("all");
   const [source, setSource] = useState("all");
@@ -81,6 +82,22 @@ export default function TalentPoolAudit() {
   // Effective gate = recruiter override wins over pipeline decision.
   const effectiveGate = (c: { id: string; gate: { decision: string } }) =>
     getGateOverride(c.id)?.newDecision ?? c.gate.decision;
+
+  // Best-fit open role — for each admitted candidate, find the job with the
+  // highest fit score across the currently open positions. This is what makes
+  // the pool feel connected to the jobs view: a hiring manager can see "who
+  // do we have that fits X?" without opening every dossier.
+  const bestFitFor = (c: import("@/lib/types").Candidate): { jobId: string; jobTitle: string; score: number } | null => {
+    if (!pool || !c.jobs) return null;
+    let best: { jobId: string; jobTitle: string; score: number } | null = null;
+    for (const [jobId, fit] of Object.entries(c.jobs)) {
+      const job = pool.jobs.find(j => j.job_id === jobId);
+      if (!job) continue;
+      const score = computeFit(fit.components, fitWeights);
+      if (!best || score > best.score) best = { jobId, jobTitle: job.title, score };
+    }
+    return best;
+  };
 
   const rows = useMemo(() => {
     if (!pool) return [];
@@ -226,6 +243,8 @@ export default function TalentPoolAudit() {
                     { label: "Company",       get: c => c.company },
                     { label: "Conference",    get: c => c.conference?.name },
                     { label: "Role family",   get: c => c.role_family },
+                    { label: "Top-match role",      get: c => bestFitFor(c)?.jobTitle ?? "" },
+                    { label: "Top-match fit",       get: c => { const b = bestFitFor(c); return b ? b.score.toFixed(1) : ""; } },
                     { label: "Signal · family",     get: c => c.gate.signals.role_family ? "yes" : "" },
                     { label: "Signal · skills",     get: c => c.gate.signals.skills_evidence ? "yes" : "" },
                     { label: "Signal · proximity",  get: c => c.gate.signals.proximity ? "yes" : "" },
@@ -253,6 +272,7 @@ export default function TalentPoolAudit() {
                 <th scope="col" className="text-left px-4 py-2.5">Title · Company</th>
                 <th scope="col" className="text-left px-4 py-2.5">Source</th>
                 <th scope="col" className="text-left px-4 py-2.5">Family</th>
+                <th scope="col" className="text-left px-4 py-2.5" title="Highest-scoring open role for this candidate">Top match</th>
                 <th scope="col" className="text-center px-2 py-2.5" title="Role family">Fam</th>
                 <th scope="col" className="text-center px-2 py-2.5" title="Skills">Skl</th>
                 <th scope="col" className="text-center px-2 py-2.5" title="Proximity">Prox</th>
@@ -294,6 +314,29 @@ export default function TalentPoolAudit() {
                   <td className="px-4 py-2.5">
                     <span className="text-[11px] text-mute bg-slate-100 rounded px-1.5 py-0.5">{c.role_family}</span>
                   </td>
+                  <td className="px-4 py-2.5" onClick={e => e.stopPropagation()}>
+                    {(() => {
+                      const best = bestFitFor(c);
+                      if (!best) {
+                        return <span className="text-[11px] text-mute italic">not scored</span>;
+                      }
+                      const strong = best.score >= 70;
+                      return (
+                        <a
+                          href={`/jobs/${best.jobId}/`}
+                          className="group inline-flex items-center gap-1.5 text-[11px] hover:underline"
+                          title={`Open ${best.jobTitle} shortlist`}
+                        >
+                          <span className={`inline-flex items-center rounded px-1.5 py-0.5 tabular font-semibold ${
+                            strong ? "bg-emerald-100 text-emerald-800" : best.score >= 45 ? "bg-amber-50 text-amber-800" : "bg-slate-100 text-slate-600"
+                          }`}>
+                            {best.score.toFixed(0)}
+                          </span>
+                          <span className="text-dim truncate max-w-[140px]">{best.jobTitle}</span>
+                        </a>
+                      );
+                    })()}
+                  </td>
                   {[c.gate.signals.role_family, c.gate.signals.skills_evidence, c.gate.signals.proximity].map((ok, j) => (
                     <td key={j} className="px-2 py-2.5 text-center">
                       {ok ? (
@@ -327,7 +370,7 @@ export default function TalentPoolAudit() {
               ))}
               {rows.length === 0 && (
                 <tr>
-                  <td colSpan={9} className="text-center text-sm text-mute py-8 italic">
+                  <td colSpan={10} className="text-center text-sm text-mute py-8 italic">
                     No candidates match the current filters.
                   </td>
                 </tr>

@@ -40,7 +40,7 @@ CRITICAL_ADMITS = {
     "HS054": "Mei Zhang — Platform Engineer, CloudNative Labs, 0 mutuals",
     "HS056": "Kim Soo-Jin — DevOps Lead, Samsung SDS, 0 mutuals",
     "HS067": "Javier Morales — Broadcast Engineer, TeleDeporte, 0 mutuals",
-    "HS026": "Grace Wilson — DevOps Engineer, CyberShield (IDF warm-path demo)",
+    "HS026": "Grace Wilson — DevOps Engineer, CyberShield (admit on skills+family alone, zero warm paths)",
 }
 
 CRITICAL_REJECTS = {
@@ -126,10 +126,12 @@ def test_stoplist_filters_generic_employers() -> None:
             )
 
 
-def test_grace_wilson_admits_via_shared_unit() -> None:
-    """The demo row: no mutuals, but a real IDF-tech-unit shared path with
-    Yuval Stern / Itai Nahum. The taxonomy's IDF alias cluster is what
-    makes this visible."""
+def test_grace_wilson_admits_on_merit_alone() -> None:
+    """The zero-network demo row: no mutuals, no shared employers (IDF
+    variants are stoplisted from passive matching — see taxonomy.yaml). She
+    still admits because family + skills pass the gate on their own. This
+    is the "not everyone strong has a warm path" case the two-axis design
+    is built to catch."""
     by_id = _run()
     grace = by_id.get("HS026")
     assert grace, "Grace Wilson missing"
@@ -147,7 +149,7 @@ if __name__ == "__main__":
         test_every_row_has_a_reason,
         test_decision_counts_are_within_expected_range,
         test_stoplist_filters_generic_employers,
-        test_grace_wilson_admits_via_shared_unit,
+        test_grace_wilson_admits_on_merit_alone,
     ]:
         try:
             fn()

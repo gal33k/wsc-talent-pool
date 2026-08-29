@@ -63,7 +63,7 @@ const SIGNAL_LABELS: Record<keyof SignalWeights, [string, string]> = {
   ],
   notes_present: [
     "Recruiter notes",
-    "A recorded booth conversation happened. Small but real warmth signal.",
+    "A recorded booth conversation happened. Small but real signal.",
   ],
   mutual_connections: [
     "Mutual connections",
@@ -156,8 +156,8 @@ export default function WeightTuner() {
                   tip="Fit score needed to earn 'Call this week' tier. Higher = fewer candidates get the top-priority label."
                   value={tiers.call_this_week.min_fit} max={100}
                   onChange={v => setTiers({ ...tiers, call_this_week: { ...tiers.call_this_week, min_fit: v } })} />
-          <Slider label="Call this week — min warmth"
-                  tip="Warmth also required for 'Call this week' (needs BOTH fit and warmth). Higher = only recommend calls where you have a solid intro path."
+          <Slider label="Call this week — min signal"
+                  tip="Signal is also required for 'Call this week' (needs BOTH fit and signal). Higher = only recommend calls where you have a solid intro path or active endorsement."
                   value={tiers.call_this_week.min_warmth} max={100}
                   onChange={v => setTiers({ ...tiers, call_this_week: { ...tiers.call_this_week, min_warmth: v } })} />
           <Slider label="Direct outreach — min fit"

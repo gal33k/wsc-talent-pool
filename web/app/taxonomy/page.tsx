@@ -233,7 +233,7 @@ export default function TaxonomyEditor() {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
               <SummaryTile n={12} label="Role families" hint="ml_cv, backend, product, …" />
               <SummaryTile n={45} label="Skill synonyms" hint="PyTorch, AWS, Kafka, …" />
-              <SummaryTile n={CURRENT_STOPLIST.length} label="Employer stopwords" hint="freelance, startup, IDF, …" />
+              <SummaryTile n={CURRENT_STOPLIST.length} label="Employer stopwords" hint="freelance, startup, university, all IDF variants, …" />
               <SummaryTile n={68} label="Family evidence skills" hint="opencv → ml_cv, spark → data_eng, …" />
             </div>
           </section>

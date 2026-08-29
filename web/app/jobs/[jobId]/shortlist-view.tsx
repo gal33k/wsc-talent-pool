@@ -223,7 +223,7 @@ export default function ShortlistView({ jobId }: { jobId: string }) {
           <TierExplainer
             dot="bg-emerald-500"
             label="Call this week"
-            rule={`Fit ≥ ${tiers.call_this_week.min_fit}  AND  Warmth ≥ ${tiers.call_this_week.min_warmth}`}
+            rule={`Fit ≥ ${tiers.call_this_week.min_fit}  AND  Signal ≥ ${tiers.call_this_week.min_warmth}`}
             hint="Strong fit AND you have a warm intro path. Phone call territory — highest response rate."
           />
           <TierExplainer
@@ -256,7 +256,7 @@ export default function ShortlistView({ jobId }: { jobId: string }) {
                   aria-label="Sort candidates by"
                 >
                   <option value="fit">Fit (competence)</option>
-                  <option value="warmth">Warmth (reachability)</option>
+                  <option value="warmth">Signal (endorsements + reachability)</option>
                   <option value="recency">Recency (most recent contact)</option>
                 </select>
               </div>
@@ -317,7 +317,7 @@ export default function ShortlistView({ jobId }: { jobId: string }) {
                       { label: "Company",       get: r => r.candidate.company },
                       { label: "Role family",   get: r => r.candidate.role_family },
                       { label: "Fit score",     get: r => r.fitScore.toFixed(1) },
-                      { label: "Warmth score",  get: r => r.warmthScore.toFixed(1) },
+                      { label: "Signal score",  get: r => r.warmthScore.toFixed(1) },
                       { label: "Tier",          get: r => (r.tier ?? "").replace(/_/g, " ") },
                       { label: "Source channel", get: () => "conference" },
                       { label: "Best intro",    get: r => r.candidate.warmth.shared_employers?.[0]?.name ?? "" },
