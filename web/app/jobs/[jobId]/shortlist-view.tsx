@@ -19,10 +19,12 @@ export default function ShortlistView({ jobId }: { jobId: string }) {
     pool, loading, error, setSelectedJobId,
     fitWeights, warmthWeights, tiers, parityOk,
     isBlacklisted, isOverridden,
+    sessionCandidates,
   } = usePool();
   const [detailId, setDetailId] = useState<string | null>(null);
   const [sortBy, setSortBy] = useState<SortKey>("fit");
   const [tierFilter, setTierFilter] = useState<TierFilter>("all");
+  const [searchQ, setSearchQ] = useState("");
 
   // Keep the shared selectedJobId in sync so /intros/, /referrals/ pick this job by default.
   useEffect(() => { setSelectedJobId(jobId); }, [jobId, setSelectedJobId]);
@@ -31,7 +33,9 @@ export default function ShortlistView({ jobId }: { jobId: string }) {
 
   const ranked = useMemo(() => {
     if (!pool || !job) return [];
-    return pool.candidates
+    // Merge seeded pool with session-only candidates (captured/referred this session)
+    const allCandidates = [...sessionCandidates, ...pool.candidates];
+    return allCandidates
       .filter(c => c.jobs[job.job_id])
       .filter(c => !isBlacklisted(c.id))
       .filter(c => !isOverridden(c.id, job.job_id))
@@ -60,12 +64,21 @@ export default function ShortlistView({ jobId }: { jobId: string }) {
         if (b.fitScore !== a.fitScore) return b.fitScore - a.fitScore;
         return b.warmthScore - a.warmthScore;
       });
-  }, [pool, job, fitWeights, warmthWeights, tiers, isBlacklisted, isOverridden, sortBy]);
+  }, [pool, job, fitWeights, warmthWeights, tiers, isBlacklisted, isOverridden, sortBy, sessionCandidates]);
 
-  const rankedFiltered = useMemo(
-    () => tierFilter === "all" ? ranked : ranked.filter(r => r.tier === tierFilter),
-    [ranked, tierFilter]
-  );
+  const rankedFiltered = useMemo(() => {
+    const q = searchQ.trim().toLowerCase();
+    return ranked
+      .filter(r => tierFilter === "all" ? true : r.tier === tierFilter)
+      .filter(r => {
+        if (!q) return true;
+        const c = r.candidate;
+        return c.name.toLowerCase().includes(q)
+            || (c.title ?? "").toLowerCase().includes(q)
+            || (c.company ?? "").toLowerCase().includes(q)
+            || (c.skills ?? []).some(s => s.toLowerCase().includes(q));
+      });
+  }, [ranked, tierFilter, searchQ]);
 
   const grouped = useMemo(() => {
     const g: Record<string, typeof ranked> = { call_this_week: [], direct_outreach: [], nurture: [] };
@@ -247,9 +260,23 @@ export default function ShortlistView({ jobId }: { jobId: string }) {
                   <option value="recency">Recency (most recent contact)</option>
                 </select>
               </div>
+              <div className="relative">
+                <Icon name="search" className="w-3.5 h-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 text-mute" />
+                <input
+                  value={searchQ}
+                  onChange={e => setSearchQ(e.target.value)}
+                  placeholder="Search name, title, company, skill…"
+                  type="search"
+                  autoComplete="off"
+                  spellCheck={false}
+                  aria-label="Search candidates on this shortlist"
+                  className="pl-8 pr-3 py-1 text-xs border border-border rounded-md bg-white focus:outline-none focus-visible:border-accent placeholder:text-faint w-56"
+                />
+              </div>
               <span className="text-[11px] text-mute">
                 {rankedFiltered.length} of {ranked.length}
-                {tierFilter !== "all" && <> · filtered by tier</>}
+                {tierFilter !== "all" && <> · tier filter</>}
+                {searchQ.trim() && <> · &ldquo;{searchQ.trim()}&rdquo;</>}
               </span>
             </div>
             <div className="flex items-center gap-3 flex-wrap">

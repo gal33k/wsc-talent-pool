@@ -71,7 +71,7 @@ const SOURCE_STYLES: Record<string, string> = {
 };
 
 export default function TalentPoolAudit() {
-  const { pool, loading, error } = usePool();
+  const { pool, loading, error, sessionCandidates } = usePool();
   const [conf, setConf] = useState("all");
   const [decision, setDecision] = useState("all");
   const [source, setSource] = useState("all");
@@ -81,12 +81,15 @@ export default function TalentPoolAudit() {
   const rows = useMemo(() => {
     if (!pool) return [];
     const ql = q.trim().toLowerCase();
-    return pool.candidates
+    // Session captures (from /capture, /referrals) appear at the top so a
+    // recruiter can see what they just added.
+    const merged = [...sessionCandidates, ...pool.candidates];
+    return merged
       .filter(c => source === "all" || (source === "conference"))
       .filter(c => conf === "all" || c.conference.name === conf)
       .filter(c => decision === "all" || c.gate.decision === decision)
       .filter(c => !ql || c.name.toLowerCase().includes(ql) || c.company.toLowerCase().includes(ql) || (c.title || "").toLowerCase().includes(ql));
-  }, [pool, conf, decision, source, q]);
+  }, [pool, sessionCandidates, conf, decision, source, q]);
 
   if (loading) return <main className="p-8 text-mute text-sm">Loading pool…</main>;
   if (error) return <main className="p-8 text-red-600 text-sm">Error: {error}</main>;
@@ -266,6 +269,11 @@ export default function TalentPoolAudit() {
                     <div className="flex items-center gap-2.5">
                       <Avatar name={c.name} size="sm" />
                       <span className="text-text font-medium">{c.name}</span>
+                      {("sessionOnly" in c && (c as { sessionOnly?: boolean }).sessionOnly) && (
+                        <span className="text-[9px] uppercase tracking-wider font-bold rounded px-1.5 py-0.5 bg-emerald-600 text-white">
+                          new
+                        </span>
+                      )}
                     </div>
                   </td>
                   <td className="px-4 py-2.5">

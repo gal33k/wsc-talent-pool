@@ -47,6 +47,11 @@ export type BqActivity = {
 
 export type IntroStatus = "queued" | "sent" | "accepted" | "declined";
 
+// Session-only additions to the pool (captured via /capture or /referrals).
+// Mocked as full Candidate shape so they flow through the shortlist/pool UIs
+// alongside seeded rows. Marked with sessionOnly for a visible chip.
+export type SessionCandidate = import("./types").Candidate & { sessionOnly: true };
+
 export type IntroRequest = {
   id: string;
   candidateId: string;
@@ -93,6 +98,11 @@ type Ctx = {
   bqActivity: BqActivity[];
   logBq: (entry: Omit<BqActivity, "ts">) => void;
 
+  // Session-only pool additions — captured leads / referrals that get
+  // merged into shortlist + pool views without persisting to disk.
+  sessionCandidates: SessionCandidate[];
+  addSessionCandidate: (c: SessionCandidate) => void;
+
   // Outreach queue — intro requests the recruiter has fired
   introRequests: IntroRequest[];
   getIntroRequest: (candidateId: string, jobId: string) => IntroRequest | undefined;
@@ -135,6 +145,17 @@ export function PoolProvider({ children }: { children: ReactNode }) {
   const [notes, setNotes] = useState<NoteEntry[]>([]);
   const [bqActivity, setBqActivity] = useState<BqActivity[]>([]);
   const [introRequests, setIntroRequests] = useState<IntroRequest[]>([]);
+  const [sessionCandidates, setSessionCandidates] = useState<SessionCandidate[]>([]);
+
+  const addSessionCandidate = useCallback((c: SessionCandidate) => {
+    setSessionCandidates(prev => {
+      // Idempotent: replace if same id already added this session
+      if (prev.some(p => p.id === c.id)) {
+        return prev.map(p => p.id === c.id ? c : p);
+      }
+      return [c, ...prev];
+    });
+  }, []);
 
   useEffect(() => {
     fetch("/data/pool.json")
@@ -349,6 +370,7 @@ export function PoolProvider({ children }: { children: ReactNode }) {
       overrideCandidate, removeOverride, blacklistCandidate, unblacklistCandidate, saveNote,
       bqActivity, logBq,
       introRequests, getIntroRequest, requestIntro, updateIntroStatus, cancelIntroRequest,
+      sessionCandidates, addSessionCandidate,
     }}>
       {children}
     </PoolContext.Provider>

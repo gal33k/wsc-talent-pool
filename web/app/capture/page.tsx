@@ -33,7 +33,7 @@ const BADGE_EXAMPLES = [
 ].map(e => ({ ...e, linkedinUrl: _searchUrl(e.name, e.company) }));
 
 export default function CaptureLead() {
-  const { pool, loading, error, fitWeights, logBq } = usePool();
+  const { pool, loading, error, fitWeights, logBq, addSessionCandidate } = usePool();
   const [name, setName] = useState("");
   const [linkedinUrl, setLinkedinUrl] = useState("");
   const [company, setCompany] = useState("");
@@ -143,6 +143,82 @@ export default function CaptureLead() {
       channel: "conference",
     };
     setPlayback(pb);
+
+    // Persist to the session pool so this candidate shows up on /jobs/[id]
+    // shortlists and /pool for the rest of the session.
+    if (gateDecision === "ADMIT") {
+      const sessionId = `session-${Date.now().toString(36)}`;
+      const jobsMap: Record<string, import("@/lib/types").FitForJob> = {};
+      pool.jobs.forEach(j => {
+        const jobEntry = jobs.find(x => x.jobId === j.job_id);
+        if (!jobEntry) return;
+        // Fabricate a plausible FitForJob from the heuristic result. Enough
+        // shape to render the CandidateCard + dossier without crashing.
+        jobsMap[j.job_id] = {
+          components: {
+            required_skills: jobEntry.matchedCount / Math.max(1, jobEntry.totalRequired),
+            role_family:     jobEntry.jobId === `JOB00${roleFamily === "ml_cv" ? 1 : roleFamily === "backend" ? 2 : roleFamily === "product" ? 3 : roleFamily === "data_engineering" ? 4 : 0}` ? 1.0 : 0.4,
+            seniority:       1.0,
+            domain:          gateSignals.proximity ? 1.0 : 0.5,
+            nice_to_have:    0.3,
+          },
+          score_default: jobEntry.fitScore,
+          matched_required: skills.filter(s => j.required_skills.some(rs => rs.replace(/\*$/, "").toLowerCase().includes(s.toLowerCase()) || s.toLowerCase().includes(rs.replace(/\*$/, "").toLowerCase()))),
+          matched_required_family: [],
+          missing_required: j.required_skills.filter(rs => {
+            const clean = rs.replace(/\*$/, "").toLowerCase();
+            return !skills.some(s => s.toLowerCase().includes(clean) || clean.includes(s.toLowerCase()));
+          }),
+          matched_nice_to_have: [],
+          critical_skills: j.required_skills.filter(s => s.endsWith("*")).map(s => s.replace(/\*$/, "")),
+          missing_critical: [],
+          seniority_flag: "in_band",
+          excluded: null,
+          best_intro_path: "",
+          why_summary: "",
+          outreach_draft: "",
+        };
+      });
+
+      addSessionCandidate({
+        id: sessionId,
+        person_id: sessionId,
+        name: name.trim(),
+        email: `${name.trim().toLowerCase().replace(/\s+/g, ".")}@example.com`,
+        title: title.trim(),
+        company: company.trim() || "—",
+        location: "",
+        years_experience: null,
+        linkedin_url: linkedinUrl.trim(),
+        industry: gateSignals.proximity ? "Sports / Broadcast" : "Technology",
+        skills,
+        past_titles: [],
+        past_companies: [],
+        conference: { name: conference, domain: "", date: new Date().toISOString().slice(0, 10), days_since: 0 },
+        notes: notes.trim(),
+        role_family: roleFamily,
+        seniority_tier: 4,
+        data_confidence: "medium",
+        enrichment_status: "partial",
+        domain_relevance_score: 100 * Object.values(gateSignals).filter(Boolean).length / 3,
+        gate: {
+          decision: "ADMIT",
+          signals: gateSignals,
+          reason: gateReason,
+        },
+        comeet_status: null,
+        warmth: {
+          components: {
+            mutual_connections: 0, shared_employer: 0, recency: 1.0, notes_present: notes.trim() ? 1.0 : 0.0,
+          } as import("@/lib/types").WarmthComponents,
+          score_default: notes.trim() ? 20 : 15,
+          mutuals: [],
+          shared_employers: [],
+        },
+        jobs: jobsMap,
+        sessionOnly: true,
+      });
+    }
 
     // Log the mock adapter calls into the client-side BigQuery activity so the
     // /analytics page sees them and /integrations shows the technical trace.
