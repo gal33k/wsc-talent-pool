@@ -101,7 +101,7 @@ export default function JobsIndex() {
           <div className="flex items-center gap-5 md:gap-8 flex-shrink-0 stagger">
             <HeroMetric n={pool.candidates.length}     label="in the pool" />
             <HeroMetric n={pool.jobs.length}           label="open roles" accent />
-            <HeroMetric n={totalCall}                  label="call this week" />
+            <HeroMetric n={totalCall}                  label="warm intros" />
           </div>
         </div>
       </section>
@@ -110,7 +110,7 @@ export default function JobsIndex() {
         { label: "Open roles",       value: pool.jobs.length,       sub: "hiring right now", iconName: "briefcase" },
         { label: "In the pool",      value: admitted,               sub: `${pool.candidates.length - admitted} filtered out`, iconName: "users" },
         { label: "Total shortlist",  value: totalShortlisted,       sub: "across all roles", iconName: "list", accent: true },
-        { label: "Call this week",   value: totalCall,              sub: "warm intro + strong fit", iconName: "trending-up" },
+        { label: "Warm intro",       value: totalCall,              sub: "strong fit + WSC intro path", iconName: "trending-up" },
       ]} />
 
       {(blacklist.length > 0 || overrides.length > 0) && (
@@ -291,8 +291,8 @@ export default function JobsIndex() {
             </div>
 
             <div className="flex items-center gap-4 mb-4 pb-4 border-b border-border-faint">
-              <TierPill label="Call" count={counts.call} colour="bg-emerald-600" />
-              <TierPill label="Outreach" count={counts.direct} colour="bg-emerald-700" />
+              <TierPill label="Warm" count={counts.call} colour="bg-emerald-600" />
+              <TierPill label="Cold" count={counts.direct} colour="bg-emerald-700" />
               <TierPill label="Nurture" count={counts.nurture} colour="bg-stone-400" />
               <div className="ml-auto text-right">
                 <div className="text-lg font-semibold text-text tabular">{total}</div>

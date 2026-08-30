@@ -46,7 +46,7 @@ assert it in a test.
 
 ### 1. Shortlist (default view)
 - Job selector across the 4 open roles
-- Candidates grouped by priority tier: **Call this week** / **Direct outreach** / **Nurture**
+- Candidates grouped by priority tier: **Warm intro** / **Cold outreach** / **Nurture**
 - Card per candidate: name, title @ company, location, years
   - two small bars — **fit and signal** — with the numbers
   - matched required skills as chips (✓ has it, ~ family match, ✗ missing)

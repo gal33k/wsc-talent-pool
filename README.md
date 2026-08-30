@@ -136,8 +136,8 @@ fits 0-1 like every other sub-score. Multiple vouches sum, capped at 1.0.
 
 | Tier | Rule | Meaning |
 |---|---|---|
-| **Call this week** | `fit ≥ 70 AND signal ≥ 20` | Strong fit + warm intro path — phone them |
-| **Direct outreach** | `fit ≥ 70` | Strong fit but network is cold — evidence-based cold email |
+| **Warm intro** | `fit ≥ 70 AND signal ≥ 20` | Strong fit + a WSC employee can introduce — ask them |
+| **Cold outreach** | `fit ≥ 70` | Strong fit, no warm path — evidence-based direct approach |
 | **Nurture** | `fit ≥ 45` | Below strong-fit line — worth keeping warm for future roles |
 
 ## Worked example — Priya Anand vs JOB001 (Senior ML Engineer)
@@ -161,7 +161,7 @@ fits 0-1 like every other sub-score. Multiple vouches sum, capped at 1.0.
 - rest: 0
 **Total ≈ 21.5**
 
-**Tier:** fit 86.3 ≥ 70 AND signal 21.5 ≥ 20 → **Call this week**
+**Tier:** fit 86.3 ≥ 70 AND signal 21.5 ≥ 20 → **Warm intro**
 
 ## The 7 assumptions we made
 

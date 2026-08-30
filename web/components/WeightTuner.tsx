@@ -152,16 +152,16 @@ export default function WeightTuner() {
         </Group>
 
         <Group label="Tier thresholds — decides who lands where" dot="bg-emerald-600">
-          <Slider label="Call this week — min fit"
-                  tip="Fit score needed to earn 'Call this week' tier. Higher = fewer candidates get the top-priority label."
+          <Slider label="Warm intro — min fit"
+                  tip="Fit score needed to earn the 'Warm intro' tier. Higher = fewer candidates get the top-priority label."
                   value={tiers.call_this_week.min_fit} max={100}
                   onChange={v => setTiers({ ...tiers, call_this_week: { ...tiers.call_this_week, min_fit: v } })} />
-          <Slider label="Call this week — min signal"
-                  tip="Signal is also required for 'Call this week' (needs BOTH fit and signal). Higher = only recommend calls where you have a solid intro path or active endorsement."
+          <Slider label="Warm intro — min signal"
+                  tip="Signal is also required for the 'Warm intro' tier (needs BOTH fit and signal). Higher = only recommend intros where the intro path is solid."
                   value={tiers.call_this_week.min_warmth} max={100}
                   onChange={v => setTiers({ ...tiers, call_this_week: { ...tiers.call_this_week, min_warmth: v } })} />
-          <Slider label="Direct outreach — min fit"
-                  tip="Fit score needed for cold-outreach recommendations (network is weak but fit is strong)."
+          <Slider label="Cold outreach — min fit"
+                  tip="Fit score needed for cold-outreach recommendations (no warm path, but fit is strong)."
                   value={tiers.direct_outreach.min_fit} max={100}
                   onChange={v => setTiers({ ...tiers, direct_outreach: { min_fit: v } })} />
           <Slider label="Nurture — min fit"

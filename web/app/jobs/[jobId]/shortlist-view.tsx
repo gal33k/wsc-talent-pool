@@ -196,14 +196,14 @@ export default function ShortlistView({ jobId }: { jobId: string }) {
           className={`card card-interactive p-4 text-left transition-colors ${
             tierFilter === "call_this_week" ? "ring-2 ring-emerald-500 border-emerald-500" : ""
           }`}
-          title="Filter list to only 'Call this week' candidates"
+          title="Filter list to only 'Warm intro' candidates"
         >
           <div className="flex items-center justify-between mb-2">
-            <div className="text-[11px] uppercase tracking-wider text-mute font-medium">Call this week</div>
+            <div className="text-[11px] uppercase tracking-wider text-mute font-medium">Warm intro</div>
             <Icon name="trending-up" className="w-3.5 h-3.5 text-emerald-600" strokeWidth={2} />
           </div>
           <div className="text-2xl font-semibold tabular text-emerald-700">{grouped.call_this_week.length}</div>
-          <div className="text-[11px] text-mute mt-1">warm intro + strong fit · click to filter</div>
+          <div className="text-[11px] text-mute mt-1">strong fit + a WSC intro path · click to filter</div>
         </button>
 
         <Link href="/intros/" className="card card-interactive p-4 group" title="Open the outreach queue">
@@ -222,21 +222,21 @@ export default function ShortlistView({ jobId }: { jobId: string }) {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
           <TierExplainer
             dot="bg-emerald-500"
-            label="Call this week"
+            label="Warm intro"
             rule={`Fit ≥ ${tiers.call_this_week.min_fit}  AND  Signal ≥ ${tiers.call_this_week.min_warmth}`}
-            hint="Strong fit AND you have a warm intro path. Phone call territory — highest response rate."
+            hint="Strong fit AND a WSC employee can introduce you. Highest response rate — ask for the intro."
           />
           <TierExplainer
             dot="bg-amber-500"
-            label="Direct outreach"
-            rule={`Fit ≥ ${tiers.direct_outreach.min_fit}  (network is cold)`}
-            hint="Same strong fit, but nobody at WSC knows them yet. Cold email with an evidence-based hook."
+            label="Cold outreach"
+            rule={`Fit ≥ ${tiers.direct_outreach.min_fit}  (no warm path)`}
+            hint="Same strong fit, but nobody at WSC knows them yet. Reach out directly with an evidence-based hook."
           />
           <TierExplainer
             dot="bg-stone-400"
             label="Nurture"
             rule={`Fit ≥ ${tiers.nurture.min_fit}  (below strong-fit line)`}
-            hint="Not this week's priority — worth keeping warm for future roles or as talent stays in-market."
+            hint="Not this week's priority — worth keeping warm for future roles as they stay in-market."
           />
         </div>
       </div>
@@ -283,7 +283,7 @@ export default function ShortlistView({ jobId }: { jobId: string }) {
               <div className="flex items-center gap-1">
                 <span className="text-[10px] uppercase tracking-wider text-mute font-semibold mr-1">Filter</span>
                 {(["all", "call_this_week", "direct_outreach", "nurture"] as const).map(t => {
-                  const label = t === "all" ? "All" : t === "call_this_week" ? "Call" : t === "direct_outreach" ? "Outreach" : "Nurture";
+                  const label = t === "all" ? "All" : t === "call_this_week" ? "Warm intro" : t === "direct_outreach" ? "Cold outreach" : "Nurture";
                   const count = t === "all" ? ranked.length : grouped[t]?.length ?? 0;
                   const active = tierFilter === t;
                   const dot = t === "call_this_week" ? "bg-emerald-500" : t === "direct_outreach" ? "bg-emerald-600" : t === "nurture" ? "bg-stone-400" : "";

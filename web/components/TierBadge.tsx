@@ -2,15 +2,15 @@ import type { Tier } from "@/lib/scoring";
 
 const STYLES: Record<Exclude<Tier, null>, { label: string; hint: string; cls: string }> = {
   call_this_week: {
-    label: "Call this week", hint: "Warm intro + strong fit",
+    label: "Warm intro", hint: "Strong fit + a WSC employee can introduce you",
     cls: "bg-emerald-100 text-emerald-800 border-emerald-200",
   },
   direct_outreach: {
-    label: "Direct outreach", hint: "Strong fit, cold approach",
+    label: "Cold outreach", hint: "Strong fit, no warm path — reach out directly",
     cls: "bg-indigo-100 text-indigo-800 border-indigo-200",
   },
   nurture: {
-    label: "Nurture", hint: "Adjacent fit, re-score next role",
+    label: "Nurture", hint: "Borderline fit — keep in pool, re-score next role",
     cls: "bg-slate-100 text-slate-700 border-slate-200",
   },
 };

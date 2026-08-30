@@ -17,9 +17,13 @@ from .config import scoring, taxonomy
 
 
 TIER_ORDER = ["call_this_week", "direct_outreach", "nurture"]
+# Internal keys stay stable for API/YAML compatibility. Human-facing labels
+# were renamed to describe the METHOD (warm vs cold) rather than the medium
+# ("call") — every tier is outreach; the difference is whether it's via an
+# intro path or direct.
 TIER_LABELS = {
-    "call_this_week": "Call this week",
-    "direct_outreach": "Direct outreach",
+    "call_this_week": "Warm intro",
+    "direct_outreach": "Cold outreach",
     "nurture": "Nurture",
 }
 

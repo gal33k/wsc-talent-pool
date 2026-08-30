@@ -245,7 +245,7 @@ function HowItWorks() {
           seeLabel="Audit the pool"
         >
           <p>
-            Sorted by fit, tagged by tier (<em>Call this week</em>, <em>Direct outreach</em>,{" "}
+            Sorted by fit, tagged by tier (<em>Warm intro</em>, <em>Cold outreach</em>,{" "}
             <em>Nurture</em>). Each card has a one-click <em>&ldquo;Ask X to introduce&rdquo;</em>{" "}
             button. If a recruiter marks someone as not-a-fit, they stay off future shortlists —
             the recruiter always wins over the model.
@@ -528,7 +528,7 @@ function WorkedExamples() {
               { title: "Enrich",    body: "Clay pulls the LinkedIn profile via its provider waterfall (Apollo → PDL → Sales-Nav-backed): past employers (DAZN, Meta), 3 recent posts on real-time inference, CVPR paper, 2.1k-star GitHub." },
               { title: "Gate",      body: "family=ml_cv ✓ · skills evidence ✓ · sports proximity ✓ → ADMIT (3/3)." },
               { title: "Score",     body: "JOB001 fit 82 (Computer Vision + Object Detection matched), signal 45 (Maya Levi 2°)." },
-              { title: "Shortlist", body: "Tier: Direct outreach. Warm intro via Maya Levi (2° via shared Meta stint)." },
+              { title: "Shortlist", body: "Tier: Warm intro. Ask Maya Levi (2° via shared Meta stint) to make the introduction." },
             ]}
             takeaway="Rich enrichment justifies the credit spend. Two of the 3 gate signals came from LinkedIn, not the badge scan."
           />
@@ -540,7 +540,7 @@ function WorkedExamples() {
               { title: "Enrich",    body: "Same LinkedIn pull as conference — plus the referrer becomes an automatic 1° warm-intro path." },
               { title: "Gate",      body: "Referral-admit path — 3/3 signals; Maya's vouch is proximity evidence." },
               { title: "Score",     body: "JOB001 fit 82 (same), signal 70 (base 55 + vouched-by-employee lift 15)." },
-              { title: "Shortlist", body: "Tier: Call this week. Warm intro is the referrer themselves." },
+              { title: "Shortlist", body: "Tier: Warm intro. The introducer is the referrer themselves." },
             ]}
             takeaway="Same candidate, same fit — but signal is dramatically higher because someone actively vouched. The recruiter picks up the phone faster."
           />
@@ -716,7 +716,7 @@ function DesignDoc({ pool: _pool }: { pool: ReturnType<typeof usePool>["pool"] }
             ]} />
           </div>
           <Callout tint="indigo">
-            Fit ≥ 70 <em>and</em> signal ≥ 20 → <em>Call this week</em>. Fit ≥ 70 alone → <em>Direct outreach</em>.
+            Fit ≥ 70 <em>and</em> signal ≥ 20 → <em>Warm intro</em>. Fit ≥ 70 alone → <em>Cold outreach</em>.
             Fit ≥ 45 → <em>Nurture</em>. Below that: not shortlisted.
           </Callout>
         </Section>
@@ -791,7 +791,7 @@ function DesignDoc({ pool: _pool }: { pool: ReturnType<typeof usePool>["pool"] }
               <ul className="text-xs text-rose-900/80 space-y-1.5">
                 <li>Who&rsquo;s admitted to the pool — deterministic rules only</li>
                 <li>The final ranking — if you can&rsquo;t reproduce it, it&rsquo;s a compliance issue</li>
-                <li>The tier label (Call / Direct outreach / Nurture)</li>
+                <li>The tier label (Warm intro / Cold outreach / Nurture)</li>
                 <li>Anything with hiring or legal effect — GDPR Article 22</li>
               </ul>
             </div>
