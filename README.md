@@ -44,7 +44,7 @@ python run.py --gate-audit               # dump gate decisions for all 75 rows
 Tests:
 ```bash
 for t in test_json_parity test_gate test_scoring test_missing_data; do python tests/$t.py; done
-# 40 tests across 4 files, all pass
+# 41 tests across 4 files, all pass
 ```
 
 ## Executive summary (for a non-technical Head of HR)
@@ -200,7 +200,7 @@ src/report.py             CSV writer + standalone HTML view + JSON emitter
 src/integrations/         mock adapters — see docs/09
 
 run.py                    python run.py --job-id JOB001 [--emit-json]
-tests/                    40 tests: parity, gate, scoring, missing-data
+tests/                    41 tests: parity, gate, scoring, missing-data
 data/                     4 supplied CSVs + comeet stub + edge-case fixtures
 output/                   committed JOB001-004 shortlists (CSV + HTML) + excluded + pool.csv
 web/                      Next.js app — see docs/08-web-app.md
@@ -262,7 +262,7 @@ Full list in `/methodology` §12. Top three:
 - [x] All 7 assumptions answered (docs + app)
 - [x] Design doc section (README + `/methodology`)
 - [x] Executive summary for non-technical HR (above)
-- [x] Tests pass (40 tests, 4 files); edge-case fixture demonstrates missing-data handling
+- [x] Tests pass (41 tests, 4 files); edge-case fixture demonstrates missing-data handling
 - [x] No candidate names, no API keys, no live calls
 - [x] `npm run dev` in `web/` serves the app against the emitted JSON
 - [x] Browser-computed default scores match Python to 1dp (asserted in tests)

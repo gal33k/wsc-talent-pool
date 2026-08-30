@@ -57,7 +57,7 @@ first commit; the ingestion layer is pluggable, the scoring core is shared.
 
 | Channel | What's different about it |
 |---|---|
-| **Inbound** (Comeet applications) | CV parsing gives skills and history directly, so enrichment is optional. These people have declared intent — worth more than any warmth score. A rejected applicant from last year resurfaces automatically when a better-fitting role opens. |
+| **Inbound** (Comeet applications) | CV parsing gives skills and history directly, so enrichment is optional. These people have declared intent — worth more than any Signal score. A rejected applicant from last year resurfaces automatically when a better-fitting role opens. |
 | **Referral** (employee-submitted) | Highest historic conversion of any channel. Capture the *relationship*, not just the name: how the referrer knows them, where and when they worked together, what they'd vouch for. That context is the referral's actual value. |
 | **Conference** (badge scan) | Highest volume, lowest signal, needs the strongest gate. This is what the task covers. |
 | **Sourced** (outbound research) | Recruiter-initiated. Record the researcher so the pool doesn't accumulate duplicate outreach. |
@@ -88,7 +88,7 @@ Why this is the right thing to demo:
 - It uses `work_history`, the column the brief never mentions, which shows we read the data rather
   than the field list.
 - **It generates its own feedback loop.** Every "I don't really know them" is a labelled example
-  that corrects the warmth model, and referral→hire conversion per employee becomes a real
+  that corrects the Signal model, and referral→hire conversion per employee becomes a real
   credibility weight over time.
 
 Two guardrails to state alongside it: cap the referral boost so a warm path can never substitute for

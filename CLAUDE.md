@@ -26,7 +26,7 @@ ranked shortlist that tells the recruiter **who to call and which WSC employee a
    - *Decision B — job match*: job-specific, runs on demand against the clean pool.
 2. **Two output scores, not one "compatibility rate".**
    - `fit_score` = competence only. **No network signal in this number, ever.**
-   - `warmth_score` = reachability (mutual connections, shared employers, recency, notes).
+   - `signal_score` (dict key still `warmth_score` for pipeline API stability) = endorsements + team overlap + reachability. 8 components — peer_vouch, same_team_overlap, cross_team_vouch, culture_affinity, prior_wsc_engagement, recency, notes_present, mutual_connections.
    - Combining them buries strong candidates who happen to have no mutual connections. See
      `docs/01-data-findings.md` § "The mutual-connections trap".
 3. **Transparent scoring.** Every weight, threshold, synonym and stoplist lives in `config/*.yaml`.

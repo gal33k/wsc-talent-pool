@@ -300,13 +300,28 @@ def _culture_affinity(candidate: dict) -> float:
 
 
 def _prior_wsc_engagement(candidate: dict) -> float:
-    """Placeholder — in production would come from a HubSpot/LinkedIn integration
-    tracking follows, engagement, past-event attendance. In this build we
-    derive a small signal from whether they've attended more than one WSC-adjacent
-    conference (via conference_domain), which is the closest deterministic proxy
-    we have. Real system: pull from HubSpot's engagement history."""
-    # No candidate has multi-conference attendance in the seed data yet — this
-    # is the swap surface for the real HubSpot integration.
+    """Deterministic proxy for "has this person engaged with WSC's world before?"
+
+    In production this pulls from HubSpot engagement history (follows, post
+    likes, past event attendance). We don't have that live in this build, so
+    we use the strongest deterministic proxy available in the CSVs: the
+    domain of the conference they attended. Someone who showed up at a
+    Sports Technology & Analytics event is exponentially more likely to have
+    engaged with WSC than someone at a generic DevOps meetup.
+
+    The mapping is centralised here rather than in taxonomy.yaml because
+    it's specific to Signal scoring, not classification. Values 0..1.
+    """
+    domain = (candidate.get("conference_domain") or "").strip().lower()
+    # Ordered from most-aligned to least — first match wins.
+    if "sports" in domain:
+        return 1.0   # e.g. "Sports Technology & Analytics" — direct WSC world
+    if "broadcast" in domain or "video" in domain:
+        return 0.75  # core to WSC's product surface
+    if "ai" in domain or "ml" in domain or "analytics" in domain:
+        return 0.4   # general tech-adjacent, some overlap
+    if "devops" in domain or "platform" in domain:
+        return 0.15  # weak signal — generic engineering conference
     return 0.0
 
 

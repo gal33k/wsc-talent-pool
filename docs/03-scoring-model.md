@@ -2,7 +2,7 @@
 
 ## Two axes, not one "compatibility rate"
 
-Report two numbers. **Fit** answers *can they do the job*. **Warmth** answers *can we get to them*.
+Report two numbers. **Fit** answers *can they do the job*. **Signal** answers *can we get to them* (endorsements + team overlap + reachability).
 Collapsing them into a single percentage is exactly how good candidates with no network get buried
 and well-connected mismatches float to the top — see `docs/01-data-findings.md` § "The
 mutual-connections trap".
@@ -47,16 +47,23 @@ than scoring near-zero. Excluded rows stay retrievable, they are just not in the
 
 ---
 
-## Axis 2 — `warmth_score` (0–100)
+## Axis 2 — `signal_score` (0–100)
 
-Reachability. Everything about how you get a reply to a cold message.
+*(Legacy name in the pipeline dict: `warmth_score`. Renamed to Signal in the axis refactor —
+see the note in `config/scoring.yaml`.)*
+
+Endorsements + team overlap + reachability. Everything about how likely a warm outreach lands.
 
 | Component | Weight | How it's computed |
 |---|---:|---|
-| Mutual connections | 40 | diminishing returns, weighted by department match |
-| Shared employer path | 30 | after stoplist filtering; same-department employee worth more |
-| Contact recency | 20 | exponential decay on `conference_date`, ~12-month half-life |
-| Recruiter notes present | 10 | a real conversation happened; there is something to open with |
+| Peer vouch | 35 | active same-team endorsement, × role_match × tenure, normalized |
+| Same-team overlap | 18 | shared employer with a same-team WSC person, no active vouch |
+| Cross-team vouch | 12 | active endorsement from a cross-department WSC employee |
+| Culture affinity | 12 | OSS in our stack + domain-topic engagement (strict definition) |
+| Prior WSC engagement | 8 | derived from `conference_domain` alignment (sports=1.0, video=0.75, ML=0.4, DevOps=0.15) |
+| Recency | 7 | exponential decay on `conference_date`, ~12-month half-life |
+| Recruiter notes | 5 | a real conversation happened; there is something to open with |
+| Mutual connections | 3 | bare LinkedIn mutual, diminishing returns curve |
 
 ### Diminishing returns on connections
 
@@ -67,8 +74,8 @@ Reachability. Everything about how you get a reply to a cold message.
 3+        -> 1.0
 ```
 
-The jump from nobody to somebody is the whole value; the jump from three to four is noise. Use the
-same curve for shared employers.
+The jump from nobody to somebody is the whole value; the jump from three to four is noise. Same
+curve is used for the `same_team_overlap` component.
 
 Weight a **same-department** employee above a cross-department one — the ask is "will you introduce
 us", and the person best placed to make it is a peer. Maya Levi (Senior ML Engineer) is a better
@@ -76,8 +83,8 @@ intro path for JOB001 than Hila Peled (UX Designer), even though both are one co
 
 ### Recency decay
 
-A badge scan from Nov 2024 is a colder lead than one from Apr 2025. Apply decay **to the warmth axis
-only** — skills don't expire, but someone's memory of a 20-minute booth conversation does.
+A badge scan from Nov 2024 is a colder lead than one from Apr 2025. Apply decay **to the signal
+axis only** — skills don't expire, but someone's memory of a 20-minute booth conversation does.
 
 ```
 recency_factor = 0.5 ** (months_since_contact / 12)
@@ -89,8 +96,8 @@ recency_factor = 0.5 ** (months_since_contact / 12)
 
 | Tier | Condition | Recruiter action |
 |---|---|---|
-| `call_this_week` | fit ≥ 70 and warmth ≥ 50 | Ask the named employee for a warm intro. Highest conversion, lowest effort. |
-| `direct_outreach` | fit ≥ 70 and warmth < 50 | Strong candidate, cold approach. Personalise from profile evidence. |
+| `call_this_week` | fit ≥ 70 and signal ≥ 20 | Ask the named employee for a warm intro. Highest conversion, lowest effort. |
+| `direct_outreach` | fit ≥ 70 and signal < 20 | Strong candidate, cold approach. Personalise from profile evidence. |
 | `nurture` | fit 45–70 | Adjacent fit. Keep in pool, re-score on the next role. |
 | `excluded` | failed gate or hard requirement | Not in the default view; retrievable with reason. |
 
@@ -149,7 +156,7 @@ over_band_penalty_per_year: 0.1
 over_band_floor: 0.5
 
 tiers:
-  call_this_week:  {min_fit: 70, min_warmth: 50}
+  call_this_week:  {min_fit: 70, min_warmth: 20}   # `min_warmth` key kept for API stability; it's the Signal-axis threshold
   direct_outreach: {min_fit: 70}
   nurture:         {min_fit: 45}
 

@@ -30,7 +30,7 @@ flowchart TB
   subgraph B["Decision B — match a job (per job_id, on demand)"]
     direction TB
     S6["6  Score fit<br/>five 0-1 components<br/>required_skills / role_family / seniority /<br/>domain / nice_to_have"]
-    S7["7  Score warmth<br/>mutuals + shared_employers (post-stoplist) +<br/>recency + notes_present<br/>-> best_intro_path (named employee, overlap dates)"]
+    S7["7  Score signal (8 components)<br/>peer_vouch + same_team_overlap + cross_team_vouch +<br/>culture_affinity + prior_wsc_engagement + recency +<br/>notes_present + mutual_connections<br/>-> best_intro_path (named employee, overlap dates)"]
     S8["8  Deliver<br/>rank + tier + evidence -> CSV, HTML, JSON"]
     S6 --> S7 --> S8
   end
@@ -142,19 +142,26 @@ fit.seniority_flag : "in_band" | "above_band" | "below_band"
 fit.excluded       : null OR { stage:"hard_requirement", reason:"..." }
 ```
 
-### After S7 — Score warmth (per candidate × job)
+### After S7 — Score signal (per candidate × job)
+
+*(Emitted under the dict key `warmth` for pipeline API stability; the axis is called Signal in
+all user-facing surfaces.)*
 
 ```
-warmth.components = {
-  mutual_connections : float 0..1  # diminishing-returns curve, same-dept weighted
-  shared_employer    : float 0..1  # after stoplist + alias unification
-  recency            : float 0..1  # exp decay on conference_date, half-life 12 months
-  notes_present      : float 0..1  # 1.0 if notes non-empty else 0.0
+signal.components = {
+  peer_vouch            : float 0..1  # active same-team endorsement × role_match × tenure
+  same_team_overlap     : float 0..1  # shared employer with a same-team person (diminishing curve)
+  cross_team_vouch      : float 0..1  # endorsement from cross-department peer
+  culture_affinity      : float 0..1  # OSS in our stack + domain-topic engagement
+  prior_wsc_engagement  : float 0..1  # from conference_domain alignment (sports=1.0, video=0.75, ML=0.4)
+  recency               : float 0..1  # exp decay on conference_date, half-life 12 months
+  notes_present         : float 0..1  # 1.0 if notes non-empty else 0.0
+  mutual_connections    : float 0..1  # bare LinkedIn mutuals (diminishing curve)
 }
-warmth.score_default : float 0..100
-warmth.mutuals            : [{employee_id, name, title, department, same_department}]
-warmth.shared_employers   : [{employer_canonical, employee_id, name, overlap_years}]
-warmth.best_intro_path    : "Maya Levi (Sr ML Engineer) — overlapped at Mobileye 2019-21"
+signal.score_default   : float 0..100
+signal.mutuals         : [{employee_id, name, title, department, same_department}]
+signal.shared_employers: [{employer_canonical, employee_id, name, overlap_years}]
+signal.best_intro_path : "Maya Levi (Sr ML Engineer) — overlapped at Mobileye 2019-21"
 ```
 
 ### After S8 — Deliver
@@ -180,7 +187,7 @@ score = Σ (components[k] × weights[k]) / Σ weights[k]  × 100
 
 With default weights this must equal `score_default` to 1 decimal place. Asserted in
 `tests/test_json_parity.py` **and** in a dev-mode invariant check on the client. Same rule for
-warmth.
+the Signal axis.
 
 ## Non-obvious data hazards handled here
 

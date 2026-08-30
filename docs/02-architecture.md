@@ -50,7 +50,7 @@ Stages 1–5 are Decision A (per ingestion). Stages 6–8 are Decision B (per `j
        |
  [6] MATCH          fit_score vs required skills, nice-to-have, seniority band, key domains
        |
- [7] ROUTE          warmth_score + best_intro_path
+ [7] ROUTE          signal_score + best_intro_path
        |            mutual connections + shared-employer overlap -> named people
        |
  [8] DELIVER        rank, tier, evidence strings -> CSV + HTML recruiter view

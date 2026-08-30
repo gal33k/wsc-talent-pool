@@ -34,7 +34,7 @@ couldn't verify"* rather than never learning they existed.
 
 ### Q3 — Is 1 mutual connection the same as 3?
 
-No — but the difference is smaller than a linear count implies, **and it belongs on the warmth axis,
+No — but the difference is smaller than a linear count implies, **and it belongs on the Signal axis,
 not the fit axis.**
 
 Diminishing returns: 0 → 0.0, 1 → 0.5, 2 → 0.8, 3+ → 1.0. The jump from nobody to somebody is the
@@ -115,7 +115,7 @@ decision you cannot explain is a compliance problem, not only an engineering one
 - `years_experience` is treated as trustworthy where present; `past_titles` is used as a cross-check.
 - Skills are self-reported and therefore evidence of *exposure*, not proficiency — the score is a
   prioritisation signal for a human, not a hiring decision.
-- Conference `notes` are unstructured and optional; their presence is a warmth signal, their content
+- Conference `notes` are unstructured and optional; their presence contributes to the Signal score, their content
   is displayed but not scored.
 - One person may appear at multiple conferences; identity resolves on LinkedIn URL first, and the
   most recent contact date wins for recency.

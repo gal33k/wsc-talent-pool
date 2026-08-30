@@ -180,7 +180,7 @@ def _card_html(row: dict) -> str:
       <div class="bar"><div style="width:{fit}%"></div></div>
     </div>
     <div class="score">
-      <div class="score-label">Warmth <span class="score-num">{warmth}</span></div>
+      <div class="score-label">Signal <span class="score-num">{warmth}</span></div>
       <div class="bar warmth-bar"><div style="width:{warmth}%"></div></div>
     </div>
   </div>

@@ -1,0 +1,15 @@
+# Enforce LF line endings on generated artefacts so a fresh clone doesn't
+# produce a huge spurious diff after `python run.py --all-jobs --emit-json`
+# on a machine with different core.autocrlf settings.
+* text=auto eol=lf
+*.py text eol=lf
+*.md text eol=lf
+*.csv text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+*.json text eol=lf
+*.html text eol=lf
+*.tsx text eol=lf
+*.ts text eol=lf
+*.js text eol=lf
+*.css text eol=lf

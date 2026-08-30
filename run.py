@@ -295,7 +295,7 @@ def _print_shortlist(shortlist: list[dict], excluded: list[dict], job: dict) -> 
     print("\n" + "=" * 100)
     print(f"SHORTLIST FOR {job['job_id']} ({job['title']})")
     print("=" * 100)
-    print(f"\n{'#':<3} {'TIER':<17} {'FIT':<5} {'WARM':<5} {'FLAG':<12} {'NAME':<24} {'TITLE':<32}")
+    print(f"\n{'#':<3} {'TIER':<17} {'FIT':<5} {'SIG':<5} {'FLAG':<12} {'NAME':<24} {'TITLE':<32}")
     print("-" * 100)
     for r in shortlist[:20]:
         print(f"{r['rank']:<3} {r['priority_tier']:<17} "

@@ -11,7 +11,7 @@ otherwise have to go and look up?*
 | `rank` | Where to start. |
 | `priority_tier` | What kind of move this is: call_this_week / direct_outreach / nurture. |
 | `fit_score` | Competence, 0–100. |
-| `warmth_score` | Reachability, 0–100. |
+| `warmth_score` | Signal score, 0–100 (endorsements + reachability). *Column name kept as `warmth_score` for pipeline API stability; user-facing surfaces call it Signal.* |
 | `fit_breakdown` | The five sub-scores, e.g. `skills:31/35, family:25/25, seniority:15/15, domain:15/15, nice:3/10`. **This is the "not a black box" column.** |
 | `full_name` | |
 | `current_title` | |
@@ -49,7 +49,7 @@ that writes the CSV. No build step, no dependencies, opens by double-clicking.
 Contents:
 - header: job title, date generated, counts (pool size, shortlisted, excluded)
 - candidate cards grouped by `priority_tier`
-- per card: name, title @ company, fit and warmth as small bars, matched/missing skills as chips,
+- per card: name, title @ company, fit and signal as small bars, matched/missing skills as chips,
   the intro path called out prominently, the recruiter note, and a copy-ready outreach line
 - a collapsed "excluded, with reasons" section at the bottom
 

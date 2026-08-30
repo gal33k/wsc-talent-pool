@@ -48,15 +48,15 @@ assert it in a test.
 - Job selector across the 4 open roles
 - Candidates grouped by priority tier: **Call this week** / **Direct outreach** / **Nurture**
 - Card per candidate: name, title @ company, location, years
-  - two small bars — fit and warmth — with the numbers
-  - matched required skills as chips; missing ones as outlined chips
+  - two small bars — **fit and signal** — with the numbers
+  - matched required skills as chips (✓ has it, ~ family match, ✗ missing)
   - **intro path called out**: "Maya Levi (Sr ML Engineer) — overlapped at Mobileye 2019–21"
   - the recruiter note from the badge scan, if present
   - `above_band` / `low confidence` flags where they apply
-- Sort and filter: by fit, by warmth, by conference, by role family
+- Sort and filter: by fit, by signal, by conference, by role family
 
 ### 2. Weight tuner (the money feature)
-A side panel with a slider per component — five for fit, four for warmth — plus the tier
+A side panel with a slider per component — five for fit, eight for signal — plus the tier
 thresholds. Everything re-ranks live as they drag. Include:
 - a **Reset to defaults** button
 - a **"what changed"** indicator: which candidates moved into or out of the top 10
@@ -68,7 +68,7 @@ respond — that is far more convincing than a paragraph saying it is explainabl
 ### 3. Candidate detail
 - Full fit breakdown as a horizontal bar chart, component by component, showing
   `earned / available` for each
-- Warmth breakdown the same way
+- Signal breakdown the same way (8 components)
 - All warm paths listed, not just the best one
 - Full profile: skills, past titles with dates, past companies, industry
 - Conference context and days since contact
@@ -116,9 +116,10 @@ compliance; publishing realistic-looking candidate profiles unlabelled would und
   "defaults": {
     "fit_weights":    { "required_skills": 35, "role_family": 25, "seniority": 15,
                         "domain": 15, "nice_to_have": 10 },
-    "warmth_weights": { "mutual_connections": 40, "shared_employer": 30,
-                        "recency": 20, "notes_present": 10 },
-    "tiers": { "call_this_week": {"min_fit":70,"min_warmth":50},
+    "signal_weights": { "peer_vouch": 35, "same_team_overlap": 18, "cross_team_vouch": 12,
+                        "culture_affinity": 12, "prior_wsc_engagement": 8, "recency": 7,
+                        "notes_present": 5, "mutual_connections": 3 },
+    "tiers": { "call_this_week": {"min_fit":70,"min_warmth":20},
                "direct_outreach": {"min_fit":70},
                "nurture": {"min_fit":45} }
   },
@@ -148,10 +149,11 @@ compliance; publishing realistic-looking candidate profiles unlabelled would und
         "reason": "3/3 signals: CV engineer title, CV skill stack, video-tech industry"
       },
 
-      "warmth": {
-        "components": { "mutual_connections":0.8, "shared_employer":1.0,
-                        "recency":0.62, "notes_present":1.0 },
-        "score_default": 84.4,
+      "warmth": {   // dict key kept for pipeline API stability; axis called "Signal" in the UI
+        "components": { "peer_vouch":0.0, "same_team_overlap":0.5, "cross_team_vouch":0.0,
+                        "culture_affinity":0.4, "prior_wsc_engagement":1.0,
+                        "recency":0.62, "notes_present":1.0, "mutual_connections":0.8 },
+        "score_default": 51.3,
         "mutuals": [ { "employee_id":"WSC002","name":"Maya Levi",
                        "title":"Senior ML Engineer","same_department":true } ],
         "shared_employers": [ { "employer":"Mobileye","employee_id":"WSC002",
